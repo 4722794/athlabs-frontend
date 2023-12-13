@@ -3,6 +3,7 @@ import React from "react";
 import Tabs from "@/app/components/Tabs";
 import InputFileUpload from "../components/InputFileUpload";
 import Chat from "../components/Chat";
+import HomeLayout from "../layout/HomeLayout";
 
 const Tab1Content = () => (
   <div>
@@ -67,20 +68,22 @@ const AdminPage = () => {
   ];
 
   return (
-    <div className="flex w-full  px-6 pt-5">
-      <div className="flex w-full flex-col lg:flex-row  gap-x-2 gap-y-2">
-        <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl  ">
-          <div className=" min-h-[662px] bg-[#262626]  rounded-2xl">
-            <InputFileUpload />
+    <HomeLayout>
+      <div className="flex w-full  px-6 pt-5">
+        <div className="flex w-full flex-col lg:flex-row  gap-x-2 gap-y-2">
+          <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl  ">
+            <div className=" min-h-[662px] bg-[#262626]  rounded-2xl">
+              <InputFileUpload />
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col relative bg-[#262626]  w-full lg:w-4/12 rounded-2xl ">
-          <div className=" min-h-[662px] bg-[#262626]  rounded-2xl">
-            <Tabs tabs={tabs} />
+          <div className="flex flex-col relative bg-[#262626]  w-full lg:w-4/12 rounded-2xl ">
+            <div className=" min-h-[662px] bg-[#262626]  rounded-2xl">
+              <Tabs tabs={tabs} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </HomeLayout>
   );
 };
 
