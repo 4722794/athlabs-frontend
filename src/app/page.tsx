@@ -42,7 +42,13 @@ const AppPage = () => {
                 </div>
               </div>
               <div className=" w-full md:w-[350px] relative">
-                <Image src="images/heroMobile.png" className=" w-full" alt="" />
+                <Image
+                  src="/images/heroMobile.png"
+                  width={304}
+                  height={614}
+                  className=" w-full"
+                  alt=""
+                />
 
                 <div className=" absolute bottom-5 left-0 w-full px-10 !py-0 h-[110px]">
                   <TypeAnimation
