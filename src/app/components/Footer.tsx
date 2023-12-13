@@ -1,9 +1,14 @@
 import Image from "next/image";
 import React from "react";
 
-const Footer = () => {
+interface FooterProps {
+  className?: string;
+}
+const Footer: React.FC<FooterProps> = ({ className }) => {
   return (
-    <footer className="bg-[#04080f]  text-white text-left items-center flex w-full sticky top-auto bottom-0 z-10  border-b border-gray-800">
+    <footer
+      className={`bg-[#04080f]  text-white text-left items-center flex w-full top-auto bottom-0 z-10  border-b border-gray-800 sticky ${className}`}
+    >
       <div className="container mx-auto self-center px-6 md:px-8 ">
         <div className="flex justify-end py-20">
           <div className="w-6/12 flex justify-between">
