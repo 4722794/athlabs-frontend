@@ -1,9 +1,13 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, ReactNode, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/AdminHeader";
 
-const HomeLayout = ({ children }) => {
+interface HomeLayoutProps {
+  children: ReactNode;
+}
+
+const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   const [open, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {

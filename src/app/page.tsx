@@ -3,6 +3,7 @@ import React from "react";
 import HealthApp from "./components/HealthApp";
 import LandingLayout from "./layout/LandingLayout";
 import { TypeAnimation } from "react-type-animation";
+import Image from "next/image";
 
 const AppPage = () => {
   return (
@@ -41,7 +42,7 @@ const AppPage = () => {
                 </div>
               </div>
               <div className=" w-full md:w-[350px] relative">
-                <img src="images/heroMobile.png" className=" w-full" alt="" />
+                <Image src="images/heroMobile.png" className=" w-full" alt="" />
 
                 <div className=" absolute bottom-5 left-0 w-full px-10 !py-0 h-[110px]">
                   <TypeAnimation

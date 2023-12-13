@@ -68,12 +68,14 @@ const HealthApp = () => {
       });
     }
 
-    function setColor(i) {
+    function setColor(i: number): void {
       if (i < 0) return;
 
       slides.forEach((slide) => {
-        slide.style.background = COLORS[i].bg;
-        slide.style.color = COLORS[i].text;
+        if (slide instanceof HTMLElement) {
+          slide.style.background = COLORS[i].bg;
+          slide.style.color = COLORS[i].text;
+        }
       });
     }
   }, []);

@@ -52,7 +52,7 @@ const Login = () => {
               Login
             </button>
             <p className="text-white/70 text-xs text-center mt-4">
-              Don't have an account?
+              Don&apos;t have an account?
               <a className="text-blue-500 hover:underline ml-1" target="_blank">
                 Request for access
               </a>
