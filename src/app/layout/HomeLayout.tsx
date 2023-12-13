@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/AdminHeader";
 
-const AdminLayout = ({ children }) => {
+const HomeLayout = ({ children }) => {
   const [open, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -90,4 +90,4 @@ const AdminLayout = ({ children }) => {
   );
 };
 
-export default AdminLayout;
+export default HomeLayout;
