@@ -129,10 +129,10 @@ const HealthApp = () => {
         <div className="container mx-auto  px-6 lg:px-8">
           <div className=" flex items-center  flex-col-reverse lg:flex-row justify-between flex-wrap lg:flex-nowrap gap-x-20">
             <div className="hp-slide__info w-full lg:w-4/12 relative z-20">
-              <h1 className="hp-slide__title">Build your health stack.</h1>
+              <h1 className="hp-slide__title">Instant, corrective, feedback</h1>
               <p className="hp-slide__text">
-                Track health, activity and lifestyle data from 100s of devices,
-                apps & more.
+                Get directed, actionable feedback by our fine-tuned, exercise
+                specific multi-modal AI models
               </p>
             </div>
             <div className="hp-slide__phone-stub w-full lg:w-3/12 lg:min-h-[600px] lg:h-screen opacity-100 lg:opacity-0">
@@ -146,7 +146,7 @@ const HealthApp = () => {
               />
             </div>
             <Image
-              src="/images/64d331b391602151f435f898_automations_mobile.png"
+              src="/images/chatinfo2.png"
               loading="eager"
               alt=""
               className="hp-slide__img  w-full lg:w-4/12"
@@ -162,11 +162,11 @@ const HealthApp = () => {
           <div className=" flex items-center flex-col-reverse  justify-between lg:flex-row-reverse flex-wrap lg:flex-nowrap gap-x-20">
             <div className="hp-slide__info w-full lg:w-4/12 relative z-20">
               <h1 className="hp-slide__title">
-                Incorporate evidence-based health habits.
+                Personalized guidance from a sports specialist
               </h1>
               <p className="hp-slide__text">
-                Optimize your sleep, nutrition, fitness & overall health, with
-                evidence-based protocols from top experts.
+                Consult a leading expert from our large network of coaches to
+                get precise guidance on your form
               </p>
             </div>
             <div className="hp-slide__phone-stub w-full lg:w-3/12 lg:min-h-[600px] lg:h-screen opacity-100 lg:opacity-0">
@@ -180,7 +180,7 @@ const HealthApp = () => {
               />
             </div>
             <Image
-              src="/images/64d6c1b4e1e8ebf6aba43d82_experts.png"
+              src="/images/coachnetwork2.png"
               loading="eager"
               sizes="(max-width: 991px) 100vw, 50vw"
               alt=""
@@ -197,11 +197,12 @@ const HealthApp = () => {
           <div className=" flex items-center flex-col-reverse lg:flex-row justify-between flex-wrap lg:flex-nowrap gap-x-20">
             <div className="hp-slide__info w-full lg:w-4/12 relative z-20">
               <h1 className="hp-slide__title">
-                Stay organized with the calendar.
+                Tailored plans for your next challenge
               </h1>
               <p className="hp-slide__text">
-                Plan and visualize your health habits, appointments & activities
-                in one place.
+                Partner with our expert coaches who will prepare training
+                programs customized to your specific goal whether it’s a tennis
+                tournament, a marathon or climbing mountains
               </p>
             </div>
             <div className="hp-slide__phone-stub w-full lg:w-3/12 lg:min-h-[600px] lg:h-screen opacity-100 lg:opacity-0">
@@ -215,7 +216,7 @@ const HealthApp = () => {
               />
             </div>
             <Image
-              src="/images/64d2da127f4f35804691a1c3_calendar.png"
+              src="/images/calendar1.png"
               loading="eager"
               sizes="(max-width: 991px) 100vw, 50vw"
               alt=""
@@ -232,11 +233,11 @@ const HealthApp = () => {
           <div className=" flex items-center flex-col-reverse  justify-between lg:flex-row-reverse flex-wrap lg:flex-nowrap gap-x-20">
             <div className="hp-slide__info w-full lg:w-4/12 relative z-20">
               <h1 className="hp-slide__title">
-                Incorporate evidence-based health habits.
+                Elevate your game with expert insights
               </h1>
               <p className="hp-slide__text">
-                Optimize your sleep, nutrition, fitness & overall health, with
-                evidence-based protocols from top experts.
+                Receive insights on your game from seasoned sports coaches to
+                enhance your performance
               </p>
             </div>
             <div className="hp-slide__phone-stub w-full lg:w-3/12 lg:min-h-[600px] lg:h-screen opacity-100 lg:opacity-0">
@@ -250,7 +251,7 @@ const HealthApp = () => {
               />
             </div>
             <Image
-              src="/images/64d2d9d1a82ff87569e10e42_stack-mobile-p-500.png"
+              src="/images/social.png"
               loading="eager"
               sizes="(max-width: 991px) 100vw, 50vw"
               alt=""

@@ -33,7 +33,7 @@ const Sidebar = ({ modalOpen, toggleSidebar }) => {
                   </div>
                 </button>
                 <button
-                  className=" grow-0 toggle-button  text-white w-10 border border-[#484A4E] hidden lg:inline-flex justify-center items-center "
+                  className=" grow-0 toggle-button  text-white w-10 border border-[#484A4E] inline-flex justify-center items-center "
                   onClick={toggleSidebar}
                 >
                   {modalOpen ? (

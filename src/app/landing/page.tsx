@@ -9,7 +9,7 @@ const Features = () => {
     <div className="relative z-20">
       <section className="  sticky top-0">
         <div className="py-0 bg-[#04080f] h-screen items-center">
-          <div className="container mx-auto  px-6 md:px-8 flex items-center  h-full">
+          <div className="container mx-auto  px-6 md:px-8 flex  items-center  h-full">
             <div className=" w-full md:w-6/12">
               <h2 className=" text-5xl lg:text-8xl font-bold mb-6 text-[#98a2b3] leading-[4rem] lg:leading-[7.5rem]">
                 Put your health on autopilot.
