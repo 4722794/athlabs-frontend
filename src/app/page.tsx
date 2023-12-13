@@ -1,6 +1,9 @@
+"use client";
 import React from "react";
 import HealthApp from "./components/HealthApp";
 import LandingLayout from "./layout/LandingLayout";
+import { TypeAnimation } from "react-type-animation";
+import Image from "next/image";
 
 const AppPage = () => {
   return (
@@ -8,13 +11,13 @@ const AppPage = () => {
       <div className="relative z-20">
         <section className="  sticky top-0">
           <div className="py-0 bg-[#04080f] h-screen items-center">
-            <div className="container mx-auto  px-6 md:px-8 flex items-center  h-full">
-              <div className=" w-full md:w-6/12">
+            <div className="container mx-auto  px-6 md:px-8 flex items-center justify-between pt-24  h-full">
+              <div className=" w-full md:w-8/12">
                 <h2 className=" text-5xl lg:text-8xl font-bold mb-6 text-[#98a2b3] leading-[4rem] lg:leading-[7.5rem]">
-                  Put your health on autopilot.
+                  Precision feedback Peak performance
                 </h2>
-                <div className=" text-2xl text-white/80 my-10">
-                  Your personalized health OS.
+                <div className=" text-4xl text-white/80 my-10">
+                  Your digital coach for injury-free training.
                 </div>
 
                 <div>
@@ -38,6 +41,35 @@ const AppPage = () => {
                   </div>
                 </div>
               </div>
+              <div className=" w-full md:w-[350px] relative">
+                <Image
+                  src="/images/heroMobile.png"
+                  width={304}
+                  height={614}
+                  className=" w-full"
+                  alt=""
+                />
+
+                <div className=" absolute bottom-5 left-0 w-full px-10 !py-0 h-[110px]">
+                  <TypeAnimation
+                    sequence={[
+                      // Same substring at the start will only be typed out once, initially
+                      "We produce food for Mice",
+                      1000, // wait 1s before replacing "Mice" with "Hamsters"
+                      "We produce food for Hamsters",
+                      1000,
+                      "We produce food for Guinea Pigs",
+                      1000,
+                      "We produce food for Chinchillas",
+                      1000,
+                    ]}
+                    wrapper="span"
+                    speed={50}
+                    className=" text-sm"
+                    repeat={Infinity}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -45,11 +77,11 @@ const AppPage = () => {
         <section className="bg-[#101828] pt-24 pb-0 relative">
           <div className="container mx-auto  px-6 md:px-8">
             <div className=" text-2xl md:text-3xl text-white text-center leading-10 font-extralight ">
-              Welcome to your personalized health system.
+              Welcome to your own digital performance coach
             </div>
             <div className=" text-2xl md:text-3xl text-white text-center leading-10 font-extralight pt-10 ">
-              Harness the power of your data to build your optimal health
-              routine.
+              Harness the power of AI to train with confidence and without
+              injury
             </div>
           </div>
         </section>

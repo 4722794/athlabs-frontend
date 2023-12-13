@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className=" font-sans">
+      <body>{children}</body>
     </html>
   );
 }
