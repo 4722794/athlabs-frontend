@@ -1,4 +1,57 @@
-const InputFileUpload = () => {
+"use client";
+import "react-dropzone-uploader/dist/styles.css";
+import Dropzone, { IFileWithMeta, IUploadParams } from "react-dropzone-uploader";
+import React, { useEffect, useState , } from "react";
+
+interface InputFileUploadProps {
+  children: ReactNode;
+}
+
+const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => {
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [childData, setChildData] = useState(null);
+  const sendDataToParent = () => {
+    // Call the callback function in the parent with the data
+    onDataFromChild(childData);
+  };
+
+  useEffect(()=>{
+    if(childData!=null){
+      sendDataToParent();
+    }
+  },[childData])
+
+  const getUploadParams = ({ file }: { file: IFileWithMeta }): IUploadParams | Promise<IUploadParams> => {
+    // You can customize the upload URL and other parameters here
+    console.log(file)
+    const formData = new FormData();
+    formData.append("video", file);
+
+    return {
+      url: "http://localhost:3000/video-upload", // Replace with your actual API endpoint
+      method: "POST",
+      body: formData,
+    };
+  };
+
+  const handleChangeStatus = ({ meta, file, xhr }: any, status: string) => {
+    if (status === "done") {
+      console.log(`${meta.name} uploaded!`);
+
+      // Access the response from the server
+      if (xhr && xhr.responseText) {
+        const response = JSON.parse(xhr.responseText);
+        console.log('Response from server:', response);
+
+        // Handle the response as needed
+        setChildData(response.feedback);
+       
+      }
+    } else if (status === "error") {
+      console.error(`${meta.name} failed to upload`);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center w-full h-full">
       <label
@@ -6,6 +59,19 @@ const InputFileUpload = () => {
         className="flex flex-col items-center justify-center w-full h-full border-2  border-dashed border-white/50 rounded-lg cursor-pointer bg-transparent hover:bg-[#171717] "
       >
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
+          <Dropzone
+            getUploadParams={getUploadParams}
+            onChangeStatus={handleChangeStatus}
+            accept="video/*"
+            maxFiles={1}
+            styles={{
+              dropzone: { minHeight: 200, maxHeight: 250 },
+            }}
+          />
+          {successMessage && (
+            <div className="success-message">{successMessage}</div>
+          )}
+
           <svg
             className="w-20 h-20 mb-4  text-white/50 "
             aria-hidden="true"
