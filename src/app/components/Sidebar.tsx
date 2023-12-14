@@ -364,7 +364,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                   <span className="sr-only">Open user menu</span>
                   <Image
                     className="w-8 h-8 me-2 rounded-lg"
-                    src="images/2.jpg"
+                    src="/images/2.jpg"
                     alt="user photo"
                     width={50}
                     height={50}
