@@ -29,9 +29,11 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => 
       if (actualFile instanceof Blob) {
         formData.append("video", actualFile, actualFile.name);
        // formData.append("additionalField", "additionalValue");
-  
+       //const apiUrl = process.env.REACT_APP_URL || "http://localhost:3001"; //not working
+       const apiUrl = "http://localhost:3000";
+       const apiEndpoint = `${apiUrl}/video-upload`;
         return {
-          url: "http://localhost:3001/video-upload",
+          url: apiEndpoint,
           method: "POST",
           body: formData,
         };
