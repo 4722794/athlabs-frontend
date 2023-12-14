@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useRef, useState } from 'react';
 // import "@/app/globals.css";
 import Tabs from "@/app/components/Tabs";
 import InputFileUpload from "../components/InputFileUpload";
@@ -67,13 +68,21 @@ const AdminPage = () => {
     { id: "tab2", label: "Chat", content: <Tab2Content /> },
   ];
 
+  const [dataFromChild, setDataFromChild] = useState(null);
+
+  const handleChildData = (childData:any) => {
+    // Do something with the data received from the child
+    console.log('Data received from child:', childData);
+    setDataFromChild(childData);
+  };
+
   return (
     <HomeLayout>
       <div className="flex w-full  px-6 pt-5">
         <div className="flex w-full flex-col lg:flex-row  gap-x-2 gap-y-2">
           <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl  ">
             <div className=" min-h-[662px] bg-[#262626]  rounded-2xl">
-              <InputFileUpload />
+              <InputFileUpload onDataFromChild={handleChildData}/>
             </div>
           </div>
           <div className="flex flex-col relative bg-[#262626]  w-full lg:w-4/12 rounded-2xl ">
