@@ -1,4 +1,68 @@
-const InputFileUpload = () => {
+"use client";
+import "react-dropzone-uploader/dist/styles.css";
+import Dropzone, { IFileWithMeta, IUploadParams } from "react-dropzone-uploader";
+import React, { ReactNode, useEffect, useState , } from "react";
+
+interface InputFileUploadProps {
+  //children: ReactNode;
+  onDataFromChild: (data: any) => void;
+}
+
+const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => {
+  const [childData, setChildData] = useState(null);
+  const sendDataToParent = () => {
+    // Call the callback function in the parent with the data
+    onDataFromChild(childData);
+  };
+
+  useEffect(()=>{
+    if(childData!=null){
+      sendDataToParent();
+    }
+  },[childData])
+
+  const getUploadParams = (file: IFileWithMeta): IUploadParams | Promise<IUploadParams> => {
+    try {
+      const formData = new FormData();
+      const actualFile = file.file; // Access the actual file from fileWithMeta
+  
+      if (actualFile instanceof Blob) {
+        formData.append("video", actualFile, actualFile.name);
+       // formData.append("additionalField", "additionalValue");
+  
+        return {
+          url: "http://localhost:3001/video-upload",
+          method: "POST",
+          body: formData,
+        };
+      } else {
+        console.error('Invalid file:', actualFile);
+        return Promise.reject(new Error('Invalid file type'));
+      }
+    } catch (error) {
+      console.error('Error getting upload params:', error);
+      return Promise.reject(error);
+    }
+  };
+
+  const handleChangeStatus = ({ meta, file, xhr }: any, status: string) => {
+    if (status === "done") {
+      console.log(`${meta.name} uploaded!`);
+
+      // Access the response from the server
+      if (xhr && xhr.responseText) {
+        const response = JSON.parse(xhr.responseText);
+        console.log('Response from server:', response);
+
+        // Handle the response as needed
+        setChildData(response.feedback);
+       
+      }
+    } else if (status === "error") {
+      console.error(`${meta.name} failed to upload`);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center w-full h-full">
       <label
@@ -6,6 +70,16 @@ const InputFileUpload = () => {
         className="flex flex-col items-center justify-center w-full h-full border-2  border-dashed border-white/50 rounded-lg cursor-pointer bg-transparent hover:bg-[#171717] "
       >
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
+          <Dropzone
+            getUploadParams={getUploadParams}
+            onChangeStatus={handleChangeStatus}
+            accept="video/*"
+            maxFiles={1}
+            styles={{
+              dropzone: { minHeight: 200, maxHeight: 250 },
+            }}
+          />
+         
           <svg
             className="w-20 h-20 mb-4  text-white/50 "
             aria-hidden="true"
