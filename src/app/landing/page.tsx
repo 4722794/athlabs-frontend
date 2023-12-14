@@ -54,7 +54,7 @@ const Features = () => {
         </div>
       </section>
 
-      <section className="s-hp-slides relative ">
+      <section className="s-hp-slides relative bg-[#101828] z-10">
         <HealthApp />
       </section>
 

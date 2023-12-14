@@ -7,9 +7,9 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ showButton = true }) => {
   return (
-    <header className="bg-[#04080f]  text-white text-left items-center flex fixed w-full top-0 z-30 h-20  md:h-24 border-b border-gray-800">
+    <header className="bg-[#04080f]  text-white text-left items-center flex fixed w-full top-0 z-30 h-14 md:h-20  lg:h-24 border-b border-gray-800">
       <div className="container mx-auto self-center px-6 md:px-8 flex justify-between items-center">
-        <a className=" inline-flex h-12 md:h-auto ">
+        <a className=" inline-flex h-10  md:h-auto">
           <Image
             src={"/images/logo.svg"}
             width={230}

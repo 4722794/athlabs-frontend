@@ -127,7 +127,7 @@ const HealthApp = () => {
         </div>
       </div>
 
-      <div className="s-hp-slide  relative z-10 is--1 py-20 lg:py-0">
+      <div className="s-hp-slide  relative z-10 is--1 py-14 md:py-14 md:py-20">
         <div className="container mx-auto  px-6 lg:px-8">
           <div className=" flex items-center  flex-col-reverse lg:flex-row justify-between flex-wrap lg:flex-nowrap gap-x-20">
             <div className="hp-slide__info w-full lg:w-4/12 relative z-20">
@@ -159,7 +159,7 @@ const HealthApp = () => {
         </div>
       </div>
 
-      <div className="s-hp-slide  relative z-10 is--2 py-20 lg:py-0">
+      <div className="s-hp-slide  relative z-10 is--2 py-14 md:py-20">
         <div className="container mx-auto  px-6 lg:px-8">
           <div className=" flex items-center flex-col-reverse  justify-between lg:flex-row-reverse flex-wrap lg:flex-nowrap gap-x-20">
             <div className="hp-slide__info w-full lg:w-4/12 relative z-20">
@@ -194,7 +194,7 @@ const HealthApp = () => {
         </div>
       </div>
 
-      <div className="s-hp-slide  relative z-10 is--3 py-20 lg:py-0">
+      <div className="s-hp-slide  relative z-10 is--3 py-14 md:py-20">
         <div className="container mx-auto  px-6 lg:px-8">
           <div className=" flex items-center flex-col-reverse lg:flex-row justify-between flex-wrap lg:flex-nowrap gap-x-20">
             <div className="hp-slide__info w-full lg:w-4/12 relative z-20">
@@ -230,7 +230,7 @@ const HealthApp = () => {
         </div>
       </div>
 
-      <div className="s-hp-slide  relative z-10 is--4 py-20 lg:py-0">
+      <div className="s-hp-slide  relative z-10 is--4 py-14 md:py-20">
         <div className="container mx-auto  px-6 lg:px-8">
           <div className=" flex items-center flex-col-reverse  justify-between lg:flex-row-reverse flex-wrap lg:flex-nowrap gap-x-20">
             <div className="hp-slide__info w-full lg:w-4/12 relative z-20">
