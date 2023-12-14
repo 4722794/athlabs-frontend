@@ -1,24 +1,20 @@
 "use client";
-import React, { useRef, useState } from 'react';
+import React, { ReactNode, useRef, useState } from 'react';
 // import "@/app/globals.css";
 import Tabs from "@/app/components/Tabs";
 import InputFileUpload from "../components/InputFileUpload";
 import Chat from "../components/Chat";
 import HomeLayout from "../layout/HomeLayout";
+interface Tab1ContentProps {
+  compData: any;
+}
 
-const Tab1Content = () => (
+const Tab1Content: React.FC<Tab1ContentProps> = ({compData}) => (
   <div>
+    {(compData)?
     <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7">
-      Summary: In the video titled The Future of Reasoning by Vsauce, it
-      explores the challenges of human reasoning and how our minds work. It is
-      explained that reasoning is not solely based on facts, and humans are
-      often lazy and bad at reasoning. The future of reasoning is discussed,
-      highlighting how technology and social arenas can help improve the
-      application of reason to important issues such as the impact of emissions
-      on the planet. Reading this content will provide insights into the
-      limitations of human reasoning and the potential for improvement in the
-      future.
-    </div>
+      {compData}
+    </div>:''}
   </div>
 );
 const Tab2Content = () => (
@@ -63,12 +59,12 @@ const Tab2Content = () => (
 );
 
 const AdminPage = () => {
+  const [dataFromChild, setDataFromChild] = useState(null);
   const tabs = [
-    { id: "tab1", label: "Feedback", content: <Tab1Content /> },
+    { id: "tab1", label: "Feedback", content: <Tab1Content compData={dataFromChild}/> },
     { id: "tab2", label: "Chat", content: <Tab2Content /> },
   ];
 
-  const [dataFromChild, setDataFromChild] = useState(null);
 
   const handleChildData = (childData:any) => {
     // Do something with the data received from the child
