@@ -27,7 +27,10 @@ const Header: React.FC<HeaderProps> = ({ showButton = true }) => {
             <a className="py-2 px-3  text-sm  font-semibold  text-white cursor-pointer">
               REQUEST DEMO
             </a>
-            <a className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-12 min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer">
+            <a
+              href="/home"
+              className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-12 min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
+            >
               GO TO APP
             </a>
           </div>
