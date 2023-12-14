@@ -1,14 +1,14 @@
 "use client";
 import "react-dropzone-uploader/dist/styles.css";
 import Dropzone, { IFileWithMeta, IUploadParams } from "react-dropzone-uploader";
-import React, { useEffect, useState , } from "react";
+import React, { ReactNode, useEffect, useState , } from "react";
 
 interface InputFileUploadProps {
-  children: ReactNode;
+  //children: ReactNode;
+  onDataFromChild: (data: any) => void;
 }
 
 const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => {
-  const [successMessage, setSuccessMessage] = useState(null);
   const [childData, setChildData] = useState(null);
   const sendDataToParent = () => {
     // Call the callback function in the parent with the data
@@ -21,17 +21,28 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => 
     }
   },[childData])
 
-  const getUploadParams = ({ file }: { file: IFileWithMeta }): IUploadParams | Promise<IUploadParams> => {
-    // You can customize the upload URL and other parameters here
-    console.log(file)
-    const formData = new FormData();
-    formData.append("video", file);
-
-    return {
-      url: "http://localhost:3000/video-upload", // Replace with your actual API endpoint
-      method: "POST",
-      body: formData,
-    };
+  const getUploadParams = (file: IFileWithMeta): IUploadParams | Promise<IUploadParams> => {
+    try {
+      const formData = new FormData();
+      const actualFile = file.file; // Access the actual file from fileWithMeta
+  
+      if (actualFile instanceof Blob) {
+        formData.append("video", actualFile, actualFile.name);
+       // formData.append("additionalField", "additionalValue");
+  
+        return {
+          url: "http://localhost:3001/video-upload",
+          method: "POST",
+          body: formData,
+        };
+      } else {
+        console.error('Invalid file:', actualFile);
+        return Promise.reject(new Error('Invalid file type'));
+      }
+    } catch (error) {
+      console.error('Error getting upload params:', error);
+      return Promise.reject(error);
+    }
   };
 
   const handleChangeStatus = ({ meta, file, xhr }: any, status: string) => {
@@ -68,10 +79,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => 
               dropzone: { minHeight: 200, maxHeight: 250 },
             }}
           />
-          {successMessage && (
-            <div className="success-message">{successMessage}</div>
-          )}
-
+         
           <svg
             className="w-20 h-20 mb-4  text-white/50 "
             aria-hidden="true"
