@@ -14,8 +14,9 @@
     "react": "^18",
     "react-custom-scroll": "^5.0.0",
     "react-dom": "^18",
-    "react-dropzone-uploader": "^2.11.0",
-    "react-scroll": "^1.9.0"
+    "react-scroll": "^1.9.0",
+    "react-type-animation": "^3.2.0",
+    "react-dropzone-uploader": "^2.11.0"
   },
   "devDependencies": {
     "@types/gsap": "^3.0.0",
