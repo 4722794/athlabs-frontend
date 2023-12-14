@@ -366,6 +366,8 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     className="w-8 h-8 me-2 rounded-lg"
                     src="images/2.jpg"
                     alt="user photo"
+                    width={50}
+                    height={50}
                   />
                   Bonnie Green
                 </span>
