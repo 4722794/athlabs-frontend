@@ -9,7 +9,7 @@ import HomeLayout from "../layout/HomeLayout";
 const Tab1Content = () => (
   <div>
     <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7">
-      Summary: In the video titled "The Future of Reasoning" by Vsauce, it
+      Summary: In the video titled The Future of Reasoning by Vsauce, it
       explores the challenges of human reasoning and how our minds work. It is
       explained that reasoning is not solely based on facts, and humans are
       often lazy and bad at reasoning. The future of reasoning is discussed,

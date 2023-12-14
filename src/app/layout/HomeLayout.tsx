@@ -1,9 +1,13 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, ReactNode, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/AdminHeader";
 
-const HomeLayout = ({ children }) => {
+interface HomeLayoutProps {
+  children: ReactNode;
+}
+
+const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   const [open, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -32,7 +36,7 @@ const HomeLayout = ({ children }) => {
           open ? " translate-x-[260px] " : "translate-x-[0px] hidden "
         }transform  -translate-y-2/2 rotate-0 translate-z-0`}
       >
-        <button className=" grow-0 toggle-button  text-white w-10 border border-white inline-flex justify-center items-center m-2.5 h-[42px]">
+        <button className=" grow-0 toggle-button  text-white w-10 border border-white inline-flex justify-center items-center m-2.5 h-[42px] hidden">
           <svg
             width="20"
             height="20"

@@ -1,10 +1,20 @@
 "use client";
 import React, { useState } from "react";
 
-const Tabs = ({ tabs }) => {
+interface Tab {
+  id: string;
+  label: string;
+  content: React.ReactNode;
+}
+
+interface TabsProps {
+  tabs: Tab[];
+}
+
+const Tabs: React.FC<TabsProps> = ({ tabs }) => {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
-  const handleTabClick = (tabId) => {
+  const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
   };
 

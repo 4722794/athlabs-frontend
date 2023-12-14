@@ -1,9 +1,15 @@
 "use client";
+import Image from "next/image";
 import React, { useEffect } from "react";
 import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css"; // Import the styles
 
-const Sidebar = ({ modalOpen, toggleSidebar }) => {
+interface SidebarProps {
+  modalOpen: boolean;
+  toggleSidebar: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   return (
     <div
       className={`dark flex-shrink-0  bg-[#262626] absolute h-full z-40 lg:relative  ${
@@ -33,7 +39,7 @@ const Sidebar = ({ modalOpen, toggleSidebar }) => {
                   </div>
                 </button>
                 <button
-                  className=" grow-0 toggle-button  text-white w-10 border border-[#484A4E] hidden lg:inline-flex justify-center items-center "
+                  className=" grow-0 toggle-button  text-white w-10 border border-[#484A4E] inline-flex justify-center items-center "
                   onClick={toggleSidebar}
                 >
                   {modalOpen ? (
@@ -356,10 +362,12 @@ const Sidebar = ({ modalOpen, toggleSidebar }) => {
               >
                 <span className=" inline-flex pe-1 items-center">
                   <span className="sr-only">Open user menu</span>
-                  <img
+                  <Image
                     className="w-8 h-8 me-2 rounded-lg"
                     src="images/2.jpg"
                     alt="user photo"
+                    width={50}
+                    height={50}
                   />
                   Bonnie Green
                 </span>

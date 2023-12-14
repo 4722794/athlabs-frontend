@@ -16,16 +16,6 @@
   }
 }
 
-/* body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
-
 body,
 html {
   height: 100%;
@@ -40,5 +30,5 @@ html {
 }
 
 .hp-slide__text {
-  @apply text-xl lg:text-3xl;
+  @apply text-xl lg:text-3xl lg:leading-10;
 }
