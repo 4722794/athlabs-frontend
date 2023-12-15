@@ -1,7 +1,84 @@
+"use client";
 import LandingLayout from "../layout/LandingLayout";
+import React, { useState, useEffect } from "react";
+import ComonToast from "../components/ComonToast";
+import LoadingComp from "../components/LoadingComp";
 
 const Login = () => {
   const footerClass = "!relative";
+
+  const [username, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState("");
+  const [formErrors, setFormErrors] = useState({ username: "", password: "" });
+  const [toastObj, setToastObj] = useState({ type: "", msg: "" });
+
+  const validateForm = () => {
+    let valid = true;
+    const errors = { username: "", password: "" };
+
+    // Username validation
+    if (!username) {
+      errors.username = "Username is required";
+      valid = false;
+    }
+
+    // Password validation
+    if (!password) {
+      errors.password = "Password is required";
+      valid = false;
+    }
+    // Password validation
+    else if (!password || !/(?=.*[A-Z])(?=.*[0-9]).{8,}/.test(password)) {
+      errors.password =
+        "Password must contain 1 uppercase letter, 1 number, and be at least 8 characters long";
+      valid = false;
+    }
+
+    setFormErrors(errors);
+    return valid;
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      const apiUrl = "http://localhost:3000/token";
+      // const url = "http://api.athlabs.co/token";
+      const formData = new URLSearchParams();
+      formData.append("username", username);
+      formData.append("password", password);
+      setLoading(true);
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: formData,
+          redirect: "follow",
+        });
+
+        // Handle response as needed
+        const result = await response.text();
+        toastObj.type = "e";
+        toastObj.msg = JSON.parse(result).detail;
+        setToastObj(toastObj);
+        setLoading(false);
+        console.log("Server response:", result);
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        toastObj.type = "e";
+        toastObj.msg = "Error submitting form";
+        setToastObj(toastObj);
+        setLoading(false);
+      }
+    } else {
+      // Form data is invalid, do something (display errors, etc.)
+    }
+  };
+
+  useEffect(() => {}, [toastObj]);
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
@@ -13,20 +90,33 @@ const Login = () => {
           <p className="text-white/90 text-center mb-10">
             Login to use Athlabs
           </p>
-          <form>
+
+          {toastObj.type && (
+            <ComonToast toastObj={toastObj} setToastObj={setToastObj} />
+          )}
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="email"
                 className="block text-white/70  text-sm font-semibold mb-2"
               >
-                Email Address *
+                Username *
               </label>
               <input
-                type="email"
-                id="email"
+                type="text"
+                id="username"
+                value={username}
                 className="form-input w-full px-4 py-2 border rounded-lg  border-gray-400 text-white/90  bg-transparent"
                 placeholder="hello@alignui.com"
+                onChange={(e) => setEmail(e.target.value)}
               />
+              {formErrors.username && (
+                <span>
+                  <p className="text-white/70 text-xs mt-1">
+                    {formErrors.username}
+                  </p>
+                </span>
+              )}
             </div>
             <div className="mb-6">
               <label
@@ -38,12 +128,18 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
+                value={password}
                 className="form-input w-full px-4 py-2 border rounded-lg  border-gray-400 text-white/90  bg-transparent"
                 placeholder="••••••••"
+                onChange={(e) => setPassword(e.target.value)}
               />
-              <p className="text-white/70 text-xs mt-1">
-                Must contain 1 uppercase letter, 1 number, min. 8 characters.
-              </p>
+              {formErrors.password && (
+                <span>
+                  <p className="text-white/70 text-xs mt-1">
+                    {formErrors.password}
+                  </p>
+                </span>
+              )}
             </div>
             <button
               type="submit"
@@ -51,6 +147,7 @@ const Login = () => {
             >
               Login
             </button>
+            {loading && <LoadingComp />}
             <p className="text-white/70 text-xs text-center mt-4">
               Don&apos;t have an account?
               <a className="text-blue-500 hover:underline ml-1" target="_blank">
