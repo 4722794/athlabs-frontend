@@ -16,19 +16,19 @@ const AppPage = () => {
       id: 1,
       type: "image",
       src: "/images/website_final/gif_new/squat_cropped.gif",
-      text: "In publishing and graphic design, Lorem ipsum is a placeholder text...",
+      text: "Push hips back…",
     },
     {
       id: 2,
       type: "image",
       src: "/images/website_final/gif_new/cropped_jump.gif",
-      text: "In publishing and graphic design, Lorem ipsum is a placeholder text..In publishing and graphic design, Lorem ipsum is a placeholder text... .",
+      text: "Land softly,extend hips at top...",
     },
     {
       id: 3,
       type: "image",
       src: "/images/website_final/gif_new/cropped_deadlift.gif",
-      text: "In publishing and graphic design, Lorem ipsum is a placeholder text...",
+      text: "Back straight, Engage your Glutes…",
     },
 
     // Add more items as needed
