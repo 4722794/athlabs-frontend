@@ -1,6 +1,6 @@
 "use client";
 import LandingLayout from "../layout/LandingLayout";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ComonToast from "../components/ComonToast";
 import LoadingComp from "../components/LoadingComp";
 
@@ -11,7 +11,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [formErrors, setFormErrors] = useState({ username: "", password: "" });
-  const [toastObj, setToastObj]= useState({ type: "", msg: "" });
+  const [toastObj, setToastObj] = useState({ type: "", msg: "" });
 
   const validateForm = () => {
     let valid = true;
@@ -39,48 +39,46 @@ const Login = () => {
     return valid;
   };
 
-  const handleSubmit = async (e) => {
-	e.preventDefault();
-  
-	if (validateForm()) {
-	  const apiUrl = "http://localhost:3000/token";
-	 // const url = "http://api.athlabs.co/token";
-	  const formData = new URLSearchParams();
-	  formData.append("username", username); 
-	  formData.append("password", password); 
-	  setLoading(true)
-	  try {
-		const response = await fetch(apiUrl, {
-		  method: "POST",
-		  headers: {
-			"Content-Type": "application/x-www-form-urlencoded",
-		  },
-		  body: formData,
-		  redirect: 'follow'
-		});
-  
-		// Handle response as needed
-		const result = await response.text();
-		toastObj.type = 'e';
-		toastObj.msg = JSON.parse(result).detail;
-		setToastObj(toastObj)
-		setLoading(false)
-		console.log("Server response:", (result));
-	  } catch (error) {
-		console.error("Error submitting form:", error);
-		toastObj.type = 'e';
-		toastObj.msg = "Error submitting form";
-		setToastObj(toastObj)
-		setLoading(false)
-	  }
-	} else {
-	  // Form data is invalid, do something (display errors, etc.)
-	}
-  };
-  
-  useEffect(() => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
 
-  }, [toastObj]);
+    if (validateForm()) {
+      const apiUrl = "http://localhost:3000/token";
+      // const url = "http://api.athlabs.co/token";
+      const formData = new URLSearchParams();
+      formData.append("username", username);
+      formData.append("password", password);
+      setLoading(true);
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: formData,
+          redirect: "follow",
+        });
+
+        // Handle response as needed
+        const result = await response.text();
+        toastObj.type = "e";
+        toastObj.msg = JSON.parse(result).detail;
+        setToastObj(toastObj);
+        setLoading(false);
+        console.log("Server response:", result);
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        toastObj.type = "e";
+        toastObj.msg = "Error submitting form";
+        setToastObj(toastObj);
+        setLoading(false);
+      }
+    } else {
+      // Form data is invalid, do something (display errors, etc.)
+    }
+  };
+
+  useEffect(() => {}, [toastObj]);
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
@@ -93,9 +91,9 @@ const Login = () => {
             Login to use Athlabs
           </p>
 
-		  {toastObj.type && (
-                <ComonToast toastObj={toastObj} setToastObj={setToastObj}/>
-              )}
+          {toastObj.type && (
+            <ComonToast toastObj={toastObj} setToastObj={setToastObj} />
+          )}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
@@ -149,7 +147,7 @@ const Login = () => {
             >
               Login
             </button>
-			{loading &&  <LoadingComp />}
+            {loading && <LoadingComp />}
             <p className="text-white/70 text-xs text-center mt-4">
               Don&apos;t have an account?
               <a className="text-blue-500 hover:underline ml-1" target="_blank">
@@ -163,6 +161,5 @@ const Login = () => {
     </LandingLayout>
   );
 };
-
 
 export default Login;

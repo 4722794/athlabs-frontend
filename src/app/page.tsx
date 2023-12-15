@@ -55,18 +55,6 @@ const AppPage = () => {
     arrows: false,
   };
 
-  const handleGifSwap = (index) => {
-    const updatedSliderItems = [...sliderItems];
-    const currentItem = updatedSliderItems[index];
-
-    if (currentItem.type === "image") {
-      // Swap image with a new GIF
-      currentItem.src = "/images/website_final/gif/new_gif.gif";
-    }
-
-    setSliderItems(updatedSliderItems);
-  };
-
   return (
     <LandingLayout>
       <div className="relative z-20">
