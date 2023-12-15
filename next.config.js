@@ -1,10 +1,14 @@
 /** @type {import('next').NextConfig} */
 const rewrites = () => {
-    const apiUrl = process.env.UPLOAD_VIDEO_API;
+    const apiUrl = 'http://api.athlabs.co';
     return [
         {
             source: "/video-upload",
             destination: apiUrl,
+        },
+        {
+            source: "/token",
+            destination: apiUrl+'/token',
         },
     ];
 };
