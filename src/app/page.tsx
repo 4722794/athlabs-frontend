@@ -136,7 +136,7 @@ const AppPage = () => {
                                     sequence={[item.text, 3000]}
                                     wrapper="span"
                                     speed={50}
-                                    className="text-[12px] md:text-sm relative z-10 text-white"
+                                    className="text-[16px] md:text-xl relative z-10 text-white"
                                     repeat={Infinity}
                                   />
                                 </div>
@@ -170,10 +170,10 @@ const AppPage = () => {
           <HealthApp />
         </section>
 
-        <section className="relative z-10  bg-[#E4E7EC] py-14 md:py-20 lg:py-20 md:min-h-[200px] border-b border-gray-800">
+        <section className="relative z-10  bg-[#9aa2b1] py-14 md:py-20 lg:py-20 md:min-h-[200px] ">
           <div className="container mx-auto  px-6 md:px-8 flex  justify-center flex-wrap lg:flex-wrap   gap-y-10">
-            <div className=" w-full lg:w-5/12">
-              <div className=" text-md md:text-lg lg:text-xl mb-5  text-left text-gray-900  tracking-wider ">
+            <div className=" w-full lg:w-7/12">
+              <div className=" text-xl md:text-2xl lg:text-3xl mb-5  text-center text-gray-900  tracking-wider ">
                 Sign up now to join our exclusive beta program
               </div>
 
@@ -202,47 +202,47 @@ const AppPage = () => {
           <div className="container mx-auto  px-6 md:px-8 flex  justify-center flex-wrap lg:flex-wrap   gap-y-10">
             <div className=" w-full lg:w-6/12">
               <Slider {...sliderSettings2}>
-                <div>
-                  <div className=" text-md md:text-xl lg:text-2xl mb-7  text-center italic text-gray-600	 ">
+                <div className=" pb-3">
+                  <div className=" text-xl md:text-2xl lg:text-3xl mb-7  text-center italic text-gray-600	 ">
                     “I love how I can easily create training programs for my
                     athletes and visualize key performance metrics”
                   </div>
-                  <div className="  text-xl  text-center ">
+                  <div className="  text-2xl  text-center ">
                     <span className=" tracking-wider font-semibold">
                       Arup Nath,
                     </span>{" "}
                     <br />
-                    <span className=" text-[15px]">
+                    <span className=" text-[15px] md:text-xl">
                       Tennis coach (Bangalore)
                     </span>
                   </div>
                 </div>
-                <div>
-                  <div className=" text-md md:text-xl lg:text-2xl mb-7  text-center italic text-gray-600	 ">
+                <div className=" pb-3">
+                  <div className=" text-xl md:text-2xl lg:text-3xl mb-7  text-center italic text-gray-600	 ">
                     “Athlabs has been a game changer for me and my athletes. The
                     best software for coaches.”
                   </div>
-                  <div className="  text-xl  text-center ">
+                  <div className="  text-2xl  text-center ">
                     <span className=" tracking-wider font-semibold">
                       Alexander West,
                     </span>{" "}
                     <br />
-                    <span className=" text-[15px]">
+                    <span className=" text-[15px] md:text-xl">
                       BMX cycling coach (Berlin)
                     </span>
                   </div>
                 </div>
-                <div>
-                  <div className=" text-md md:text-xl lg:text-2xl mb-7  text-center italic text-gray-600	 ">
+                <div className=" pb-3">
+                  <div className=" text-xl md:text-2xl lg:text-3xl mb-7  text-center italic text-gray-600	 ">
                     “Strength training is very difficult without proper feedback
                     and this is where Athlabs shines!”
                   </div>
-                  <div className="  text-xl  text-center ">
+                  <div className="  text-2xl  text-center ">
                     <span className=" tracking-wider font-semibold">
                       Dev Borah,
                     </span>{" "}
                     <br />
-                    <span className=" text-[15px]">
+                    <span className=" text-[15px] md:text-xl">
                       Badminton Player (Bangalore)
                     </span>
                   </div>
