@@ -1,20 +1,82 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import HealthApp from "./components/HealthApp";
 import LandingLayout from "./layout/LandingLayout";
 import { TypeAnimation } from "react-type-animation";
 import Image from "next/image";
+import Slider from "react-slick";
+
+// Import slick-carousel styles
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const AppPage = () => {
+  const [sliderItems, setSliderItems] = useState([
+    {
+      id: 1,
+      type: "image",
+      src: "/images/website_final/gif_new/squat_cropped.gif",
+      text: "In publishing and graphic design, Lorem ipsum is a placeholder text...",
+    },
+    {
+      id: 2,
+      type: "image",
+      src: "/images/website_final/gif_new/cropped_jump.gif",
+      text: "In publishing and graphic design, Lorem ipsum is a placeholder text..In publishing and graphic design, Lorem ipsum is a placeholder text... .",
+    },
+    {
+      id: 3,
+      type: "image",
+      src: "/images/website_final/gif_new/cropped_deadlift.gif",
+      text: "In publishing and graphic design, Lorem ipsum is a placeholder text...",
+    },
+
+    // Add more items as needed
+  ]);
+
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
+
+  const sliderSettings2 = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false,
+  };
+
+  const handleGifSwap = (index) => {
+    const updatedSliderItems = [...sliderItems];
+    const currentItem = updatedSliderItems[index];
+
+    if (currentItem.type === "image") {
+      // Swap image with a new GIF
+      currentItem.src = "/images/website_final/gif/new_gif.gif";
+    }
+
+    setSliderItems(updatedSliderItems);
+  };
+
   return (
     <LandingLayout>
       <div className="relative z-20">
         <section className="  md:sticky top-0  ">
-          <div className="py-0 bg-[#04080f] md:h-screen items-center pb-10 md:pb-0">
-            <div className="container mx-auto  px-6 md:px-8 flex flex-wrap md:flex-nowrap items-center justify-between pt-24  h-full gap-y-12">
-              <div className=" w-full md:w-8/12">
+          <div className="py-0 bg-[#04080f]   min-h-[550px] items-center pt-10 pb-10 md:pb-0">
+            <div className="container mx-auto  px-6 md:px-8 flex flex-wrap lg:flex-nowrap items-center justify-between pt-24  pb-20 h-full gap-y-12">
+              <div className=" w-full lg:w-8/12">
                 <h2 className=" text-3xl  md:text-5xl  xl:text-6xl  2xl:text-8xl font-bold mb-6 text-[#98a2b3] leading-10 md:leading-[4rem] xl:leading-[6.5rem] 2xl:leading-[7.5rem] text-center md:text-left">
-                  Precision feedback Peak performance
+                  Precision feedback <br />
+                  Peak performance
                 </h2>
                 <div className=" text-2xl md:text-4xl text-white/80 my-5 md:my-10 text-center md:text-left">
                   Your digital coach for injury-free training.
@@ -27,7 +89,7 @@ const AppPage = () => {
                         <input
                           type="text"
                           placeholder=" > enter your email"
-                          className="box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] p-1 md:p-2 pl-5 h-12 md:min-h-[75px]  w-full  outline-2 outline-gray-800 "
+                          className="box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] p-1 md:p-2 md:pl-5 h-12 md:min-h-[75px]  w-full  outline-2 outline-gray-800 "
                         />
                       </div>
 
@@ -41,33 +103,63 @@ const AppPage = () => {
                   </div>
                 </div>
               </div>
-              <div className=" w-[250px] md:w-[350px] relative mx-auto md:mr-0 ">
-                <Image
-                  src="/images/heroMobile.png"
-                  width={304}
-                  height={614}
-                  className=" w-full"
-                  alt=""
-                />
-
-                <div className=" absolute bottom-5 left-0 w-full px-6 md:px-10 !py-0 h-[75px] md:h-[110px]">
-                  <TypeAnimation
-                    sequence={[
-                      // Same substring at the start will only be typed out once, initially
-                      "We produce food for Mice",
-                      1000, // wait 1s before replacing "Mice" with "Hamsters"
-                      "We produce food for Hamsters",
-                      1000,
-                      "We produce food for Guinea Pigs",
-                      1000,
-                      "We produce food for Chinchillas",
-                      1000,
-                    ]}
-                    wrapper="span"
-                    speed={50}
-                    className=" text-[12px] md:text-sm"
-                    repeat={Infinity}
+              <div className=" w-[226px] sm:w-[326px] md:w-[326px] lg:w-4/12 2xl:w-4/12  flex justify-center lg:justify-end mx-auto lg:mr-0">
+                <div className="relative w-full   lg:w-10/12 xl:w-8/12 ">
+                  {/* <div className=" w-[calc(100%-8px)] h-full absolute bg-white  rounded-[50px] z-0 left-1"></div> */}
+                  <Image
+                    src="/images/iphone-x-png-29483.png"
+                    width={304}
+                    height={614}
+                    className=" w-full"
+                    alt=""
                   />
+
+                  <div className=" absolute z-20 top-3 left-1/2 transform -translate-x-1/2">
+                    <Image
+                      src="/images/top.png"
+                      width={120}
+                      height={22}
+                      className=" "
+                      alt=""
+                    />
+                  </div>
+
+                  <div className="absolute mySlider top-1/2 transform -translate-y-1/2 h-[calc(100%-24px)] md:h-[calc(100%-32px)]  left-1/2  -translate-x-1/2 w-[calc(100%-26px)] md:w-[calc(100%-34px)]  overflow-hidden">
+                    <Slider
+                      className="  h-full rounded-[22px] sm:rounded-[30px] md:rounded-[30px]  lg:rounded-[20px]  xl:rounded-[28px] 2xl:rounded-[30px] overflow-hidden"
+                      {...sliderSettings}
+                    >
+                      {sliderItems.map((item, index) => (
+                        <div key={item.id} className="relative h-full ">
+                          {item.type === "image" && (
+                            <>
+                              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-full">
+                                <Image
+                                  src={item.src}
+                                  width={800}
+                                  height={1500}
+                                  alt=""
+                                />
+                              </div>
+
+                              <div className="absolute bottom-[22px] left-1/2 transform -translate-x-1/2 w-[calc(100%-30px)] rounded-b-[0px] px-3 md:px-3 !py-3 h-auto bg-black/50 flex">
+                                <div>
+                                  <TypeAnimation
+                                    sequence={[item.text, 3000]}
+                                    wrapper="span"
+                                    speed={50}
+                                    className="text-[12px] md:text-sm relative z-10 text-white"
+                                    repeat={Infinity}
+                                  />
+                                </div>
+                              </div>
+                            </>
+                          )}
+                          {/* Add more conditions for other item types if needed */}
+                        </div>
+                      ))}
+                    </Slider>
+                  </div>
                 </div>
               </div>
             </div>
@@ -90,29 +182,84 @@ const AppPage = () => {
           <HealthApp />
         </section>
 
-        <section className="relative z-10  bg-[#e4e7ec] py-14 md:py-20 lg:py-20 md:min-h-[200px]">
-          <div className="container mx-auto  px-6 md:px-8">
-            <div className=" text-xl md:text-3xl lg:text-5xl mb-5 lg:leading-[58px] text-center ">
-              “I love how I can easily create training programs <br />
-              for my athletes and visualize key performance metrics”
-            </div>
+        <section className="relative z-10  bg-[#E4E7EC] py-14 md:py-20 lg:py-20 md:min-h-[200px] border-b border-gray-800">
+          <div className="container mx-auto  px-6 md:px-8 flex  justify-center flex-wrap lg:flex-wrap   gap-y-10">
+            <div className=" w-full lg:w-5/12">
+              <div className=" text-md md:text-lg lg:text-xl mb-5  text-left text-gray-900  tracking-wider ">
+                Sign up now to join our exclusive beta program
+              </div>
 
-            <div className="w-full lg:w-6/12 mx-auto pt-5">
-              <form className="flex items-center flex-1 justify-start mt-30 relative">
-                <div className="w-full relative text-left">
+              <div className="w-full lg:w-12/12 mx-auto pt-5">
+                <form className="flex items-center flex-1 justify-start mt-30 relative">
+                  <div className="w-full relative text-left">
+                    <input
+                      type="text"
+                      className="box-border shadow-none text-[#212121] bg-[#dadada] border-1 border-[#344054]  p-1 md:p-2 pl-5 h-12 md:min-h-[75px]  w-full  outline-2 outline-gray-800"
+                    />
+                  </div>
+
                   <input
-                    type="text"
-                    className="box-border shadow-none text-[#212121] bg-[#dadada] border-1 border-[#344054]  p-1 md:p-2 pl-5 h-12 md:min-h-[75px]  w-full  outline-2 outline-gray-800"
+                    type="submit"
+                    value="Get access"
+                    data-wait="..."
+                    className="px-3 md:px-0 md:w-[200px] cursor-pointer text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded-sm bg-[#a11043] h-10 md:min-h-[60px] absolute right-1 md:right-2 top-1 md:top-2 overflow-visible"
                   />
-                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                <input
-                  type="submit"
-                  value="Get access"
-                  data-wait="..."
-                  className="px-3 md:px-0 md:w-[200px] cursor-pointer text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded-sm bg-[#a11043] h-10 md:min-h-[60px] absolute right-1 md:right-2 top-1 md:top-2 overflow-visible"
-                />
-              </form>
+        <section className="relative z-10  bg-[#E4E7EC] py-14 md:py-20 lg:py-20 md:min-h-[200px] border-b border-gray-800">
+          <div className="container mx-auto  px-6 md:px-8 flex  justify-center flex-wrap lg:flex-wrap   gap-y-10">
+            <div className=" w-full lg:w-6/12">
+              <Slider {...sliderSettings2}>
+                <div>
+                  <div className=" text-md md:text-xl lg:text-2xl mb-7  text-center italic text-gray-600	 ">
+                    “I love how I can easily create training programs for my
+                    athletes and visualize key performance metrics”
+                  </div>
+                  <div className="  text-xl  text-center ">
+                    <span className=" tracking-wider font-semibold">
+                      Arup Nath,
+                    </span>{" "}
+                    <br />
+                    <span className=" text-[15px]">
+                      Tennis coach (Bangalore)
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <div className=" text-md md:text-xl lg:text-2xl mb-7  text-center italic text-gray-600	 ">
+                    “Athlabs has been a game changer for me and my athletes. The
+                    best software for coaches.”
+                  </div>
+                  <div className="  text-xl  text-center ">
+                    <span className=" tracking-wider font-semibold">
+                      Alexander West,
+                    </span>{" "}
+                    <br />
+                    <span className=" text-[15px]">
+                      BMX cycling coach (Berlin)
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <div className=" text-md md:text-xl lg:text-2xl mb-7  text-center italic text-gray-600	 ">
+                    “Strength training is very difficult without proper feedback
+                    and this is where Athlabs shines!”
+                  </div>
+                  <div className="  text-xl  text-center ">
+                    <span className=" tracking-wider font-semibold">
+                      Dev Borah,
+                    </span>{" "}
+                    <br />
+                    <span className=" text-[15px]">
+                      Badminton Player (Bangalore)
+                    </span>
+                  </div>
+                </div>
+              </Slider>
             </div>
           </div>
         </section>

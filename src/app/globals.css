@@ -32,3 +32,31 @@ html {
 .hp-slide__text {
   @apply text-lg md:text-xl lg:text-3xl lg:leading-10;
 }
+
+.mySlider .slick-list {
+  @apply !h-full;
+}
+.mySlider .slick-track {
+  @apply !h-full;
+}
+
+.mySlider .slick-slide img {
+  @apply !h-full;
+  /* @apply !w-auto; */
+}
+/* 
+.slick-slider .slick-track {
+  @apply w-10/12 xl:w-8/12;
+} */
+
+.mySlider .slick-slide > div {
+  @apply !h-full;
+}
+
+.mySlider .slick-prev {
+  @apply !left-6 z-30;
+}
+
+.mySlider .slick-next {
+  @apply !right-6 z-30;
+}

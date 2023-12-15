@@ -10,7 +10,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
       className={`bg-[#04080f]  text-white text-left items-center flex w-full top-auto bottom-0 z-10  border-b border-gray-800 sticky ${className}`}
     >
       <div className="container mx-auto self-center px-6 md:px-8 ">
-        <div className="flex flex-wrap lg:flex-nowrap justify-end py-14 md:py-20 gap-y-10">
+        <div className="flex flex-wrap lg:flex-nowrap justify-end pt-14 pb-7 md:pt-20 md:pb-10 gap-y-10">
           <div className="w-full lg:w-6/12 flex justify-between">
             <a className=" inline-flex h-10 md:h-auto ">
               <Image
