@@ -5,6 +5,7 @@ import Tabs from "@/app/components/Tabs";
 import InputFileUpload from "../components/InputFileUpload";
 import Chat from "../components/Chat";
 import HomeLayout from "../layout/HomeLayout";
+import CustomScroll from 'react-custom-scroll';
 interface Tab1ContentProps {
   compData: any;
 }
@@ -13,15 +14,25 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({compData}) => (
   <div>
     {(compData)?
     <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7">
+       <CustomScroll
+                className="-mx-3"
+                heightRelativeToParent="calc(100% - 20px)"
+              >
       {compData}
+      </CustomScroll>
     </div>:''}
   </div>
 );
 const Tab2Content = () => (
   <div className=" flex h-full w-full">
     <div className=" flex flex-col w-full h-full justify-between">
-      <div className=" h-[calc(600px-100px)] overflow-auto">
+      <div className=" h-full">
+      <CustomScroll
+                className="-mx-2"
+                heightRelativeToParent="calc(100% - 20px)"
+              >
         <Chat />
+        </CustomScroll>
       </div>
       <div className=" ">
         <div className=" inline-flex  w-full">
@@ -77,12 +88,12 @@ const AdminPage = () => {
       <div className="flex w-full  px-6 pt-5">
         <div className="flex w-full flex-col lg:flex-row  gap-x-2 gap-y-2">
           <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl  ">
-            <div className=" min-h-[662px] bg-[#262626]  rounded-2xl">
+            <div className=" min-h-[462px] bg-[#262626]  rounded-2xl">
               <InputFileUpload onDataFromChild={handleChildData}/>
             </div>
           </div>
           <div className="flex flex-col relative bg-[#262626]  w-full lg:w-4/12 rounded-2xl ">
-            <div className=" min-h-[662px] bg-[#262626]  rounded-2xl">
+            <div className=" min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#262626]  rounded-2xl">
               <Tabs tabs={tabs} />
             </div>
           </div>

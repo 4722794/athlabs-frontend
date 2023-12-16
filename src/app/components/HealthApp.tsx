@@ -12,6 +12,7 @@ const HealthApp = () => {
     // const S = document.querySelector(".s-hp-slides");
     const slides = document.querySelectorAll(".s-hp-slide");
     const images = document.querySelectorAll(".my_slider_image");
+    const newimages = document.querySelectorAll(".setIndex_");
 
     const COLORS = [
       { bg: "#0f1828", text: "#ffffff" },
@@ -33,16 +34,19 @@ const HealthApp = () => {
         slides.forEach((el, i) => {
           if (i === 0) return;
 
-          const img = images[i];
+          // const img = images[i];
+          const img = newimages[i];
           const tl = gsap.timeline();
           tl.to(img, {
             alpha: 1,
             ease: "power3.out",
             duration: 0.5,
+            
           });
 
           ScrollTrigger.create({
             id: "slide__" + i,
+            class: "setIndex_" + i,
             trigger: el,
             animation: tl,
             start: "top 50%",
@@ -83,11 +87,68 @@ const HealthApp = () => {
   return (
     <>
       <div className="hp-slides__sticky-wrap z-20 pointer-events-none  absolute w-full h-full hidden lg:block">
-        <div className="hp-slides__center  sticky top-12">
+        <div className="hp-slides__center  sticky top-12  pt-10">
           <div className="container mx-auto  px-6 lg:px-8">
             <div className=" flex justify-center gap-x-20">
               <div className=" w-4/12"></div>
-              <div className="hp-slides__phones w-3/12 min-h-[600px] h-screen mx-auto relative ">
+              <div className=" w-3/12 xl:min-h-[400px] xl:h-[calc(100vh-120px)] mx-auto ">
+
+                <div className="relative w-auto h-full 2xl:h-auto 2xl:w-full flex justify-center">
+                <div className="  w-auto h-full z-10">
+              <Image
+                  src="/images/iphone-x-png-29483.png"
+                  loading="lazy"
+                  alt=""
+                  className=" w-auto h-full "
+                  width={422}
+                  height={850}
+                />
+                </div>
+
+
+              
+                <div className=" absolute overflow-hidden rounded-[50px]  top-1/2 transform -translate-y-1/2 h-[calc(100%-24px)] md:h-[calc(100%-24px)]  left-1/2  -translate-x-1/2  w-full ">
+                <div className=" relative  w-auto h-full">
+                <Image
+                  src="/images/64d2e0a08848f53dee006f29_basisstack.png"
+                  loading="lazy"
+                  alt=""
+                  className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-100"
+                  width={422}
+                  height={850}
+                />
+                 <Image
+                 src="/images/64d2e183120f6b29b37e63e6_basishabits.png"
+                  loading="lazy"
+                  alt=""
+                  className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0"
+
+                  width={422}
+                  height={850}
+                />
+                 <Image
+                   src="/images/64d2e3acd32aebafaef11531_basiscalendar.png"
+                  loading="lazy"
+                  alt=""
+                  className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0"
+
+                  width={422}
+                  height={850}
+                />
+                 <Image
+                  src="/images/website_final/gif_new/cropped_golf.gif"
+                  loading="lazy"
+                  alt=""
+                  className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0"
+
+                  width={422}
+                  height={850}
+                />
+                </div>
+              </div>
+              </div>
+              </div>
+              {/* <div className="hp-slides__phones w-3/12 min-h-[600px] h-screen mx-auto relative ">
                 <Image
                   src="/images/64d2e0a08848f53dee006f29_basisstack.png"
                   loading="lazy"
@@ -120,7 +181,7 @@ const HealthApp = () => {
                   width={422}
                   height={850}
                 />
-              </div>
+              </div> */}
               <div className=" w-4/12"></div>
             </div>
           </div>
@@ -241,6 +302,7 @@ const HealthApp = () => {
                 Receive insights on your game from seasoned sports coaches to
                 enhance your performance
               </p>
+              <div className=" pt-5 text-yellow-500 text-lg 2xl:text-xl">Comming soon</div>
             </div>
             <div className="hp-slide__phone-stub w-full lg:w-3/12 lg:min-h-[600px] lg:h-screen opacity-100 lg:opacity-0">
               <Image
