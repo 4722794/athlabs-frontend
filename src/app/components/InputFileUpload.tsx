@@ -69,20 +69,42 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => 
     <div className="flex items-center justify-center w-full h-full">
       <label
         htmlFor="dropzone-file"
-        className="flex flex-col items-center justify-center w-full h-full border-2  border-dashed border-white/50 rounded-lg cursor-pointer bg-transparent hover:bg-[#171717] "
+        className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer bg-transparent hover:bg-[#171717] "
       >
-        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+
+        <div className="flex items-center justify-center w-full h-full">
           <Dropzone
             getUploadParams={getUploadParams}
             onChangeStatus={handleChangeStatus}
             accept="video/*"
             maxFiles={1}
+           
             styles={{
-              dropzone: { minHeight: 200, maxHeight: 250 },
+              dropzone: {
+                minHeight: 200,
+               
+                border: "2px dashed #3498db",
+                borderRadius: "8px",
+                backgroundColor: "#fff",
+                padding: "20px",
+                textAlign: "center",
+                overflow:"hidden",
+                width:'100%',
+                height:"100%"
+              },
+              input: {
+                display: "none",
+              },
+              previewContainer: {
+                display: "none",
+              },
+              dropzoneActive: {
+                borderColor: "#2ecc71",
+              },
             }}
           />
          
-          <svg
+          {/* <svg
             className="w-20 h-20 mb-4  text-white/50 "
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +125,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => 
           </p>
           <p className="text-xs  text-white/50 ">
             SVG, PNG, JPG or GIF (MAX. 800x400px)
-          </p>
+          </p> */}
         </div>
         <input id="dropzone-file" type="file" className="hidden" />
       </label>
