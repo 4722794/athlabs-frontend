@@ -91,7 +91,7 @@ const HealthApp = () => {
           <div className="container mx-auto  px-6 lg:px-8">
             <div className=" flex justify-center gap-x-20">
               <div className=" w-4/12"></div>
-              <div className=" w-3/12 xl:min-h-[400px] xl:h-[calc(100vh-120px)] mx-auto flex items-center ">
+              <div className=" w-3/12 xl:min-h-[400px] xl:h-[calc(100vh-120px)] mx-auto flex items-center justify-center ">
 
                 <div className="relative w-auto h-full 2xl:h-auto 2xl:w-full flex justify-center">
                 <div className="  w-auto h-full z-10">
@@ -107,7 +107,7 @@ const HealthApp = () => {
 
 
               
-                <div className=" absolute overflow-hidden rounded-[50px]  top-1/2 transform -translate-y-1/2 h-[calc(100%-24px)] md:h-[calc(100%-24px)]  left-1/2  -translate-x-1/2  w-full ">
+                <div className=" absolute overflow-hidden rounded-[50px]  top-1/2 transform -translate-y-1/2 h-[calc(100%-0px)] md:h-[calc(100%-0px)]  left-1/2  -translate-x-1/2  w-full ">
                 <div className=" relative  w-auto h-full">
                 <Image
                   src="/images/64d2e0a08848f53dee006f29_basisstack.png"
@@ -199,14 +199,26 @@ const HealthApp = () => {
               </p>
             </div>
             <div className="hp-slide__phone-stub w-full lg:w-3/12 lg:min-h-[600px] lg:h-screen opacity-100 lg:opacity-0">
+             <div className=" relative  -mt-20 lg:mt-0">
               <Image
                 src="/images/64d2e0a08848f53dee006f29_basisstack.png"
                 loading="lazy"
                 alt=""
-                className="my_slider_image  w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto  -mt-20 lg:mt-0"
+                className="my_slider_image  absolute w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto lg:mt-0"
                 width={422}
                 height={850}
               />
+
+
+<Image
+                src="/images/iphone-x-png-29483.png"
+                loading="lazy"
+                alt=""
+                className="my_slider_image  w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto relative z-10"
+                width={422}
+                height={850}
+              />
+              </div>
             </div>
             <Image
               src="/images/chatinfo2.png"
@@ -233,14 +245,24 @@ const HealthApp = () => {
               </p>
             </div>
             <div className="hp-slide__phone-stub w-full lg:w-3/12 lg:min-h-[600px] lg:h-screen opacity-100 lg:opacity-0">
+            <div className=" relative  -mt-20 lg:mt-0">
               <Image
                 src="/images/64d2e183120f6b29b37e63e6_basishabits.png"
                 loading="lazy"
                 alt=""
-                className="my_slider_image  w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto  -mt-20 lg:mt-0"
+                className="my_slider_image absolute w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto "
                 width={422}
                 height={850}
               />
+              <Image
+                src="/images/iphone-x-png-29483.png"
+                loading="lazy"
+                alt=""
+                className="my_slider_image  w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto relative z-10"
+                width={422}
+                height={850}
+              />
+            </div>
             </div>
             <Image
               src="/images/coachnetwork2.png"
@@ -269,14 +291,25 @@ const HealthApp = () => {
               </p>
             </div>
             <div className="hp-slide__phone-stub w-full lg:w-3/12 lg:min-h-[600px] lg:h-screen opacity-100 lg:opacity-0">
+            <div className=" relative  -mt-20 lg:mt-0">
+              
               <Image
                 src="/images/64d2e3acd32aebafaef11531_basiscalendar.png"
                 loading="lazy"
                 alt=""
-                className="my_slider_image  w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto  -mt-20 lg:mt-0"
+                className="my_slider_image absolute w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto  "
                 width={422}
                 height={850}
               />
+              <Image
+                src="/images/iphone-x-png-29483.png"
+                loading="lazy"
+                alt=""
+                className="my_slider_image  w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto relative z-10"
+                width={422}
+                height={850}
+              />
+            </div>
             </div>
             <Image
               src="/images/calendar1.png"
@@ -297,22 +330,33 @@ const HealthApp = () => {
             <div className="hp-slide__info w-full lg:w-4/12 relative z-20">
               <h1 className="hp-slide__title">
                 Elevate your game with expert insights
+              <div className=" pt-3 text-yellow-500 text-lg 2xl:text-xl">Comming soon</div>
               </h1>
               <p className="hp-slide__text">
                 Receive insights on your game from seasoned sports coaches to
                 enhance your performance
               </p>
-              <div className=" pt-5 text-yellow-500 text-lg 2xl:text-xl">Comming soon</div>
             </div>
             <div className="hp-slide__phone-stub w-full lg:w-3/12 lg:min-h-[600px] lg:h-screen opacity-100 lg:opacity-0">
+            <div className=" relative  -mt-20 lg:mt-0">
+              
               <Image
-                src="/images/64ae1282c17c9ae16b938102_automation.png"
+                src="/images/website_final/gif_new/cropped_golf.gif"
                 loading="lazy"
                 alt=""
-                className="my_slider_image  w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto  -mt-20 lg:mt-0"
+                className="my_slider_image absolute w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto  px-1 my-1.5 rounded-3xl"
                 width={422}
                 height={850}
               />
+              <Image
+                src="/images/iphone-x-png-29483.png"
+                loading="lazy"
+                alt=""
+                className="my_slider_image  w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto relative z-10"
+                width={422}
+                height={850}
+              />
+            </div>
             </div>
             <Image
               src="/images/social.png"
