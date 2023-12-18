@@ -99,9 +99,6 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
               input: {
                 display: "none",
               },
-              previewContainer: {
-                display: "none",
-              },
               dropzoneActive: {
                 borderColor: "#2ecc71",
               },
