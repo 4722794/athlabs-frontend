@@ -34,6 +34,8 @@ const checkLogin = ()=>{
   const token = localStorage.getItem('athlabsAuthToken'); 
   if (!token) {
     return false
+  }else{
+    return true;
   }
 }
 

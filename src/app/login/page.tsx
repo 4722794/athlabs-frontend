@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import ComonToast from "../components/ComonToast";
 import LoadingComp from "../components/LoadingComp";
 import { useRouter } from 'next/navigation'
+import { checkLogin } from "../services/apiUtils";
 
 const Login = () => {
   const footerClass = "!relative";
@@ -85,7 +86,13 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {}, [toastObj]);
+  useEffect(() => {
+	if(!checkLogin()){
+		router.push('/login')
+	  }else{
+		router.push('/home')
+	  }
+  }, [toastObj]);
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
