@@ -8,7 +8,7 @@ function ComonToast({ toastObj={},setToastObj }:any) {
         if (toastObj.msg) {
           const timer = setTimeout(() => {
             setToastObj({});
-          }, 3000);     
+          }, 2000);     
           return () => clearTimeout(timer); 
         }
       }, [toastObj]);

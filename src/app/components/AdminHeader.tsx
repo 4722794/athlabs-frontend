@@ -6,21 +6,19 @@ const Header = () => {
     <header className="bg-[#171717]  text-white text-left sticky top-0 flex items-center  w-full z-30 h-16  border-b border-white/50">
       <div className="flex justify-between items-center w-full px-6">
         <div className=" inline-flex justify-between">
-         
-
           <a className=" inline-flex h-8 xl:h-8 2xl:h-10  items-start">
-          <Image
-            src={"/images/logo.svg"}
-            width={230}
-            height={72}
-            className=" h-full w-auto"
-            alt="logo"
-          />
-        </a>
+            <Image
+              src={"/images/logo.svg"}
+              width={230}
+              height={72}
+              className=" h-full w-auto"
+              alt="logo"
+            />
+          </a>
         </div>
 
         <div className=" inline-flex justify-between">
-          <a className=" w-14 h-14 hover:bg-gray-700 inline-flex justify-center items-center rounded-full cursor-pointer">
+          {/* <a className=" w-14 h-14 hover:bg-gray-700 inline-flex justify-center items-center rounded-full cursor-pointer">
             <svg
               width="30"
               height="37"
@@ -33,7 +31,7 @@ const Header = () => {
                 fill="white"
               />
             </svg>
-          </a>
+          </a> */}
 
           <a className=" w-14 h-14 hover:bg-gray-700 inline-flex justify-center items-center rounded-full cursor-pointer">
             <svg

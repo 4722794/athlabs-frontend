@@ -3,10 +3,13 @@ import LandingLayout from "../layout/LandingLayout";
 import React, { useState, useEffect } from "react";
 import ComonToast from "../components/ComonToast";
 import LoadingComp from "../components/LoadingComp";
+import { useRouter } from 'next/navigation'
+import { checkLogin } from "../services/apiUtils";
 
 const Login = () => {
   const footerClass = "!relative";
-
+  const router = useRouter()
+  
   const [username, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
@@ -29,26 +32,25 @@ const Login = () => {
       valid = false;
     }
     // Password validation
-    else if (!password || !/(?=.*[A-Z])(?=.*[0-9]).{8,}/.test(password)) {
+    /* else if (!password || !/(?=.*[A-Z])(?=.*[0-9]).{8,}/.test(password)) {
       errors.password =
         "Password must contain 1 uppercase letter, 1 number, and be at least 8 characters long";
       valid = false;
-    }
+    } */
 
     setFormErrors(errors);
     return valid;
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: any) => {	
     e.preventDefault();
-
     if (validateForm()) {
       const apiUrl = "http://localhost:3000/token";
-      // const url = "http://api.athlabs.co/token";
       const formData = new URLSearchParams();
       formData.append("username", username);
       formData.append("password", password);
       setLoading(true);
+  
       try {
         const response = await fetch(apiUrl, {
           method: "POST",
@@ -56,29 +58,41 @@ const Login = () => {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body: formData,
-          redirect: "follow",
+          redirect: 'follow'
         });
-
-        // Handle response as needed
-        const result = await response.text();
-        toastObj.type = "e";
-        toastObj.msg = JSON.parse(result).detail;
-        setToastObj(toastObj);
-        setLoading(false);
-        console.log("Server response:", result);
-      } catch (error) {
+  
+        // Handling response based on status
+        if (response.status === 200) {
+          const result = await response.json();          
+          localStorage.setItem('athlabsAuthToken', result.access_token);
+		  router.push('/home')
+        } else {
+		   	let result1= await response.text(); 
+          const errorMessage = JSON.parse(result1).detail;
+          toastObj.type = 'e';
+          toastObj.msg = errorMessage || "Error submitting form";
+          setToastObj(toastObj);
+        }
+      } catch (error) { alert() 	
         console.error("Error submitting form:", error);
-        toastObj.type = "e";
+        toastObj.type = 'e';
         toastObj.msg = "Error submitting form";
         setToastObj(toastObj);
+      } finally {
         setLoading(false);
       }
     } else {
-      // Form data is invalid, do something (display errors, etc.)
+       //validation failed
     }
   };
 
-  useEffect(() => {}, [toastObj]);
+  useEffect(() => {
+	if(!checkLogin()){
+		router.push('/login')
+	  }else{
+		router.push('/home')
+	  }
+  }, [toastObj]);
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
