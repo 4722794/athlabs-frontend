@@ -74,7 +74,7 @@ const Tab2Content = () => (
 
 const AdminPage = () => {
   const [dataFromChild, setDataFromChild] = useState(null);
-  const [videoUrl, setVideoUrl] = useState(false);
+  const [videoUrl, setVideoUrl] = useState(null);
   const tabs = [
     {
       id: "tab1",
