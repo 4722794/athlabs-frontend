@@ -10,6 +10,10 @@ const rewrites = () => {
             source: "/token",
             destination: apiUrl+'/token',
         },
+        {
+            source: "/getVideoHistory",
+            destination: apiUrl
+        },
     ];
 };
 const nextConfig = {
