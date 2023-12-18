@@ -1,5 +1,5 @@
-const BASE_URL = 'http://api.athlabs.co/'; // Replace with your API base URL
-//const BASE_URL = 'http://localhost:3000/';
+//const BASE_URL = 'http://api.athlabs.co/'; // Replace with your API base URL
+const BASE_URL = 'https://main.d2ty1k492879bg.amplifyapp.com/';
 
 const callApi = async (method, contentType, bodyData = null,uriString) => {
   const token = localStorage.getItem('athlabsAuthToken'); 
@@ -7,7 +7,7 @@ const callApi = async (method, contentType, bodyData = null,uriString) => {
     // Handle token not available (e.g., redirect to login)
     return { error: 'Token not found' };
   }
-
+  console.log('->>> CSS')
   try {
     const headers = {
       'Content-Type': contentType,

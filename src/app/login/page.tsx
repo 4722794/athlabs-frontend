@@ -45,7 +45,7 @@ const Login = () => {
   const handleSubmit = async (e: any) => {	
     e.preventDefault();
     if (validateForm()) {
-      const apiUrl = "http://api.athlabs.co/token";
+      const apiUrl = "https://main.d2ty1k492879bg.amplifyapp.com/token";
       const formData = new URLSearchParams();
       formData.append("username", username);
       formData.append("password", password);
