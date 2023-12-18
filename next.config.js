@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const rewrites = () => {
-    const apiUrl = 'http://api.athlabs.co';
+    const apiUrl = 'https://main.d2ty1k492879bg.amplifyapp.com';
     return [
         {
             source: "/video-upload",
