@@ -1,5 +1,5 @@
-//const BASE_URL = 'http://api.athlabs.co/'; // Replace with your API base URL
-const BASE_URL = 'https://main.d2ty1k492879bg.amplifyapp.com/';
+const BASE_URL = 'https://api.athlabs.co/'; // Replace with your API base URL
+//const BASE_URL = 'https://main.d2ty1k492879bg.amplifyapp.com/';
 
 const callApi = async (method, contentType, bodyData = null,uriString) => {
   const token = localStorage.getItem('athlabsAuthToken'); 
