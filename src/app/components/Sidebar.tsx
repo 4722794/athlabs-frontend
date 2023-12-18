@@ -35,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         fill="white"
                       />
                     </svg>
-                    <span className=" text-sm"> New chat</span>
+                    <span className=" text-sm">New Analysis </span>
                   </div>
                 </button>
                 <button

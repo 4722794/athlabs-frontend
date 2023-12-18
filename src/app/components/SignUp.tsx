@@ -3,19 +3,18 @@
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useState } from "react";
 
-function SignUp() {
-  const [openModal, setOpenModal] = useState(true);
-  const [email, setEmail] = useState("");
+interface SignUpProps {
+  popupAction: boolean;
+  onCloseModal: boolean;
+}
 
-  function onCloseModal() {
-    setOpenModal(false);
-    setEmail("");
-  }
+const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
+  const [email, setEmail] = useState("");
 
   return (
     <Modal
       className=" z-50"
-      show={openModal}
+      show={popupAction}
       size="5xl"
       onClose={onCloseModal}
       popup
@@ -68,6 +67,6 @@ function SignUp() {
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default SignUp;
