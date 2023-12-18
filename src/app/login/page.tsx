@@ -50,7 +50,7 @@ const Login = () => {
       formData.append("username", username);
       formData.append("password", password);
       setLoading(true);
-
+      console.log("->>> Login CSS");
       try {
         const response = await fetch(apiUrl, {
           method: "POST",
