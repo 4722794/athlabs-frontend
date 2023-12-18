@@ -1,5 +1,5 @@
-//const BASE_URL = 'http://api.athlabs.co/'; // Replace with your API base URL
-const BASE_URL = 'http://localhost:3000/';
+const BASE_URL = 'http://api.athlabs.co/'; // Replace with your API base URL
+//const BASE_URL = 'http://localhost:3000/';
 
 const callApi = async (method, contentType, bodyData = null,uriString) => {
   const token = localStorage.getItem('athlabsAuthToken'); 
