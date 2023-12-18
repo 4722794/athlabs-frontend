@@ -321,7 +321,7 @@ const HealthApp = () => {
             <div className="hp-slide__info w-full lg:w-4/12 relative z-20">
               <h1 className="hp-slide__title">
                 Elevate your game with expert insights
-                <div className=" pt-3 text-yellow-500 text-lg 2xl:text-xl">
+                <div className=" pt-3 text-yellow-500 text-lg 2xl:text-xl ">
                   (coming soon)
                 </div>
               </h1>
