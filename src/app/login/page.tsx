@@ -73,7 +73,7 @@ const Login = () => {
           toastObj.msg = errorMessage || "Error submitting form";
           setToastObj(toastObj);
         }
-      } catch (error) { alert() 	
+      } catch (error) { 	
         console.error("Error submitting form:", error);
         toastObj.type = 'e';
         toastObj.msg = "Error submitting form";
