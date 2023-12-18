@@ -1,48 +1,55 @@
 "use client";
 import "react-dropzone-uploader/dist/styles.css";
-import Dropzone, { IFileWithMeta, IUploadParams } from "react-dropzone-uploader";
-import React, { ReactNode, useEffect, useState , } from "react";
+import Dropzone, {
+  IFileWithMeta,
+  IUploadParams,
+} from "react-dropzone-uploader";
+import React, { ReactNode, useEffect, useState } from "react";
 
 interface InputFileUploadProps {
   //children: ReactNode;
   onDataFromChild: (data: any) => void;
 }
 
-const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => {
+const InputFileUpload: React.FC<InputFileUploadProps> = ({
+  onDataFromChild,
+}) => {
   const [childData, setChildData] = useState(null);
   const sendDataToParent = () => {
     // Call the callback function in the parent with the data
     onDataFromChild(childData);
   };
 
-  useEffect(()=>{
-    if(childData!=null){
+  useEffect(() => {
+    if (childData != null) {
       sendDataToParent();
     }
-  },[childData])
+  }, [childData]);
 
-  const getUploadParams = (file: IFileWithMeta): IUploadParams | Promise<IUploadParams> => {
+  const getUploadParams = (
+    file: IFileWithMeta
+  ): IUploadParams | Promise<IUploadParams> => {
     try {
       const formData = new FormData();
       const actualFile = file.file; // Access the actual file from fileWithMeta
-  
+
       if (actualFile instanceof Blob) {
         formData.append("video", actualFile, actualFile.name);
-       // formData.append("additionalField", "additionalValue");
-       //const apiUrl = process.env.REACT_APP_URL || "http://localhost:3001"; //not working
-       const apiUrl = "http://localhost:3000";
-       const apiEndpoint = `${apiUrl}/video-upload`;
+        // formData.append("additionalField", "additionalValue");
+        //const apiUrl = process.env.REACT_APP_URL || "http://localhost:3001"; //not working
+        const apiUrl = "http://localhost:3000";
+        const apiEndpoint = `${apiUrl}/video-upload`;
         return {
           url: apiEndpoint,
           method: "POST",
           body: formData,
         };
       } else {
-        console.error('Invalid file:', actualFile);
-        return Promise.reject(new Error('Invalid file type'));
+        console.error("Invalid file:", actualFile);
+        return Promise.reject(new Error("Invalid file type"));
       }
     } catch (error) {
-      console.error('Error getting upload params:', error);
+      console.error("Error getting upload params:", error);
       return Promise.reject(error);
     }
   };
@@ -54,11 +61,10 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => 
       // Access the response from the server
       if (xhr && xhr.responseText) {
         const response = JSON.parse(xhr.responseText);
-        console.log('Response from server:', response);
+        console.log("Response from server:", response);
 
         // Handle the response as needed
         setChildData(response.feedback);
-       
       }
     } else if (status === "error") {
       console.error(`${meta.name} failed to upload`);
@@ -69,33 +75,28 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => 
     <div className="flex items-center justify-center w-full h-full">
       <label
         htmlFor="dropzone-file"
-        className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer bg-transparent hover:bg-[#171717] "
+        className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer bg-transparent"
       >
-
         <div className="flex items-center justify-center w-full h-full">
           <Dropzone
             getUploadParams={getUploadParams}
             onChangeStatus={handleChangeStatus}
             accept="video/*"
             maxFiles={1}
-           
             styles={{
               dropzone: {
                 minHeight: 200,
-               
-                border: "2px dashed #3498db",
+
+                border: "2px dashed #2F3747",
                 borderRadius: "8px",
-                backgroundColor: "#fff",
+                backgroundColor: "#1B212E",
                 padding: "20px",
                 textAlign: "center",
-                overflow:"hidden",
-                width:'100%',
-                height:"100%"
+                overflow: "hidden",
+                width: "100%",
+                height: "100%",
               },
               input: {
-                display: "none",
-              },
-              previewContainer: {
                 display: "none",
               },
               dropzoneActive: {
@@ -103,7 +104,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({onDataFromChild }) => 
               },
             }}
           />
-         
+
           {/* <svg
             className="w-20 h-20 mb-4  text-white/50 "
             aria-hidden="true"

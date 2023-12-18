@@ -12,14 +12,14 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   return (
     <div
-      className={`dark flex-shrink-0  bg-[#262626] absolute h-full z-40 lg:relative  ${
+      className={`dark flex-shrink-0  bg-[#1B212E] absolute h-full z-40 lg:relative  ${
         modalOpen ? " w-[260px] visible" : " w-0 invisible"
       }`}
     >
       <div className="h-full w-[260px]">
         <div className="flex h-full min-h-0 flex-col">
           <div className="flex h-full min-h-0 flex-col transition-opacity opacity-100">
-            <div className="sticky left-0 right-0 top-0 z-20 bg-[#262626] py-2.5 min-h-[56px]">
+            <div className="sticky left-0 right-0 top-0 z-20 bg-[#1B212E] py-2.5 min-h-[56px]">
               <div className=" flex justify-between px-3 gap-x-3">
                 <button className=" grow  text-white border border-[#484A4E] px-3 py-2.5">
                   <div className=" flex items-center gap-x-2">
@@ -72,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     Today
                   </h5>
                   <ul className="">
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -91,9 +91,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         Complex React Component Component Component Component
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -112,9 +112,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         Health Product Webpage Creation
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -133,7 +133,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         FFmpeg: Video Re-encoding Guide
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
                   </ul>
                 </div>
@@ -143,7 +143,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     Yesterday
                   </h5>
                   <ul className="">
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -162,9 +162,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         Complex React Component Component Component Component
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -183,9 +183,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         Health Product Webpage Creation
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -204,7 +204,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         FFmpeg: Video Re-encoding Guide
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
                   </ul>
                 </div>
@@ -214,7 +214,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     Yesterday
                   </h5>
                   <ul className="">
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -233,9 +233,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         Complex React Component Component Component Component
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -254,9 +254,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         Health Product Webpage Creation
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -275,7 +275,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         FFmpeg: Video Re-encoding Guide
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
                   </ul>
                 </div>
@@ -285,7 +285,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     Yesterday
                   </h5>
                   <ul className="">
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -304,9 +304,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         Complex React Component Component Component Component
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -325,9 +325,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         Health Product Webpage Creation
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer">
+                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#26313E] cursor-pointer">
                       <i className=" absolute left-3 z-0">
                         <svg
                           width="16"
@@ -346,14 +346,14 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         {" "}
                         FFmpeg: Video Re-encoding Guide
                       </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
+                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                     </li>
                   </ul>
                 </div>
               </CustomScroll>
             </div>
 
-            <div className="flex flex-col empty:hidden border-[#262626] h-[60px] bg-[#171717] border-r">
+            <div className="flex flex-col empty:hidden border-[#262626] h-[60px] bg-[#26313F] border-r">
               <button
                 id="dropdownAvatarNameButton"
                 data-dropdown-toggle="dropdownAvatarName"

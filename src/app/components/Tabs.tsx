@@ -26,7 +26,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
             key={tab.id}
             onClick={() => handleTabClick(tab.id)}
             className={`grow py-2 px-4 text-white rounded-xl text-sm ${
-              activeTab === tab.id ? "bg-[#171717]" : " bg-transparent "
+              activeTab === tab.id ? "bg-[#2F3747]" : " bg-transparent "
             }`}
           >
             {tab.label}
