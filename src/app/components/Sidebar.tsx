@@ -25,7 +25,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   }, []);
 
   const getVideoHistory = async () => {
-    const uriString = `getVideoHistory`;
+    const uriString = ``;
     const method = "GET";
     const contentType = "application/json";
     const responseData = await callApi(method, contentType, null, uriString);
