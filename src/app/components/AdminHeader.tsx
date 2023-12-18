@@ -33,7 +33,7 @@ const Header = () => {
             </svg>
           </a> */}
 
-          <a className=" w-14 h-14 hover:bg-gray-700 inline-flex justify-center items-center rounded-full cursor-pointer">
+          {/* <a className=" w-10 h-10 hover:bg-gray-700 inline-flex justify-center items-center rounded-full cursor-pointer">
             <svg
               width="40"
               height="40"
@@ -54,7 +54,7 @@ const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-          </a>
+          </a> */}
         </div>
       </div>
     </header>

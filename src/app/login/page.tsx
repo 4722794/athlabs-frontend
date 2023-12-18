@@ -3,13 +3,13 @@ import LandingLayout from "../layout/LandingLayout";
 import React, { useState, useEffect } from "react";
 import ComonToast from "../components/ComonToast";
 import LoadingComp from "../components/LoadingComp";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { checkLogin } from "../services/apiUtils";
 
 const Login = () => {
   const footerClass = "!relative";
-  const router = useRouter()
-  
+  const router = useRouter();
+
   const [username, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
@@ -42,7 +42,7 @@ const Login = () => {
     return valid;
   };
 
-  const handleSubmit = async (e: any) => {	
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (validateForm()) {
       const apiUrl = "http://localhost:3000/token";
@@ -50,7 +50,7 @@ const Login = () => {
       formData.append("username", username);
       formData.append("password", password);
       setLoading(true);
-  
+
       try {
         const response = await fetch(apiUrl, {
           method: "POST",
@@ -58,45 +58,46 @@ const Login = () => {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body: formData,
-          redirect: 'follow'
+          redirect: "follow",
         });
-  
+
         // Handling response based on status
         if (response.status === 200) {
-          const result = await response.json();          
-          localStorage.setItem('athlabsAuthToken', result.access_token);
-		  router.push('/home')
+          const result = await response.json();
+          localStorage.setItem("athlabsAuthToken", result.access_token);
+          router.push("/home");
         } else {
-		   	let result1= await response.text(); 
+          let result1 = await response.text();
           const errorMessage = JSON.parse(result1).detail;
-          toastObj.type = 'e';
+          toastObj.type = "e";
           toastObj.msg = errorMessage || "Error submitting form";
           setToastObj(toastObj);
         }
-      } catch (error) { alert() 	
+      } catch (error) {
+        alert();
         console.error("Error submitting form:", error);
-        toastObj.type = 'e';
+        toastObj.type = "e";
         toastObj.msg = "Error submitting form";
         setToastObj(toastObj);
       } finally {
         setLoading(false);
       }
     } else {
-       //validation failed
+      //validation failed
     }
   };
 
   useEffect(() => {
-	if(!checkLogin()){
-		router.push('/login')
-	  }else{
-		router.push('/home')
-	  }
+    if (!checkLogin()) {
+      router.push("/login");
+    } else {
+      router.push("/home");
+    }
   }, [toastObj]);
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
-      <div className="bg-[#04080f] flex items-center justify-center pt-40 pb-20 h-screen ">
+      <div className="bg-[#04080f] flex items-center justify-center pt-40 pb-20">
         <div className="bg-black p-8 rounded-lg shadow-lg max-w-sm w-full border-[3px]  border-gray-400">
           <h2 className="text-2xl font-semibold text-center mb-4 text-white">
             Login

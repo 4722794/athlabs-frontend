@@ -11,14 +11,14 @@ interface Tab1ContentProps {
 }
 
 const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => (
-  <div>
+  <div className=" h-[calc(100vh-200px)]">
     {compData ? (
-      <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7">
+      <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7  h-[calc(100vh-200px)]">
         <CustomScroll
-          className="-mx-3"
-          heightRelativeToParent="calc(100% - 20px)"
+          className="-mx-3 "
+          heightRelativeToParent="calc(100% - 0px)"
         >
-          {compData}
+          <div className=" px-3 ">{compData}</div>
         </CustomScroll>
       </div>
     ) : (
