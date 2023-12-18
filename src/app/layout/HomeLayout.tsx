@@ -2,6 +2,8 @@
 import React, { useState, ReactNode, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/AdminHeader";
+import { useRouter } from 'next/navigation'
+import { checkLogin } from "../services/apiUtils";
 
 interface HomeLayoutProps {
   children: ReactNode;
@@ -9,12 +11,19 @@ interface HomeLayoutProps {
 
 const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   const [open, setSidebarOpen] = useState(true);
-
+  const router = useRouter()
   const toggleSidebar = () => {
     setSidebarOpen(!open);
   };
 
   useEffect(() => {
+
+    if(!checkLogin()){
+      router.push('/login')
+    }else{
+      router.push('/home')
+    }
+    
     const handleResize = () => {
       const isSmallScreen = window.innerWidth <= 1024;
 
