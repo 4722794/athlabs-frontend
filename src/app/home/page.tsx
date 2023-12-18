@@ -1,37 +1,40 @@
 "use client";
-import React, { ReactNode, useRef, useState } from 'react';
+import React, { ReactNode, useRef, useState } from "react";
 // import "@/app/globals.css";
 import Tabs from "@/app/components/Tabs";
 import InputFileUpload from "../components/InputFileUpload";
 import Chat from "../components/Chat";
 import HomeLayout from "../layout/HomeLayout";
-import CustomScroll from 'react-custom-scroll';
+import CustomScroll from "react-custom-scroll";
 interface Tab1ContentProps {
   compData: any;
 }
 
-const Tab1Content: React.FC<Tab1ContentProps> = ({compData}) => (
+const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => (
   <div>
-    {(compData)?
-    <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7">
-       <CustomScroll
-                className="-mx-3"
-                heightRelativeToParent="calc(100% - 20px)"
-              >
-      {compData}
-      </CustomScroll>
-    </div>:''}
+    {compData ? (
+      <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7">
+        <CustomScroll
+          className="-mx-3"
+          heightRelativeToParent="calc(100% - 20px)"
+        >
+          {compData}
+        </CustomScroll>
+      </div>
+    ) : (
+      ""
+    )}
   </div>
 );
 const Tab2Content = () => (
   <div className=" flex h-full w-full">
     <div className=" flex flex-col w-full h-full justify-between">
       <div className=" h-full">
-      <CustomScroll
-                className="-mx-2"
-                heightRelativeToParent="calc(100% - 20px)"
-              >
-        <Chat />
+        <CustomScroll
+          className="-mx-2"
+          heightRelativeToParent="calc(100% - 20px)"
+        >
+          <Chat />
         </CustomScroll>
       </div>
       <div className=" ">
@@ -39,11 +42,11 @@ const Tab2Content = () => (
           <form className=" relative w-full">
             <input
               type="text"
-              className=" h-11  px-5 w-full pr-10 bg-transparent  border border-white  rounded-lg
+              className=" h-11  px-5 w-full pr-10 bg-[#2F3747]  border border-white/40  rounded-lg
 
                    ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600
                   "
-              placeholder="Search here"
+              placeholder="Type your message here..."
             />
             <a
               className=" absolute right-2.5 top-2.5 text-white hover:text-cyan-500"
@@ -72,14 +75,17 @@ const Tab2Content = () => (
 const AdminPage = () => {
   const [dataFromChild, setDataFromChild] = useState(null);
   const tabs = [
-    { id: "tab1", label: "Feedback", content: <Tab1Content compData={dataFromChild}/> },
+    {
+      id: "tab1",
+      label: "Feedback",
+      content: <Tab1Content compData={dataFromChild} />,
+    },
     { id: "tab2", label: "Chat", content: <Tab2Content /> },
   ];
 
-
-  const handleChildData = (childData:any) => {
+  const handleChildData = (childData: any) => {
     // Do something with the data received from the child
-    console.log('Data received from child:', childData);
+    console.log("Data received from child:", childData);
     setDataFromChild(childData);
   };
 
@@ -88,12 +94,12 @@ const AdminPage = () => {
       <div className="flex w-full  px-6 pt-5">
         <div className="flex w-full flex-col lg:flex-row  gap-x-2 gap-y-2">
           <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl  ">
-            <div className=" min-h-[462px] bg-[#262626]  rounded-2xl">
-              <InputFileUpload onDataFromChild={handleChildData}/>
+            <div className=" min-h-[462px] bg-[#1B212E]  rounded-2xl">
+              <InputFileUpload onDataFromChild={handleChildData} />
             </div>
           </div>
-          <div className="flex flex-col relative bg-[#262626]  w-full lg:w-4/12 rounded-2xl ">
-            <div className=" min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#262626]  rounded-2xl">
+          <div className="flex flex-col relative bg-[#1B212E]  w-full lg:w-4/12 rounded-2xl ">
+            <div className=" min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-2xl">
               <Tabs tabs={tabs} />
             </div>
           </div>
