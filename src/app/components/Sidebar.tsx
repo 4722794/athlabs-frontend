@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
-import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   modalOpen: boolean;
@@ -18,7 +17,6 @@ interface GroupedVideos {
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
   const [activeVideo, setactiveVideo] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     getVideoHistory();
@@ -109,13 +107,6 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     }
   };
 
-  const logOut = () => {
-    localStorage.removeItem("athlabsAuthToken");
-    const tokenAfterRemoval = localStorage.getItem("athlabsAuthToken");
-    if (tokenAfterRemoval === null) {
-      router.push("/login");
-    }
-  };
   return (
     <div
       className={`dark flex-shrink-0  bg-[#1B212E] absolute h-full z-40 lg:relative  ${
@@ -225,9 +216,6 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                 className="flex items-center text-sm font-medium text-white rounded-full h-full w-full px-3 justify-between"
                 type="button"
               >
-                <a href="#" onClick={logOut}>
-                  dfdsfdfds
-                </a>
                 <span className=" inline-flex pe-1 items-center">
                   <span className="sr-only">Open user menu</span>
                   <Image

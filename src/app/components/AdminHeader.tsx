@@ -1,7 +1,17 @@
 import Image from "next/image";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
+
+  const logOut = () => {
+    localStorage.removeItem("athlabsAuthToken");
+    const tokenAfterRemoval = localStorage.getItem("athlabsAuthToken");
+    if (tokenAfterRemoval === null) {
+      router.push("/login");
+    }
+  };
   return (
     <header className="bg-[#171717]  text-white text-left sticky top-0 flex items-center  w-full z-30 py-3  ">
       <div className="flex justify-between items-center w-full px-6">
@@ -20,6 +30,7 @@ const Header = () => {
         <div className=" inline-flex justify-between">
           <a
             className=" w-10 h-10 hover:bg-gray-700 inline-flex justify-center items-center rounded-full cursor-pointer text-3xl "
+            onClick={logOut}
             title="logout"
           >
             <svg

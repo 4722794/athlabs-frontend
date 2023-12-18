@@ -162,7 +162,12 @@ const Login = () => {
             >
               Login
             </button>
-            {loading && <LoadingComp />}
+
+            {loading && (
+              <div className="mt-3">
+                <LoadingComp />
+              </div>
+            )}
             <p className="text-white/70 text-xs text-center mt-4">
               Don&apos;t have an account?
               <a className="text-blue-500 hover:underline ml-1" target="_blank">
