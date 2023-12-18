@@ -14,6 +14,10 @@ const rewrites = () => {
             source: "/getVideoHistory",
             destination: apiUrl
         },
+        {
+            source: "/getVideoDetailByVideoId/:id",
+            destination: apiUrl+'/h/:id'
+        },
     ];
 };
 const nextConfig = {

@@ -100,7 +100,7 @@ const AdminPage = () => {
               {!videoUrl ? (
                 <InputFileUpload onDataFromChild={handleChildData} />
               ) : (
-                <video controls className="w-full h-auto">
+                <video controls className="w-full">
                   <source src={videoUrl} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
