@@ -5,7 +5,6 @@ import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css"; // Import the styles
 import { callApi } from "../services/apiUtils";
 
-
 interface SidebarProps {
   modalOpen: boolean;
   toggleSidebar: () => void;
@@ -24,79 +23,79 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     const contentType = "application/json";
     const responseData = await callApi(method, contentType, null, uriString);
     console.log(responseData.data);
-    if (responseData.status) {	
+    if (responseData.status) {
       setVideoData(responseData.data.videos);
     }
   };
 
   const groupVideosByDate = (videos: any[]) => {
-	const groupedVideos = {};
-  
-	// Function to get date label based on video timestamp
-	const getDateLabel = (videoDate: number) => {
-	  const today = new Date().setHours(0, 0, 0, 0);
-	  const yesterday = new Date(today - 86400000).setHours(0, 0, 0, 0); // Subtract 1 day in milliseconds
-  
-	  if (videoDate === today) {
-		return 'Today';
-	  } else if (videoDate === yesterday) {
-		return 'Yesterday';
-	  } else {
-		const diffTime = Math.abs(today - videoDate);
-		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
-		if (diffDays <= 7) {
-		  return 'Previous 7 days';
-		} else if (diffDays <= 30) {
-		  return 'Previous 30 days';
-		} else {
-		  return 'Older';
-		}
-	  }
-	};
-  
-	videos.forEach((video) => {
-	  const videoDate = new Date(video.timestamp).setHours(0, 0, 0, 0);
-	  const label = getDateLabel(videoDate);
-  
-	  if (!groupedVideos[label]) {
-		groupedVideos[label] = [];
-	  }
-	  groupedVideos[label].push(video);
-	});
-  
-	// Sort the groupedVideos by date labels in descending order
-	const sortedLabels = Object.keys(groupedVideos).sort((a, b) => {
-	  const order = {
-		Today: 1,
-		Yesterday: 2,
-		'Previous 7 days': 3,
-		'Previous 30 days': 4,
-		Older: 5,
-	  };
-	  return order[a]-order[b];
-	});
-  
-	// Create a new object with sorted groups
-	const sortedGroupedVideos = {};
-	sortedLabels.forEach((label) => {
-	  sortedGroupedVideos[label] = groupedVideos[label];
-	});
-	console.log('sortedGroupedVideos',sortedGroupedVideos)
-	return sortedGroupedVideos;
+    const groupedVideos = {};
+
+    // Function to get date label based on video timestamp
+    const getDateLabel = (videoDate: number) => {
+      const today = new Date().setHours(0, 0, 0, 0);
+      const yesterday = new Date(today - 86400000).setHours(0, 0, 0, 0); // Subtract 1 day in milliseconds
+
+      if (videoDate === today) {
+        return "Today";
+      } else if (videoDate === yesterday) {
+        return "Yesterday";
+      } else {
+        const diffTime = Math.abs(today - videoDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays <= 7) {
+          return "Previous 7 days";
+        } else if (diffDays <= 30) {
+          return "Previous 30 days";
+        } else {
+          return "Older";
+        }
+      }
+    };
+
+    videos.forEach((video) => {
+      const videoDate = new Date(video.timestamp).setHours(0, 0, 0, 0);
+      const label = getDateLabel(videoDate);
+
+      if (!groupedVideos[label]) {
+        groupedVideos[label] = [];
+      }
+      groupedVideos[label].push(video);
+    });
+
+    // Sort the groupedVideos by date labels in descending order
+    const sortedLabels = Object.keys(groupedVideos).sort((a, b) => {
+      const order = {
+        Today: 1,
+        Yesterday: 2,
+        "Previous 7 days": 3,
+        "Previous 30 days": 4,
+        Older: 5,
+      };
+      return order[a] - order[b];
+    });
+
+    // Create a new object with sorted groups
+    const sortedGroupedVideos = {};
+    sortedLabels.forEach((label) => {
+      sortedGroupedVideos[label] = groupedVideos[label];
+    });
+    console.log("sortedGroupedVideos", sortedGroupedVideos);
+    return sortedGroupedVideos;
   };
-    
-  const groupedVideos = groupVideosByDate(videoData); 
+
+  const groupedVideos = groupVideosByDate(videoData);
   return (
     <div
-      className={`dark flex-shrink-0  bg-[#262626] absolute h-full z-40 lg:relative  ${
+      className={`dark flex-shrink-0  bg-[#1B212E] absolute h-full z-40 lg:relative  ${
         modalOpen ? " w-[260px] visible" : " w-0 invisible"
       }`}
     >
       <div className="h-full w-[260px]">
         <div className="flex h-full min-h-0 flex-col">
           <div className="flex h-full min-h-0 flex-col transition-opacity opacity-100">
-            <div className="sticky left-0 right-0 top-0 z-20 bg-[#262626] py-2.5 min-h-[56px]">
+            <div className="sticky left-0 right-0 top-0 z-20 bg-[#1B212E] py-2.5 min-h-[56px]">
               <div className=" flex justify-between px-3 gap-x-3">
                 <button className=" grow  text-white border border-[#484A4E] px-3 py-2.5">
                   <div className=" flex items-center gap-x-2">
@@ -112,7 +111,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                         fill="white"
                       />
                     </svg>
-                    <span className=" text-sm"> New chat</span>
+                    <span className=" text-sm">New Analysis </span>
                   </div>
                 </button>
                 <button
@@ -144,43 +143,45 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                 className="-mx-3"
                 heightRelativeToParent="calc(100% - 20px)"
               >
-				{Object.keys(groupedVideos).map((dateLabel) => (
-                <div key={dateLabel}>
-                  <h5 className="h-9 pb-2 pt-3 px-3 text-xs font-medium text-ellipsis overflow-hidden break-all text-gizmo-gray-600">
-				  {dateLabel}
-                  </h5>
-                  <ul className="">
-				  {groupedVideos[dateLabel].map((video) => (
-                    <li className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer" key={video.id}>
-                      <i className=" absolute left-3 z-0">
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+                {Object.keys(groupedVideos).map((dateLabel) => (
+                  <div key={dateLabel}>
+                    <h5 className="h-9 pb-2 pt-3 px-3 text-xs font-medium text-ellipsis overflow-hidden break-all text-gizmo-gray-600">
+                      {dateLabel}
+                    </h5>
+                    <ul className="">
+                      {groupedVideos[dateLabel].map((video) => (
+                        <li
+                          className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer"
+                          key={video.id}
                         >
-                          <path
-                            d="M5.14551 10.833C5.52017 10.8525 5.83884 10.9893 6.10151 11.2434C6.34551 11.517 6.47684 11.849 6.49551 12.2393V12.708L8.54951 11.1268C8.77351 10.9309 9.03551 10.833 9.33551 10.833H13.2455C13.5268 10.8136 13.6768 10.6573 13.6955 10.3643V1.92676C13.6768 1.6337 13.5268 1.47745 13.2455 1.45801H2.44551C2.16417 1.47745 2.01417 1.6337 1.99551 1.92676V10.3643C2.01417 10.6573 2.16417 10.8136 2.44551 10.833H5.14551ZM6.49551 14.4663L6.35551 14.583L5.87751 14.9643C5.72684 15.0615 5.56751 15.0712 5.39951 14.9934C5.23017 14.9156 5.14551 14.7788 5.14551 14.583V13.9684V13.7622V13.6455V12.2393H3.79551H2.44551C1.93884 12.2198 1.51684 12.0344 1.17951 11.683C0.842175 11.3316 0.664174 10.892 0.645508 10.3643V1.92676C0.664174 1.39898 0.842175 0.959397 1.17951 0.608008C1.51684 0.256619 1.93884 0.0712023 2.44551 0.0517578H13.2455C13.7522 0.0712023 14.1742 0.256619 14.5115 0.608008C14.8488 0.959397 15.0268 1.39898 15.0455 1.92676V10.3643C15.0268 10.892 14.8488 11.3316 14.5115 11.683C14.1742 12.0344 13.7522 12.2198 13.2455 12.2393H9.33551L6.49551 14.4663Z"
-                            fill="white"
-                          />
-                        </svg>
-                      </i>
-                      <div className=" pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden">
-                        {" "}
-                        {video.name}
-                      </div>
-                      <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#262626] via-[#262626]/50 to-[#262626]/30"></div>
-                    </li>
-					))}
-                    
-                  </ul>
-                </div>
-				))}
+                          <i className=" absolute left-3 z-0">
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M5.14551 10.833C5.52017 10.8525 5.83884 10.9893 6.10151 11.2434C6.34551 11.517 6.47684 11.849 6.49551 12.2393V12.708L8.54951 11.1268C8.77351 10.9309 9.03551 10.833 9.33551 10.833H13.2455C13.5268 10.8136 13.6768 10.6573 13.6955 10.3643V1.92676C13.6768 1.6337 13.5268 1.47745 13.2455 1.45801H2.44551C2.16417 1.47745 2.01417 1.6337 1.99551 1.92676V10.3643C2.01417 10.6573 2.16417 10.8136 2.44551 10.833H5.14551ZM6.49551 14.4663L6.35551 14.583L5.87751 14.9643C5.72684 15.0615 5.56751 15.0712 5.39951 14.9934C5.23017 14.9156 5.14551 14.7788 5.14551 14.583V13.9684V13.7622V13.6455V12.2393H3.79551H2.44551C1.93884 12.2198 1.51684 12.0344 1.17951 11.683C0.842175 11.3316 0.664174 10.892 0.645508 10.3643V1.92676C0.664174 1.39898 0.842175 0.959397 1.17951 0.608008C1.51684 0.256619 1.93884 0.0712023 2.44551 0.0517578H13.2455C13.7522 0.0712023 14.1742 0.256619 14.5115 0.608008C14.8488 0.959397 15.0268 1.39898 15.0455 1.92676V10.3643C15.0268 10.892 14.8488 11.3316 14.5115 11.683C14.1742 12.0344 13.7522 12.2198 13.2455 12.2393H9.33551L6.49551 14.4663Z"
+                                fill="white"
+                              />
+                            </svg>
+                          </i>
+                          <div className=" pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden">
+                            {" "}
+                            {video.name}
+                          </div>
+                          <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </CustomScroll>
             </div>
 
-            <div className="flex flex-col empty:hidden border-[#262626] h-[60px] bg-[#171717] border-r">
+            <div className="flex flex-col empty:hidden border-[#262626] h-[60px] bg-[#26313F] border-r">
               <button
                 id="dropdownAvatarNameButton"
                 data-dropdown-toggle="dropdownAvatarName"

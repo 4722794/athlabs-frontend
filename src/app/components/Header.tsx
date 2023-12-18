@@ -3,9 +3,10 @@ import React from "react";
 
 interface HeaderProps {
   showButton?: boolean;
+  joinUSAction?: any;
 }
 
-const Header: React.FC<HeaderProps> = ({ showButton = true }) => {
+const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
   return (
     <header className="bg-[#04080f]  text-white text-left items-center flex fixed w-full top-0 z-30 h-14 md:h-16  lg:h-16 xl:h-16 2xl:h-24 border-b border-gray-800">
       <div className="container mx-auto self-center px-6 md:px-8 flex justify-between items-center">
@@ -21,7 +22,10 @@ const Header: React.FC<HeaderProps> = ({ showButton = true }) => {
 
         {showButton ? (
           <div className=" hidden lg:inline-flex items-center">
-            <a className="py-2 px-3  text-sm  font-semibold  text-white cursor-pointer">
+            <a
+              className="py-2 px-3  text-sm  font-semibold  text-white cursor-pointer"
+              onClick={joinUSAction}
+            >
               JOIN US
             </a>
             <a className="py-2 px-3  text-sm  font-semibold  text-white cursor-pointer">
