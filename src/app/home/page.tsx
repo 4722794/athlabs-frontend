@@ -74,6 +74,7 @@ const Tab2Content = () => (
 
 const AdminPage = () => {
   const [dataFromChild, setDataFromChild] = useState(null);
+  const [videoUrl, setVideoUrl] = useState(false);
   const tabs = [
     {
       id: "tab1",
@@ -86,7 +87,8 @@ const AdminPage = () => {
   const handleChildData = (childData: any) => {
     // Do something with the data received from the child
     console.log("Data received from child:", childData);
-    setDataFromChild(childData);
+    setDataFromChild(childData.feedback);
+    setVideoUrl(childData.video_url);
   };
 
   return (
@@ -95,7 +97,14 @@ const AdminPage = () => {
         <div className="flex w-full flex-col lg:flex-row  gap-x-2 gap-y-2">
           <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl  ">
             <div className=" min-h-[462px] bg-[#1B212E]  rounded-2xl">
-              <InputFileUpload onDataFromChild={handleChildData} />
+              {!videoUrl ? (
+                <InputFileUpload onDataFromChild={handleChildData} />
+              ) : (
+                <video controls className="w-full h-auto">
+                  <source src={videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
             </div>
           </div>
           <div className="flex flex-col relative bg-[#1B212E]  w-full lg:w-4/12 rounded-2xl ">

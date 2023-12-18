@@ -28,6 +28,10 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   };
 
   const groupVideosByDate = (videos: any[]) => {
+	if (!videos || videos.length === 0) {
+		return {};
+	}
+
 	const groupedVideos = {};
   
 	// Function to get date label based on video timestamp
@@ -53,7 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
 	  }
 	};
   
-	videos.forEach((video) => {
+	videos.length >0  && videos.forEach((video) => {
 	  const videoDate = new Date(video.timestamp).setHours(0, 0, 0, 0);
 	  const label = getDateLabel(videoDate);
   
