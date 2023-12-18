@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import CustomScroll from "react-custom-scroll";
-import "react-custom-scroll/dist/customScroll.css"; // Import the styles
+import "react-custom-scroll/dist/customScroll.css"; 
 import { callApi } from "../services/apiUtils";
 
 interface SidebarProps {
@@ -22,67 +22,69 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     const method = "GET";
     const contentType = "application/json";
     const responseData = await callApi(method, contentType, null, uriString);
-    console.log(responseData.data);
-    if (responseData.status) {
+    if (responseData.status) {	
       setVideoData(responseData.data.videos);
     }
   };
 
   const groupVideosByDate = (videos: any[]) => {
-    const groupedVideos = {};
+	if (!videos || videos.length === 0) {
+		return {};
+	}
 
-    // Function to get date label based on video timestamp
-    const getDateLabel = (videoDate: number) => {
-      const today = new Date().setHours(0, 0, 0, 0);
-      const yesterday = new Date(today - 86400000).setHours(0, 0, 0, 0); // Subtract 1 day in milliseconds
-
-      if (videoDate === today) {
-        return "Today";
-      } else if (videoDate === yesterday) {
-        return "Yesterday";
-      } else {
-        const diffTime = Math.abs(today - videoDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        if (diffDays <= 7) {
-          return "Previous 7 days";
-        } else if (diffDays <= 30) {
-          return "Previous 30 days";
-        } else {
-          return "Older";
-        }
-      }
-    };
-
-    videos.forEach((video) => {
-      const videoDate = new Date(video.timestamp).setHours(0, 0, 0, 0);
-      const label = getDateLabel(videoDate);
-
-      if (!groupedVideos[label]) {
-        groupedVideos[label] = [];
-      }
-      groupedVideos[label].push(video);
-    });
-
-    // Sort the groupedVideos by date labels in descending order
-    const sortedLabels = Object.keys(groupedVideos).sort((a, b) => {
-      const order = {
-        Today: 1,
-        Yesterday: 2,
-        "Previous 7 days": 3,
-        "Previous 30 days": 4,
-        Older: 5,
-      };
-      return order[a] - order[b];
-    });
-
-    // Create a new object with sorted groups
-    const sortedGroupedVideos = {};
-    sortedLabels.forEach((label) => {
-      sortedGroupedVideos[label] = groupedVideos[label];
-    });
-    console.log("sortedGroupedVideos", sortedGroupedVideos);
-    return sortedGroupedVideos;
+	const groupedVideos = {};
+  
+	// Function to get date label based on video timestamp
+	const getDateLabel = (videoDate: number) => {
+	  const today = new Date().setHours(0, 0, 0, 0);
+	  const yesterday = new Date(today - 86400000).setHours(0, 0, 0, 0); // Subtract 1 day in milliseconds
+  
+	  if (videoDate === today) {
+		return 'Today';
+	  } else if (videoDate === yesterday) {
+		return 'Yesterday';
+	  } else {
+		const diffTime = Math.abs(today - videoDate);
+		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+		if (diffDays <= 7) {
+		  return 'Previous 7 days';
+		} else if (diffDays <= 30) {
+		  return 'Previous 30 days';
+		} else {
+		  return 'Older';
+		}
+	  }
+	};
+  
+	videos.length >0  && videos.forEach((video) => {
+	  const videoDate = new Date(video.timestamp).setHours(0, 0, 0, 0);
+	  const label = getDateLabel(videoDate);
+  
+	  if (!groupedVideos[label]) {
+		groupedVideos[label] = [];
+	  }
+	  groupedVideos[label].push(video);
+	});
+  
+	// Sort the groupedVideos by date labels in descending order
+	const sortedLabels = Object.keys(groupedVideos).sort((a, b) => {
+	  const order = {
+		Today: 1,
+		Yesterday: 2,
+		'Previous 7 days': 3,
+		'Previous 30 days': 4,
+		Older: 5,
+	  };
+	  return order[a]-order[b];
+	});
+  
+	// Create a new object with sorted groups
+	const sortedGroupedVideos = {};
+	sortedLabels.forEach((label) => {
+	  sortedGroupedVideos[label] = groupedVideos[label];
+	});
+	return sortedGroupedVideos;
   };
 
   const groupedVideos = groupVideosByDate(videoData);

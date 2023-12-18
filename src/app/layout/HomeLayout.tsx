@@ -17,13 +17,13 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   };
 
   useEffect(() => {
-
-    if(!checkLogin()){
+    console.log('sdsdss',checkLogin())
+    if(!checkLogin()){ 
       router.push('/login')
-    }else{
+    }else{ 
       router.push('/home')
     }
-    
+
     const handleResize = () => {
       const isSmallScreen = window.innerWidth <= 1024;
 

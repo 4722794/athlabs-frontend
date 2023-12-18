@@ -5,6 +5,8 @@ import Dropzone, {
   IUploadParams,
 } from "react-dropzone-uploader";
 import React, { ReactNode, useEffect, useState } from "react";
+import { checkLogin } from "../services/apiUtils";
+import LoadingComp from "./LoadingComp";
 
 interface InputFileUploadProps {
   //children: ReactNode;
@@ -42,7 +44,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
 
         // Include authentication headers
         const headers = {
-          Authorization: "Bearer YOUR_ACCESS_TOKEN", // Replace with your actual token
+          Authorization: `Bearer ${checkLogin()}`, // Replace with your actual token
         };
 
         return {
@@ -69,9 +71,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
 
       if (xhr && xhr.responseText) {
         const response = JSON.parse(xhr.responseText);
-        console.log("Response from server:", response);
-
-        setChildData(response.feedback);
+        setChildData(response);
       }
     } else if (status === "error") {
       setLoading(false); // Set loading to false on error
@@ -114,6 +114,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
           />
         </div>
         <input id="dropzone-file" type="file" className="hidden" />
+        {loading && <LoadingComp />}
       </label>
     </div>
   );
