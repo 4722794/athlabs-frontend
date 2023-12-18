@@ -45,7 +45,7 @@ const Login = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (validateForm()) {
-      const apiUrl = "http://localhost:3000/token";
+      const apiUrl = "http://api.athlabs.co/token";
       const formData = new URLSearchParams();
       formData.append("username", username);
       formData.append("password", password);
@@ -74,7 +74,6 @@ const Login = () => {
           setToastObj(toastObj);
         }
       } catch (error) {
-        alert();
         console.error("Error submitting form:", error);
         toastObj.type = "e";
         toastObj.msg = "Error submitting form";
