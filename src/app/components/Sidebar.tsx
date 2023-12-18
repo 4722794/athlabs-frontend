@@ -12,6 +12,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
+  const [activeVideo, setactiveVideo] = useState(false);
 
   useEffect(() => {
     getVideoHistory();
@@ -88,6 +89,17 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   };
 
   const groupedVideos = groupVideosByDate(videoData);
+
+  const getVideoDetail = async (videoId:any) => {
+	const uriString = `getVideoDetailByVideoId/${videoId}`;
+    const method = "GET";
+    const contentType = "application/json";
+    const responseData = await callApi(method, contentType, null, uriString);
+    if (responseData.status) {	
+		console.log(responseData)
+		setactiveVideo(videoId)
+    }
+  }
   return (
     <div
       className={`dark flex-shrink-0  bg-[#1B212E] absolute h-full z-40 lg:relative  ${
@@ -153,7 +165,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     <ul className="">
                       {groupedVideos[dateLabel].map((video) => (
                         <li
-                          className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer"
+						className={`relative text-white py-2.5 px-3 overflow-x-hidden hover:bg-[#171717] cursor-pointer ${(activeVideo === video.id )? 'bg-[#171717]' : ''}`}
                           key={video.id}
                         >
                           <i className=" absolute left-3 z-0">
@@ -170,9 +182,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                               />
                             </svg>
                           </i>
-                          <div className=" pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden">
+                          <div className="pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden">
                             {" "}
-                            {video.name}
+							<a href={'#'} onClick={()=>getVideoDetail(video.id)}>{video.name}</a>
                           </div>
                           <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                         </li>
