@@ -7,9 +7,9 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ showButton = true }) => {
   return (
-    <header className="bg-[#04080f]  text-white text-left items-center flex fixed w-full top-0 z-30 h-20  md:h-24 border-b border-gray-800">
+    <header className="bg-[#04080f]  text-white text-left items-center flex fixed w-full top-0 z-30 h-14 md:h-16  lg:h-16 xl:h-16 2xl:h-24 border-b border-gray-800">
       <div className="container mx-auto self-center px-6 md:px-8 flex justify-between items-center">
-        <a className=" inline-flex h-12 md:h-auto ">
+        <a className=" inline-flex h-8 xl:h-8 2xl:h-10 ">
           <Image
             src={"/images/logo.svg"}
             width={230}
@@ -27,7 +27,10 @@ const Header: React.FC<HeaderProps> = ({ showButton = true }) => {
             <a className="py-2 px-3  text-sm  font-semibold  text-white cursor-pointer">
               REQUEST DEMO
             </a>
-            <a className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-12 min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer">
+            <a
+              href="/home"
+              className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
+            >
               GO TO APP
             </a>
           </div>
