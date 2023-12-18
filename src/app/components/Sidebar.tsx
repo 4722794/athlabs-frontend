@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import CustomScroll from "react-custom-scroll";
-import "react-custom-scroll/dist/customScroll.css"; // Import the styles
+import "react-custom-scroll/dist/customScroll.css"; 
 import { callApi } from "../services/apiUtils";
 
 
@@ -23,7 +23,6 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     const method = "GET";
     const contentType = "application/json";
     const responseData = await callApi(method, contentType, null, uriString);
-    console.log(responseData.data);
     if (responseData.status) {	
       setVideoData(responseData.data.videos);
     }
@@ -82,7 +81,6 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
 	sortedLabels.forEach((label) => {
 	  sortedGroupedVideos[label] = groupedVideos[label];
 	});
-	console.log('sortedGroupedVideos',sortedGroupedVideos)
 	return sortedGroupedVideos;
   };
     
