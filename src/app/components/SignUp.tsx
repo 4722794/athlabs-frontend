@@ -5,7 +5,7 @@ import { useState } from "react";
 
 interface SignUpProps {
   popupAction: boolean;
-  onCloseModal: boolean;
+  onCloseModal: () => void;
 }
 
 const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {

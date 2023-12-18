@@ -1,7 +1,7 @@
 //const BASE_URL = 'http://api.athlabs.co/'; // Replace with your API base URL
 const BASE_URL = 'http://localhost:3000/';
 
-const callApi = async (method, contentType = 'application/json', bodyData = null,uriString) => {
+const callApi = async (method, contentType, bodyData = null,uriString) => {
   const token = localStorage.getItem('athlabsAuthToken'); 
   if (!token) {
     // Handle token not available (e.g., redirect to login)
@@ -17,7 +17,7 @@ const callApi = async (method, contentType = 'application/json', bodyData = null
     const requestOptions = {
       method: method,
       headers: headers,
-      body: bodyData ? JSON.stringify(bodyData) : null,
+      body: bodyData,
     };
 
     const response = await fetch(BASE_URL+uriString, requestOptions);
@@ -35,7 +35,7 @@ const checkLogin = ()=>{
   if (!token) {
     return false
   }else{
-    return true;
+    return token;
   }
 }
 

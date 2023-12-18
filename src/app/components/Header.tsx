@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
               REQUEST DEMO
             </a>
             <a
-              href="/home"
+              href="/login"
               className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
             >
               GO TO APP

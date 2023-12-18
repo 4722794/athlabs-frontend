@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import CustomScroll from "react-custom-scroll";
-import "react-custom-scroll/dist/customScroll.css"; // Import the styles
+import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
 
 interface SidebarProps {
@@ -10,8 +10,13 @@ interface SidebarProps {
   toggleSidebar: () => void;
 }
 
+interface GroupedVideos {
+  [key: string]: any[] | undefined;
+}
+
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
+  const [activeVideo, setactiveVideo] = useState(false);
 
   useEffect(() => {
     getVideoHistory();
@@ -22,17 +27,20 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     const method = "GET";
     const contentType = "application/json";
     const responseData = await callApi(method, contentType, null, uriString);
-    console.log(responseData.data);
     if (responseData.status) {
       setVideoData(responseData.data.videos);
     }
   };
 
-  const groupVideosByDate = (videos: any[]) => {
-    const groupedVideos = {};
+  const groupVideosByDate = (videos: any[]): GroupedVideos => {
+    if (!videos || videos.length === 0) {
+      return {};
+    }
+
+    const groupedVideos: GroupedVideos = {};
 
     // Function to get date label based on video timestamp
-    const getDateLabel = (videoDate: number) => {
+    const getDateLabel = (videoDate: number): string => {
       const today = new Date().setHours(0, 0, 0, 0);
       const yesterday = new Date(today - 86400000).setHours(0, 0, 0, 0); // Subtract 1 day in milliseconds
 
@@ -54,38 +62,51 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
       }
     };
 
-    videos.forEach((video) => {
-      const videoDate = new Date(video.timestamp).setHours(0, 0, 0, 0);
-      const label = getDateLabel(videoDate);
+    videos.length > 0 &&
+      videos.forEach((video) => {
+        const videoDate = new Date(video.timestamp).setHours(0, 0, 0, 0);
+        const label = getDateLabel(videoDate);
 
-      if (!groupedVideos[label]) {
-        groupedVideos[label] = [];
-      }
-      groupedVideos[label].push(video);
-    });
+        if (!groupedVideos[label]) {
+          groupedVideos[label] = [];
+        }
+        groupedVideos[label]?.push(video);
+      });
 
     // Sort the groupedVideos by date labels in descending order
+    const order: Record<string, number> = {
+      Today: 1,
+      Yesterday: 2,
+      "Previous 7 days": 3,
+      "Previous 30 days": 4,
+      Older: 5,
+    };
+
     const sortedLabels = Object.keys(groupedVideos).sort((a, b) => {
-      const order = {
-        Today: 1,
-        Yesterday: 2,
-        "Previous 7 days": 3,
-        "Previous 30 days": 4,
-        Older: 5,
-      };
       return order[a] - order[b];
     });
 
     // Create a new object with sorted groups
-    const sortedGroupedVideos = {};
+    const sortedGroupedVideos: Record<string, any[]> = {};
     sortedLabels.forEach((label) => {
-      sortedGroupedVideos[label] = groupedVideos[label];
+      sortedGroupedVideos[label] = groupedVideos[label] || []; // Ensure the property exists
     });
-    console.log("sortedGroupedVideos", sortedGroupedVideos);
     return sortedGroupedVideos;
   };
 
   const groupedVideos = groupVideosByDate(videoData);
+
+  const getVideoDetail = async (videoId: any) => {
+    const uriString = `getVideoDetailByVideoId/${videoId}`;
+    const method = "GET";
+    const contentType = "application/json";
+    const responseData = await callApi(method, contentType, null, uriString);
+    if (responseData.status) {
+      console.log(responseData);
+      setactiveVideo(videoId);
+    }
+  };
+
   return (
     <div
       className={`dark flex-shrink-0  bg-[#1B212E] absolute h-full z-40 lg:relative  ${
@@ -149,9 +170,11 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                       {dateLabel}
                     </h5>
                     <ul className="">
-                      {groupedVideos[dateLabel].map((video) => (
+                      {groupedVideos[dateLabel]?.map((video) => (
                         <li
-                          className=" relative text-white py-2.5 px-3  overflow-x-hidden hover:bg-[#171717] cursor-pointer"
+                          className={`relative text-white py-2.5 px-3 overflow-x-hidden hover:bg-[#171717] cursor-pointer ${
+                            activeVideo === video.id ? "bg-[#171717]" : ""
+                          }`}
                           key={video.id}
                         >
                           <i className=" absolute left-3 z-0">
@@ -168,9 +191,14 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                               />
                             </svg>
                           </i>
-                          <div className=" pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden">
+                          <div className="pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden">
                             {" "}
-                            {video.name}
+                            <a
+                              href={"#"}
+                              onClick={() => getVideoDetail(video.id)}
+                            >
+                              {video.name}
+                            </a>
                           </div>
                           <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                         </li>
