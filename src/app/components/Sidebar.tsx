@@ -10,6 +10,10 @@ interface SidebarProps {
   toggleSidebar: () => void;
 }
 
+interface GroupedVideos {
+	[key: string]: any[] | undefined;
+}
+
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
   const [activeVideo, setactiveVideo] = useState(false);
@@ -28,15 +32,15 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     }
   };
 
-  const groupVideosByDate = (videos: any[]) => {
+  const groupVideosByDate = (videos: any[]): GroupedVideos => {
 	if (!videos || videos.length === 0) {
 		return {};
 	}
 
-	const groupedVideos = {};
+	const groupedVideos: GroupedVideos = {};
   
 	// Function to get date label based on video timestamp
-	const getDateLabel = (videoDate: number) => {
+	const getDateLabel = (videoDate: number):string => {
 	  const today = new Date().setHours(0, 0, 0, 0);
 	  const yesterday = new Date(today - 86400000).setHours(0, 0, 0, 0); // Subtract 1 day in milliseconds
   
@@ -65,26 +69,27 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
 	  if (!groupedVideos[label]) {
 		groupedVideos[label] = [];
 	  }
-	  groupedVideos[label].push(video);
+	  groupedVideos[label]?.push(video);
 	});
-  
+	
 	// Sort the groupedVideos by date labels in descending order
-	const sortedLabels = Object.keys(groupedVideos).sort((a, b) => {
-	  const order = {
+	const order: Record<string, number> = {
 		Today: 1,
 		Yesterday: 2,
 		'Previous 7 days': 3,
 		'Previous 30 days': 4,
 		Older: 5,
 	  };
-	  return order[a]-order[b];
-	});
+	  
+	  const sortedLabels = Object.keys(groupedVideos).sort((a, b) => {
+		return order[a] - order[b];
+	  });
   
 	// Create a new object with sorted groups
-	const sortedGroupedVideos = {};
+	const sortedGroupedVideos: Record<string, any[]> = {};
 	sortedLabels.forEach((label) => {
-	  sortedGroupedVideos[label] = groupedVideos[label];
-	});
+		sortedGroupedVideos[label] = groupedVideos[label] || []; // Ensure the property exists
+	  });
 	return sortedGroupedVideos;
   };
 
@@ -163,7 +168,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                       {dateLabel}
                     </h5>
                     <ul className="">
-                      {groupedVideos[dateLabel].map((video) => (
+					{groupedVideos[dateLabel]?.map((video) => (
                         <li
 						className={`relative text-white py-2.5 px-3 overflow-x-hidden hover:bg-[#171717] cursor-pointer ${(activeVideo === video.id )? 'bg-[#171717]' : ''}`}
                           key={video.id}
