@@ -48,7 +48,7 @@ const Tab2Content = () => {
 		return valid;
 	};
 
-	/*const handleSubmit = async (e: any) => {
+	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		if (validateForm()) {
 			const uriString = `/c`;
@@ -63,7 +63,8 @@ const Tab2Content = () => {
 			}else{
 				console.log(responseData)
 			} 
-	  }; */
+	  };
+  }
 
   return (<div className=" flex h-full w-full">
     <div className=" flex flex-col w-full h-full justify-between">
@@ -119,7 +120,7 @@ const AdminPage = () => {
       label: "Feedback",
       content: <Tab1Content compData={dataFromChild} />,
     },
-    { id: "tab2", label: "Chat", content: <Tab2Content /> },
+    activeVideoDetail ?{ id: "tab2", label: "Chat", content: <Tab2Content /> }:'',
   ];
 
   const handleChildData = (childData: any) => {    
