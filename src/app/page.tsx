@@ -42,7 +42,7 @@ const AppPage = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 5000,
     afterChange: (id: any) => {
       SetTypewriterShow(true);
     },
@@ -109,7 +109,7 @@ const AppPage = () => {
                     alt=""
                   />
 
-                  <div className=" absolute z-20 top-3 left-1/2 transform -translate-x-1/2">
+                  <div className=" absolute z-20 top-3 left-1/2 transform -translate-x-1/2 curso">
                     <Image
                       src="/images/top.png"
                       width={120}
@@ -120,7 +120,7 @@ const AppPage = () => {
                   </div>
 
                   <div
-                    className="  absolute  transform top-1/2 -translate-y-1/2 left-1/2  -translate-x-1/2  h-[calc(100%-35px)] w-[calc(100%-35px)] overflow-hidden bg-blue-600
+                    className="  absolute  transform top-1/2 -translate-y-1/2 left-1/2  -translate-x-1/2  h-[calc(100%-35px)] w-[calc(100%-35px)] overflow-hidden
                    rounded-[22px] sm:rounded-[30px] md:rounded-[30px]  lg:rounded-[20px]  xl:rounded-[28px] 2xl:rounded-[30px]
                   "
                   >
@@ -160,7 +160,7 @@ const AppPage = () => {
                                             strings: item.text,
                                             autoStart: true,
                                             loop: true,
-                                            delay: 50,
+                                            delay: 100,
                                           }}
                                         />
                                       )}

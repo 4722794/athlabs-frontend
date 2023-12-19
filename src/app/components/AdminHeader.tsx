@@ -16,7 +16,7 @@ const Header = () => {
     <header className="bg-[#171717]  text-white text-left sticky top-0 flex items-center  w-full z-30 py-3  ">
       <div className="flex justify-between items-center w-full px-6">
         <div className=" inline-flex justify-between">
-          <a className=" inline-flex h-8 xl:h-8 2xl:h-10  items-start">
+          <a href="/" className=" inline-flex h-8 xl:h-8 2xl:h-10  items-start">
             <Image
               src={"/images/logo.svg"}
               width={230}

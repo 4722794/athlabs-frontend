@@ -114,7 +114,7 @@ const HealthApp = () => {
                         height={850}
                       />
                       <Image
-                        src="/images/64d2e183120f6b29b37e63e6_basishabits.png"
+                        src="/images/section_2.png"
                         loading="lazy"
                         alt=""
                         className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0"
@@ -129,14 +129,39 @@ const HealthApp = () => {
                         width={422}
                         height={850}
                       />
-                      <Image
-                        src="/images/website_final/gif_new/cropped_golf.gif"
+
+                      <div className=" absolute w-full h-auto left-1/2 top-1/2  transform -translate-y-1/2  -translate-x-1/2 setIndex_  opacity-0">
+                        <div className=" w-full h-full ">
+                          {/* <Image
+                            src="/images/64d2e3acd32aebafaef11531_basiscalendar.png"
+                            loading="lazy"
+                            alt=""
+                            className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0"
+                            width={422}
+                            height={850}
+                          /> */}
+
+                          <video
+                            autoPlay
+                            muted
+                            loop
+                            className="  w-full h-full"
+                          >
+                            <source
+                              src={"/images/web/golfswing.webm"}
+                              type="video/webm"
+                            />
+                          </video>
+                        </div>
+                      </div>
+                      {/* <Image
+                        src="/images/web/golfswing.webm"
                         loading="lazy"
                         alt=""
                         className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0"
                         width={422}
                         height={850}
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -239,18 +264,19 @@ const HealthApp = () => {
             <div className="hp-slide__phone-stub w-full lg:w-3/12 lg:min-h-[600px] lg:h-screen opacity-100 lg:opacity-0">
               <div className=" relative  -mt-20 lg:mt-0">
                 <Image
-                  src="/images/64d2e183120f6b29b37e63e6_basishabits.png"
+                  src="/images/section_2.png"
                   loading="lazy"
                   alt=""
-                  className="my_slider_image absolute w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto "
+                  className="my_slider_image absolute w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto  rounded-[35px] px-1 py-1"
                   width={422}
                   height={850}
                 />
+
                 <Image
                   src="/images/iphone-x-png-29483.png"
                   loading="lazy"
                   alt=""
-                  className="my_slider_image  w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto relative z-10"
+                  className="my_slider_image  w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto relative z-10 "
                   width={422}
                   height={850}
                 />
