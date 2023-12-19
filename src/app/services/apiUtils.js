@@ -20,6 +20,10 @@ const callApi = async (method, contentType, bodyData,uriString) => {
 
     const response = await fetch(BASE_URL+uriString, requestOptions);
     console.log('response',response.status)
+    if(response.status === 401){
+      localStorage.removeItem("athlabsAuthToken");
+      window.location.href = '/login'
+    }
     const data = await response.json();
     const status = response.status; // Get HTTP status
     return { data, status }; // Return both data and status
