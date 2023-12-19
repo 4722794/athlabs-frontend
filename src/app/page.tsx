@@ -31,7 +31,7 @@ const AppPage = () => {
       type: "image",
       src: "/images/web/deadlift.webm",
       text: "Back straight, Engage your Glutes…",
-    }
+    },
   ]);
   const [typewriterShow, SetTypewriterShow] = useState(true);
 
@@ -142,6 +142,7 @@ const AppPage = () => {
                                     <video
                                       autoPlay
                                       muted
+                                      loop
                                       className="  h-full w-full "
                                     >
                                       <source
