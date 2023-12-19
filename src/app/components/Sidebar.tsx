@@ -125,7 +125,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
             <div className="sticky left-0 right-0 top-0 z-20 bg-[#1B212E] py-2.5 min-h-[56px]">
               <div className=" flex justify-between px-3 gap-x-3">
                 <button
-                  className=" grow  text-white border border-[#484A4E] px-3 py-2.5"
+                  className=" grow  text-white border border-[#484A4E] px-3 py-2.5 rounded-md"
                   onClick={() => clearPage()}
                 >
                   <div className=" flex items-center gap-x-2">
@@ -145,7 +145,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                   </div>
                 </button>
                 <button
-                  className=" grow-0 toggle-button  text-white w-10 border border-[#484A4E] inline-flex justify-center items-center "
+                  className=" grow-0 toggle-button  text-white w-10 border border-[#484A4E] inline-flex justify-center items-center rounded-md "
                   onClick={toggleSidebar}
                 >
                   {modalOpen ? (
