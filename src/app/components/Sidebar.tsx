@@ -18,7 +18,7 @@ interface GroupedVideos {
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
   const [activeVideo, setactiveVideo] = useState(false);
-  const { setVideoDetailData } = useVideoContext();
+  const { setActiveVideoData } = useVideoContext();
 
   useEffect(() => {
     getVideoHistory();
@@ -99,14 +99,14 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const groupedVideos = groupVideosByDate(videoData);
 
   const getVideoDetail = async (videoId: any) => {
-    const uriString = `h/${videoId}`;
+    const uriString = `/h/${videoId}`;
     const method = "GET";
     const contentType = "application/json";
     const responseData = await callApi(method, contentType, null, uriString);
     if (responseData.status) {
       // console.log(responseData);
       setactiveVideo(videoId);
-      setVideoDetailData(responseData.data);
+      setActiveVideoData(responseData.data);
     }
   };
 
@@ -198,7 +198,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                             {" "}
                             <a
                               href={"#"}
-                              onClick={() => getVideoDetail(video.id)}
+                              onClick={() => getVideoDetail(video.video_id)}
                             >
                               {video.name}
                             </a>

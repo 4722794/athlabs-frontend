@@ -7,6 +7,7 @@ import Dropzone, {
 import React, { ReactNode, useEffect, useState } from "react";
 import { checkLogin } from "../services/apiUtils";
 import LoadingComp from "./LoadingComp";
+import { useVideoContext } from "../services/VideoContext";
 
 interface InputFileUploadProps {
   //children: ReactNode;
@@ -18,7 +19,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
 }) => {
   const [childData, setChildData] = useState(null);
   const [loading, setLoading] = useState(false); // New state for loading indicator
-
+  const { setActiveVideoData } = useVideoContext();
   const sendDataToParent = () => {
     // Call the callback function in the parent with the data
     onDataFromChild(childData);
@@ -71,7 +72,8 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
 
       if (xhr && xhr.responseText) {
         const response = JSON.parse(xhr.responseText);
-        setChildData(response);
+        //setChildData(response);
+        setActiveVideoData(response);
       }
     } else if (status === "error") {
       setLoading(false); // Set loading to false on error
