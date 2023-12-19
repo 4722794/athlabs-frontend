@@ -6,6 +6,7 @@ import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
 
+
 interface SidebarProps {
   modalOpen: boolean;
   toggleSidebar: () => void;
@@ -18,11 +19,17 @@ interface GroupedVideos {
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
   const [activeVideo, setactiveVideo] = useState(false);
-  const { setActiveVideoData } = useVideoContext();
+  const { setActiveVideoData,setOtherData,otherData } = useVideoContext();
 
   useEffect(() => {
     getVideoHistory();
   }, []);
+  useEffect(() => {
+    if(otherData.fetchVideoHistroy){
+      getVideoHistory();
+      setOtherData({...otherData,fetchVideoHistroy:false});
+    }
+  }, [otherData.fetchVideoHistroy]);
 
   const getVideoHistory = async () => {
     const uriString = ``;
