@@ -8,8 +8,7 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { checkLogin } from "../services/apiUtils";
 import LoadingComp from "./LoadingComp";
 import { useVideoContext } from "../services/VideoContext";
-import { Spinner } from 'flowbite-react';
-
+import { Spinner } from "flowbite-react";
 
 interface InputFileUploadProps {
   //children: ReactNode;
@@ -23,11 +22,11 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   const [loading, setLoading] = useState(false); // New state for loading indicator
   const [selectedFile, setSelectedFile] = useState(false); // New state for loading indicator
   const [formErrors, setFormErrors] = useState({ name: "", file: "" });
-  const [name, setName] = useState(''); // New state for loading indicator
+  const [name, setName] = useState(""); // New state for loading indicator
 
-   // Reference to Dropzone instance
-   const dropzoneRef = useRef(null);
-  const { setActiveVideoData,setOtherData,otherData } = useVideoContext();
+  // Reference to Dropzone instance
+  const dropzoneRef = useRef<any>(null);
+  const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
   const sendDataToParent = () => {
     // Call the callback function in the parent with the data
     onDataFromChild(childData);
@@ -40,7 +39,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   }, [childData]);
 
   const getUploadParams = (
-    file: IFileWithMeta,
+    file: IFileWithMeta
   ): IUploadParams | Promise<IUploadParams> => {
     try {
       const formData = new FormData();
@@ -61,7 +60,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
           url: apiEndpoint,
           method: "POST",
           body: formData,
-          headers
+          headers,
         };
       } else {
         console.error("Invalid file:", actualFile);
@@ -73,60 +72,63 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
     }
   };
 
-  
-
-
   const handleChangeStatus = ({ meta, file, xhr }: any, status: string) => {
     if (status === "uploading") {
       setLoading(true); // Set loading to true when uploading
     } else if (status === "done") {
       setLoading(false); // Set loading to false when upload is complete
-      
+
       if (xhr && xhr.responseText) {
         const response = JSON.parse(xhr.responseText);
-        setName('');
+        setName("");
         //setChildData(response);
-        setOtherData({...otherData,fetchVideoHistroy:true});
+        setOtherData({ ...otherData, fetchVideoHistroy: true });
         setActiveVideoData(response);
-
       }
     } else if (status === "error") {
       setLoading(false); // Set loading to false on error
       console.error(`${meta.name} failed to upload`);
-    }else if(status === "ready"){
+    } else if (status === "ready") {
       setSelectedFile(true);
     }
-    
   };
-  const Preview = ({ meta ,fileWithMeta}) => {
-    const { name, percent, status } = meta
+  const Preview = ({ meta }: any) => {
+    const { name, percent, status } = meta;
     return (
-    
+      <div className="flex items-center justify-center w-full min-h-[200px] h-full bg-[#1B212E] rounded-md border-dash border-2 border-[#2F3747] ">
+        <div className=" relative">
+          {loading && <Spinner aria-label="Default status example" size="xl" />}
+        </div>
+        <span
+          className="self-center h-full flex items-center text-white text-2xl"
+          style={{ margin: "10px 3%", fontFamily: "Helvetica" }}
+        >
+          {name}
+        </span>
+      </div>
+    );
+  };
 
-<div className="flex items-center justify-center w-full min-h-[200px] h-full bg-[#1B212E] rounded-md border-dash border-2 border-[#2F3747] ">
-  <div className=" relative">
-   {loading && <Spinner aria-label="Default status example" size="xl" /> }
-</div>
-<span className="self-center h-full flex items-center text-white text-2xl" style={{ margin: '10px 3%', fontFamily: 'Helvetica' }}>
-  {name}
-</span>
-</div>
-    )
-  }
-
-  const Layout = ({ input, previews, submitButton, dropzoneProps, files, extra: { maxFiles } }) => {
+  const Layout = ({
+    input,
+    previews,
+    submitButton,
+    dropzoneProps,
+    files,
+    extra: { maxFiles },
+  }: any) => {
     return (
       <>
         {previews}
-  
-        {files.length==0 && <div {...dropzoneProps}>
-          {files.length < maxFiles && input}
-        </div>}
-  
+
+        {files.length == 0 && (
+          <div {...dropzoneProps}>{files.length < maxFiles && input}</div>
+        )}
+
         {files.length > 0 && submitButton}
       </>
-    )
-  }
+    );
+  };
   const validateForm = () => {
     let valid = true;
     const errors = { name: "", file: "" };
@@ -152,83 +154,95 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
     setFormErrors(errors);
     return valid;
   };
-  const handleSubmit = ()=>{
+  const handleSubmit = () => {
     // Manually trigger the upload
-    if(validateForm()){
+    if (validateForm()) {
       setSelectedFile(false);
       if (dropzoneRef.current) {
         dropzoneRef.current.handleRestart(dropzoneRef.current.files[0]);
       }
     }
-  }
+  };
 
   return (
     <>
-    <div className="flex items-center justify-center w-full h-full">
-      <label
-        htmlFor="dropzone-file"
-        className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer bg-transparent"
+      <div className="flex items-center justify-center w-full h-full">
+        <label
+          htmlFor="dropzone-file"
+          className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer bg-transparent"
+        >
+          <div className="flex items-center justify-center w-full h-full">
+            <Dropzone
+              getUploadParams={getUploadParams}
+              onChangeStatus={handleChangeStatus}
+              accept="video/*"
+              maxFiles={1}
+              LayoutComponent={Layout}
+              ref={dropzoneRef}
+              autoUpload={false}
+              PreviewComponent={Preview}
+              disabled={selectedFile}
+              styles={{
+                dropzone: {
+                  minHeight: 200,
+                  minWidth: "100%",
+
+                  border: "2px dashed #2F3747",
+                  borderRadius: "8px",
+                  backgroundColor: "#1B212E",
+                  padding: "20px",
+                  textAlign: "center",
+                  overflow: "hidden",
+                  width: "100%",
+                  height: "100%",
+                },
+                input: {
+                  display: "none",
+                },
+                dropzoneActive: {
+                  borderColor: "#2ecc71",
+                },
+              }}
+            />
+          </div>
+          <input id="dropzone-file" type="file" className="hidden" />
+          {/* {loading && <LoadingComp />} */}
+        </label>
+      </div>
+      {formErrors.file && (
+        <span>
+          <p className="text-red-500 text-xs mt-1">{formErrors.file}</p>
+        </span>
+      )}
+
+      <input
+        type="text"
+        placeholder="Title"
+        className="my-5 h-11  px-5 w-full pr-10 bg-[#2F3747]  border border-white/40  rounded-lg      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600 "
+        value={name}
+        onChange={(e) => {
+          setName(e.target.value);
+        }}
+      />
+      {formErrors.name && (
+        <span>
+          <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
+        </span>
+      )}
+      <button
+        type="button"
+        disabled={loading}
+        className={`bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-7 2xl:h-10 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40    ${
+          loading
+            ? " cursor-progress "
+            : "hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white cursor-pointer"
+        }`}
+        value={"Submit"}
+        onClick={handleSubmit}
       >
-        <div className="flex items-center justify-center w-full h-full">        
-          <Dropzone
-            getUploadParams={getUploadParams}
-            onChangeStatus={handleChangeStatus}
-            accept="video/*"
-            maxFiles={1}
-            LayoutComponent={Layout}
-            ref={dropzoneRef}
-            autoUpload={false}
-            PreviewComponent={Preview}
-            disabled={selectedFile}
-            styles={{
-              dropzone: {
-                minHeight: 200,
-                minWidth:"100%",
-
-                border: "2px dashed #2F3747",
-                borderRadius: "8px",
-                backgroundColor: "#1B212E",
-                padding: "20px",
-                textAlign: "center",
-                overflow: "hidden",
-                width: "100%",
-                height: "100%",
-              },
-              input: {
-                display: "none",
-              },
-              dropzoneActive: {
-                borderColor: "#2ecc71",
-              },
-            }}
-          /> 
-
-          
-        </div>
-        <input id="dropzone-file" type="file" className="hidden" />
-        {/* {loading && <LoadingComp />} */}
-      </label>
-      
-    </div>
-{formErrors.file && (
-                <span>
-                  <p className="text-red-500 text-xs mt-1">
-                    {formErrors.file}
-                  </p>
-                </span>
-              )}
-  
-  <input type="text" placeholder="Title" className="my-5 h-11  px-5 w-full pr-10 bg-[#2F3747]  border border-white/40  rounded-lg      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600 " value={name} onChange={(e)=>{setName(e.target.value)}}
-   />
-   {formErrors.name && (
-                <span>
-                  <p className="text-red-500 text-xs mt-1">
-                    {formErrors.name}
-                  </p>
-                </span>
-              )}
-  <button type="button" disabled={loading} className={`bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-7 2xl:h-10 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40    ${loading ? " cursor-progress " : "hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white cursor-pointer"}`} value={'Submit'} onClick={handleSubmit} >Submit</button>
-  </>
+        Submit
+      </button>
+    </>
   );
 };
 
