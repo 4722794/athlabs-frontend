@@ -91,7 +91,7 @@ const HealthApp = () => {
             <div className=" flex justify-center gap-x-20">
               <div className=" w-4/12"></div>
               <div className=" w-3/12 xl:min-h-[400px] xl:h-[calc(100vh-120px)] mx-auto flex items-center justify-center ">
-                <div className="relative w-auto h-full 2xl:h-auto 2xl:w-full flex justify-center">
+                <div className="relative w-auto h-full xl:h-auto 2xl:h-auto 2xl:w-full flex justify-center">
                   <div className="  w-auto h-full z-10">
                     <Image
                       src="/images/iphone-x-png-29483.png"
@@ -321,7 +321,7 @@ const HealthApp = () => {
             <div className="hp-slide__info w-full lg:w-4/12 relative z-20">
               <h1 className="hp-slide__title">
                 Elevate your game with expert insights
-                <div className=" pt-3 text-yellow-500 text-lg 2xl:text-xl ">
+                <div className=" pt-3 text-[#E63946] text-lg 2xl:text-xl ">
                   (coming soon)
                 </div>
               </h1>
