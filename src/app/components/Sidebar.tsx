@@ -104,14 +104,13 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     const contentType = "application/json";
     const responseData = await callApi(method, contentType, null, uriString);
     if (responseData.status) {
-      // console.log(responseData);
       setactiveVideo(videoId);
       setActiveVideoData(responseData.data);
     }
   };
 
   const clearPage = () => {
-    setActiveVideoData(null); 
+    setActiveVideoData(null);
   };
 
   return (
@@ -125,7 +124,10 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
           <div className="flex h-full min-h-0 flex-col transition-opacity opacity-100">
             <div className="sticky left-0 right-0 top-0 z-20 bg-[#1B212E] py-2.5 min-h-[56px]">
               <div className=" flex justify-between px-3 gap-x-3">
-                <button className=" grow  text-white border border-[#484A4E] px-3 py-2.5" onClick={()=>clearPage()}>
+                <button
+                  className=" grow  text-white border border-[#484A4E] px-3 py-2.5"
+                  onClick={() => clearPage()}
+                >
                   <div className=" flex items-center gap-x-2">
                     <svg
                       width="12"
@@ -180,9 +182,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                       {groupedVideos[dateLabel]?.map((video) => (
                         <li
                           className={`relative text-white py-2.5 px-3 overflow-x-hidden hover:bg-[#171717] cursor-pointer ${
-                            activeVideo === video.id ? "bg-[#171717]" : ""
+                            activeVideo === video.video_id ? "bg-[#171717]" : ""
                           }`}
-                          key={video.id}
+                          key={video.video_id}
                         >
                           <i className=" absolute left-3 z-0">
                             <svg
@@ -201,8 +203,11 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                           <div className="pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden">
                             {" "}
                             <a
-                              href={"#"}
-                              onClick={() => getVideoDetail(video.video_id)}
+                              href="/"
+                              onClick={(event) => {
+                                event.preventDefault();
+                                getVideoDetail(video.video_id);
+                              }}
                             >
                               {video.name}
                             </a>

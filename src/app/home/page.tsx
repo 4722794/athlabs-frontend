@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState,useContext } from "react";
 // import "@/app/globals.css";
 import Tabs from "@/app/components/Tabs";
 import InputFileUpload from "../components/InputFileUpload";
@@ -35,6 +35,8 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => {
 const Tab2Content = () => {
   const [formErrors, setFormErrors] = useState({ textMsg: "" });
   const [textMsg, setText] = useState("");
+  const { activeVideoDetail } = useVideoContext();
+  const { setActiveVideoData } = useVideoContext();
 
   const validateForm = () => {
     let valid = true;
@@ -48,20 +50,31 @@ const Tab2Content = () => {
   };
 
   const handleSubmit = async (e: any) => {
+    //const context = useVideoContext(VideoContext);
+    //console.log('context',context)
     e.preventDefault();
-    if (validateForm()) {
-      const uriString = `/c`;
+    let videoId = activeVideoDetail.video_id;
+    if (validateForm() && videoId) {
+      const uriString = `/c/${videoId}`;
       const method = "POST";
       const contentType = "application/x-www-form-urlencoded";
       const formData = new URLSearchParams();
       formData.append("text", textMsg);
-
-      const responseData = await callApi(method, contentType, null, uriString);
+      console.log(formData);
+      const responseData = await callApi(method, contentType, formData, uriString);
       if (responseData.status) {
-        alert("posted");
+        
+        const updatedData = { ...activeVideoDetail };
+        console.log('before',updatedData);
+        updatedData.messages.push(responseData.data);
+        
+        setActiveVideoData(updatedData); 
+        console.log('after',updatedData);
       } else {
         console.log(responseData);
       }
+    }else{
+      alert('else')
     }
   };
 
@@ -86,6 +99,8 @@ const Tab2Content = () => {
                    ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600
                   "
                 placeholder="Type your message here..."
+                value={textMsg}
+                onChange={(e) => setText(e.target.value)}
               />
               {formErrors.textMsg && (
                 <span>
