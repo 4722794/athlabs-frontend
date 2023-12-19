@@ -199,12 +199,14 @@ const AdminPage = () => {
                 <InputFileUpload onDataFromChild={handleChildData} />
                 </div>
               ) : (
-                <div className="  min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-2xl ">
+                <div className="min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-2xl ">
                 <video controls className=" h-full mx-auto" key={activeVideoDetail?.video_url}>
                   <source src={activeVideoDetail?.video_url} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
+                <span style={{ color: '#fff', fontWeight: 'bold' }}>{activeVideoDetail.name}</span>
                 </div>
+
               )}
            
           </div>
