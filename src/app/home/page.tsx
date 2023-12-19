@@ -198,7 +198,7 @@ const AdminPage = () => {
   return (
     <HomeLayout>
       <div className="flex w-full  px-6 pt-0">
-        <div className="flex w-full flex-col lg:flex-row  gap-x-2 gap-y-2">
+        <div className="flex w-full flex-col lg:flex-row  gap-x-5 gap-y-2">
           <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl  ">
             {!activeVideoDetail?.video_url ? (
               <div>
