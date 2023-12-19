@@ -5,10 +5,12 @@ import LandingLayout from "./layout/LandingLayout";
 import { TypeAnimation } from "react-type-animation";
 import Image from "next/image";
 import Slider from "react-slick";
+import Typewriter from "typewriter-effect";
 
 // Import slick-carousel styles
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useAmp } from "next/amp";
 
 const AppPage = () => {
   const [sliderItems, setSliderItems] = useState([
@@ -29,10 +31,9 @@ const AppPage = () => {
       type: "image",
       src: "/images/web/deadlift.webm",
       text: "Back straight, Engage your Glutes…",
-    },
-
-    // Add more items as needed
+    }
   ]);
+  const [typewriterShow, SetTypewriterShow] = useState(true);
 
   const sliderSettings = {
     dots: false,
@@ -42,6 +43,12 @@ const AppPage = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
+    afterChange: (id: any) => {
+      SetTypewriterShow(true);
+    },
+    beforeChange: (id: any) => {
+      SetTypewriterShow(false);
+    },
   };
 
   const sliderSettings2 = {
@@ -144,15 +151,18 @@ const AppPage = () => {
                                     </video>
                                   </div>
 
-                                  <div className="absolute bottom-[50px] left-1/2 transform -translate-x-1/2 w-[calc(100%-30px)] rounded-b-[0px] px-3 md:px-3 !py-3 h-auto bg-black/50 flex">
+                                  <div className="absolute bottom-[50px] left-1/2 transform -translate-x-1/2 w-[calc(100%-30px)] rounded-b-[0px] px-3 md:px-3 !py-3 h-auto bg-black/50 text-white text-2xl flex">
                                     <div>
-                                      <TypeAnimation
-                                        sequence={[item.text, 3000]}
-                                        wrapper="span"
-                                        speed={50}
-                                        className="text-[16px] md:text-xl relative z-10 text-white"
-                                        repeat={Infinity}
-                                      />
+                                      {typewriterShow && (
+                                        <Typewriter
+                                          options={{
+                                            strings: item.text,
+                                            autoStart: true,
+                                            loop: true,
+                                            delay: 50,
+                                          }}
+                                        />
+                                      )}
                                     </div>
                                   </div>
                                 </>
