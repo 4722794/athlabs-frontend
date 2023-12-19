@@ -38,7 +38,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   }, []);
 
   return (
-    <VideoProvider>
+    
       <div className="relative z-0 flex h-full w-full overflow-hidden">
         <Sidebar modalOpen={open} toggleSidebar={toggleSidebar} />
         <div
@@ -102,7 +102,6 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
           </main>
         </div>
       </div>
-    </VideoProvider>
   );
 };
 
