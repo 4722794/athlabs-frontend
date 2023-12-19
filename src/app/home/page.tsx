@@ -47,6 +47,7 @@ const Tab2Content = () => {
   const { activeVideoDetail } = useVideoContext();
   const { setActiveVideoData } = useVideoContext();
   const [loading, setLoading] = useState(false);
+  const formRef = useRef<any>(null);
 
   const validateForm = () => {
     let valid = true;
@@ -90,6 +91,9 @@ const Tab2Content = () => {
         updatedData1.messages.push(responseData.data);
         setActiveVideoData(updatedData1);
         setLoading(false);
+        if (formRef.current) {
+          formRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
       } else {
         console.log(responseData);
         setLoading(false);
@@ -113,7 +117,7 @@ const Tab2Content = () => {
         </div>
         <div className=" ">
           <div className=" inline-flex  w-full">
-            <form className=" relative w-full" onSubmit={handleSubmit}>
+            <form className=" relative w-full" onSubmit={handleSubmit} ref={formRef}>
               <input
                 type="text"
                 className=" h-11  px-5 w-full pr-10 bg-[#2F3747]  border border-white/40  rounded-lg

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React ,{useRef, useEffect} from "react";
 import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css";
 import { useVideoContext } from "../services/VideoContext";
@@ -12,11 +12,21 @@ interface Message {
 
 const Chat: React.FC = () => {
   const { activeVideoDetail } = useVideoContext();
+  const customScrollRef = useRef<any>(null);
+
+  const scrollToBottom = () => {
+    if (customScrollRef.current) {
+      customScrollRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [activeVideoDetail]);
 
   return (
     <div className="flex flex-col h-full">
       <CustomScroll className="" heightRelativeToParent="calc(100% - 20px)">
-        <div className="p-3 flex flex-col gap-y-3">
+        <div className="p-3 flex flex-col gap-y-3" >
           {/* Check if activeVideoDetail and chat exist */}
           {activeVideoDetail && activeVideoDetail.messages && activeVideoDetail.messages.map((message:Message) => (
             <div key={message.id} className={`flex ${message.sender === 'user' ? 'items-start' : 'items-end'}`}>
@@ -26,7 +36,9 @@ const Chat: React.FC = () => {
             </div>
           ))}
         </div>
+        <span  ref={customScrollRef}></span>
       </CustomScroll>
+
     </div>
   );
 };
