@@ -63,6 +63,16 @@ const Tab2Content = () => {
     e.preventDefault();
     let videoId = activeVideoDetail.video_id;
     if (validateForm() && videoId) {
+
+      let userMsg = {
+        text: textMsg,
+        sender: "user",
+        timestamp: moment().format("MMMM Do YYYY, h:mm:ss a"),
+      };
+      const updatedData = { ...activeVideoDetail };
+      updatedData.messages.push(userMsg);
+      setActiveVideoData(updatedData);
+      setText("");
       setLoading(true);
       const uriString = `/c/${videoId}`;
       const method = "POST";
@@ -76,16 +86,9 @@ const Tab2Content = () => {
         uriString
       );
       if (responseData.status) {
-        let userMsg = {
-          text: textMsg,
-          sender: "user",
-          timestamp: moment().format("MMMM Do YYYY, h:mm:ss a"),
-        };
-        const updatedData = { ...activeVideoDetail };
-        updatedData.messages.push(userMsg);
-        updatedData.messages.push(responseData.data);
-        setActiveVideoData(updatedData);
-        setText("");
+        const updatedData1 = { ...activeVideoDetail };
+        updatedData1.messages.push(responseData.data);
+        setActiveVideoData(updatedData1);
         setLoading(false);
       } else {
         console.log(responseData);
