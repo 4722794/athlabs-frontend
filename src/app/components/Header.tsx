@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 interface HeaderProps {
   showButton?: boolean;
@@ -7,9 +7,21 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
+  const [openmenu, setOpenMenu] = useState(false);
+
+  const mobileMenuOpen = () => {
+    document.body.classList.add("overflow-hidden");
+    setOpenMenu(true);
+  };
+
+  const mobileMenuClose = () => {
+    document.body.classList.remove("overflow-hidden");
+    setOpenMenu(false);
+  };
+
   return (
     <>
-      <header className="bg-[#04080f]  text-white text-left items-center flex fixed w-full top-0 z-30 h-14 md:h-16  lg:h-16 xl:h-16 2xl:h-24 border-b border-gray-800">
+      <header className="bg-[#04080f]   text-white text-left items-center flex fixed w-full top-0 z-30 h-14 md:h-16  lg:h-16 xl:h-16 2xl:h-24 border-b border-gray-800">
         <div className="container mx-auto self-center px-6 md:px-8 flex justify-between items-center">
           <a className=" inline-flex h-8 xl:h-8 2xl:h-10 ">
             <Image
@@ -23,7 +35,10 @@ const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
 
           {showButton ? (
             <>
-              <div className="inline-flex lg:hidden items-center  text-xl w-8 h-8  bg-transparent justify-center  rounded-full border border-gray-300">
+              <div
+                onClick={mobileMenuOpen}
+                className="inline-flex lg:hidden items-center  text-xl w-8 h-8  bg-transparent justify-center  rounded-full border border-gray-300"
+              >
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
@@ -68,7 +83,11 @@ const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
         </div>
       </header>
 
-      <div className=" absolute h-full w-full z-50 bg-[#04080f] hidden">
+      <div
+        className={` absolute h-full w-full z-50 bg-[#04080f] ${
+          openmenu ? "" : "hidden"
+        }`}
+      >
         <div className="bg-[#04080f]  text-white text-left items-center flex w-full top-0 z-30 h-14 md:h-16  lg:h-16 xl:h-16 2xl:h-24 border-b border-gray-800">
           <div className="container mx-auto self-center px-6 md:px-8 flex justify-between items-center">
             <a className=" inline-flex h-8 xl:h-8 2xl:h-10 ">
@@ -81,7 +100,10 @@ const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
               />
             </a>
 
-            <div className="inline-flex items-center  text-xl w-8 h-8  bg-transparent justify-center  rounded-full border border-gray-300">
+            <div
+              onClick={mobileMenuClose}
+              className="inline-flex items-center  text-xl w-8 h-8  bg-transparent justify-center  rounded-full border border-gray-300"
+            >
               <svg
                 stroke="currentColor"
                 fill="currentColor"
