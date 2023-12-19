@@ -91,7 +91,7 @@ const Tab2Content = () => {
         setActiveVideoData(updatedData1);
         setLoading(false);
         if (formRef.current) {
-          formRef.current.scrollIntoView({ behavior: 'smooth' });
+          formRef.current.scrollIntoView({ behavior: "smooth" });
         }
       } else {
         console.log(responseData);
@@ -116,7 +116,11 @@ const Tab2Content = () => {
         </div>
         <div className=" ">
           <div className=" inline-flex  w-full">
-            <form className=" relative w-full" onSubmit={handleSubmit} ref={formRef}>
+            <form
+              className=" relative w-full"
+              onSubmit={handleSubmit}
+              ref={formRef}
+            >
               <input
                 type="text"
                 className=" h-11  px-5 w-full pr-10 bg-[#2F3747]  border border-white/40  rounded-lg
@@ -204,15 +208,18 @@ const AdminPage = () => {
               <div className="min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-2xl ">
                 <video
                   controls
-                  className=" h-full mx-auto"
+                  className=" h-[calc(100%-66px)] mx-auto"
                   key={activeVideoDetail?.video_url}
                 >
                   <source src={activeVideoDetail?.video_url} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
-                <span style={{ color: "#fff", fontWeight: "bold" }}>
+                <div
+                  className=" text-lg px-3 flex items-center min-h-[66px] "
+                  style={{ color: "#fff" }}
+                >
                   {activeVideoDetail.name}
-                </span>
+                </div>
               </div>
             )}
           </div>
