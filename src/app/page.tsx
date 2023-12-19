@@ -15,19 +15,19 @@ const AppPage = () => {
     {
       id: 1,
       type: "image",
-      src: "/images/website_final/gif_new/squat_cropped.gif",
+      src: "/images/web/kettlebelldl.webm",
       text: "Push hips back…",
     },
     {
       id: 2,
       type: "image",
-      src: "/images/website_final/gif_new/cropped_jump.gif",
+      src: "/images/web/boxjumps.webm",
       text: "Land softly,extend hips at top...",
     },
     {
       id: 3,
       type: "image",
-      src: "/images/website_final/gif_new/cropped_deadlift.gif",
+      src: "/images/web/deadlift.webm",
       text: "Back straight, Engage your Glutes…",
     },
 
@@ -91,7 +91,7 @@ const AppPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="   w-[226px] sm:w-[326px] md:w-[326px] lg:w-4/12 2xl:w-4/12  flex justify-center lg:justify-end mx-auto lg:mr-0">
+              <div className="   w-[226px] sm:w-[326px] md:w-[326px] lg:w-4/12 2xl:w-4/12  flex justify-center lg:justify-center mx-auto lg:mr-0">
                 <div className="relative w-full   lg:w-10/12 xl:w-7/12 2xl:w-8/12 ">
                   {/* <div className=" w-[calc(100%-8px)] h-full absolute bg-white  rounded-[50px] z-0 left-1"></div> */}
                   <Image
@@ -112,41 +112,57 @@ const AppPage = () => {
                     />
                   </div>
 
-                  <div className="absolute mySlider top-1/2 transform -translate-y-1/2 h-[calc(100%-24px)] md:h-[calc(100%-32px)]  left-1/2  -translate-x-1/2 w-[calc(100%-26px)] md:w-[calc(100%-34px)]  overflow-hidden">
-                    <Slider
-                      className="  h-full rounded-[22px] sm:rounded-[30px] md:rounded-[30px]  lg:rounded-[20px]  xl:rounded-[28px] 2xl:rounded-[30px] overflow-hidden"
-                      {...sliderSettings}
-                    >
-                      {sliderItems.map((item, index) => (
-                        <div key={item.id} className="relative h-full ">
-                          {item.type === "image" && (
-                            <>
-                              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-full">
-                                <Image
+                  <div
+                    className="  absolute  transform top-1/2 -translate-y-1/2 left-1/2  -translate-x-1/2  h-[calc(100%-35px)] w-[calc(100%-35px)] overflow-hidden bg-blue-600
+                   rounded-[22px] sm:rounded-[30px] md:rounded-[30px]  lg:rounded-[20px]  xl:rounded-[28px] 2xl:rounded-[30px]
+                  "
+                  >
+                    <div className=" relative  h-full w-full overflow-hidden  scale-110">
+                      <div className="absolute mySlider transform top-1/2 -translate-y-1/2 left-1/2  -translate-x-1/2  h-[calc(100%+0px)] w-[calc(100%+0px)]   overflow-hidden ">
+                        <Slider className="  h-full " {...sliderSettings}>
+                          {sliderItems.map((item, index) => (
+                            <div key={item.id} className="relative h-full">
+                              {item.type === "image" && (
+                                <>
+                                  <div className="absolute transform top-1/2 -translate-y-1/2 left-1/2  -translate-x-1/2 w-full h-full  ">
+                                    {/* <Image
                                   src={item.src}
                                   width={800}
                                   height={1500}
                                   alt=""
-                                />
-                              </div>
+                                /> */}
 
-                              <div className="absolute bottom-[22px] left-1/2 transform -translate-x-1/2 w-[calc(100%-30px)] rounded-b-[0px] px-3 md:px-3 !py-3 h-auto bg-black/50 flex">
-                                <div>
-                                  <TypeAnimation
-                                    sequence={[item.text, 3000]}
-                                    wrapper="span"
-                                    speed={50}
-                                    className="text-[16px] md:text-xl relative z-10 text-white"
-                                    repeat={Infinity}
-                                  />
-                                </div>
-                              </div>
-                            </>
-                          )}
-                          {/* Add more conditions for other item types if needed */}
-                        </div>
-                      ))}
-                    </Slider>
+                                    <video
+                                      autoPlay
+                                      muted
+                                      className="  h-full w-full "
+                                    >
+                                      <source
+                                        src={item.src}
+                                        type="video/webm"
+                                      />
+                                    </video>
+                                  </div>
+
+                                  <div className="absolute bottom-[50px] left-1/2 transform -translate-x-1/2 w-[calc(100%-30px)] rounded-b-[0px] px-3 md:px-3 !py-3 h-auto bg-black/50 flex">
+                                    <div>
+                                      <TypeAnimation
+                                        sequence={[item.text, 3000]}
+                                        wrapper="span"
+                                        speed={50}
+                                        className="text-[16px] md:text-xl relative z-10 text-white"
+                                        repeat={Infinity}
+                                      />
+                                    </div>
+                                  </div>
+                                </>
+                              )}
+                              {/* Add more conditions for other item types if needed */}
+                            </div>
+                          ))}
+                        </Slider>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
