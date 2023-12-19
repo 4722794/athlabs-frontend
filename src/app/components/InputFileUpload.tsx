@@ -4,7 +4,7 @@ import Dropzone, {
   IFileWithMeta,
   IUploadParams,
 } from "react-dropzone-uploader";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { checkLogin } from "../services/apiUtils";
 import LoadingComp from "./LoadingComp";
 
@@ -19,6 +19,8 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   const [childData, setChildData] = useState(null);
   const [loading, setLoading] = useState(false); // New state for loading indicator
 
+   // Reference to Dropzone instance
+   const dropzoneRef = useRef(null);
   const sendDataToParent = () => {
     // Call the callback function in the parent with the data
     onDataFromChild(childData);
@@ -78,8 +80,16 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       console.error(`${meta.name} failed to upload`);
     }
   };
+  const handleSubmit = ()=>{
+    // Manually trigger the upload
+    if (dropzoneRef.current) {
+      console.log('ddd',dropzoneRef.current);
+      dropzoneRef.current.handleRestart(dropzoneRef.current.files[0]);
+    }
+  }
 
   return (
+    <>
     <div className="flex items-center justify-center w-full h-full">
       <label
         htmlFor="dropzone-file"
@@ -91,6 +101,8 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
             onChangeStatus={handleChangeStatus}
             accept="video/*"
             maxFiles={1}
+            ref={dropzoneRef}
+            autoUpload={false}
             styles={{
               dropzone: {
                 minHeight: 200,
@@ -117,6 +129,8 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         {loading && <LoadingComp />}
       </label>
     </div>
+  <button type="button" className="bg-blue-400"  value={'Submit'} onClick={handleSubmit} >Submit</button>
+  </>
   );
 };
 
