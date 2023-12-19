@@ -4,14 +4,14 @@ import React, { createContext, useContext, useState } from "react";
 const VideoContext = createContext();
 
 export const VideoProvider = ({ children }) => {
-  const [videoDetail, setVideoDetail] = useState(null);
+  const [activeVideoDetail, setVideoDetail] = useState(null);
 
-  const setVideoDetailData = (data) => {
+  const setActiveVideoData = (data) => {
     setVideoDetail(data);
   };
 
   return (
-    <VideoContext.Provider value={{ videoDetail, setVideoDetailData }}>
+    <VideoContext.Provider value={{ activeVideoDetail, setActiveVideoData }}>
       {children}
     </VideoContext.Provider>
   );

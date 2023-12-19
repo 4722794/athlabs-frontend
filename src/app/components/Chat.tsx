@@ -1,29 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import CustomScroll from "react-custom-scroll";
-import "react-custom-scroll/dist/customScroll.css"; // Import the styles
+import "react-custom-scroll/dist/customScroll.css";
 import { useVideoContext } from "../services/VideoContext";
 
 const Chat = () => {
-  const { videoDetail } = useVideoContext();
-
-  console.log("Video Detail:", videoDetail);
+  const { activeVideoDetail } = useVideoContext();
 
   return (
     <div className="flex flex-col h-full">
       <CustomScroll className="" heightRelativeToParent="calc(100% - 20px)">
         <div className="p-3 flex flex-col gap-y-3">
-          <div className="flex items-center ">
-            <div className="max-w-[90%] bg-[#171717] text-white text-sm py-3 px-4 rounded-lg">
-              Hello! How can I help you today?
+          {/* Check if activeVideoDetail and chat exist */}
+          {activeVideoDetail && activeVideoDetail.chat && activeVideoDetail.chat.map((message) => (
+            <div key={message.id} className={`flex ${message.sender === 'user' ? 'items-start' : 'items-end'}`}>
+              <div className={`max-w-[90%] ${message.sender === 'user' ? 'bg-[#171717] text-white rounded-br-none' : 'bg-blue-500 text-white rounded-bl-none'} text-sm py-3 px-4 rounded-lg rounded-${message.sender === 'user' ? 'tl' : 'tr'}-none`}>
+                {message.text}
+              </div>
             </div>
-          </div>
-
-          <div className="flex items-center justify-end">
-            <div className="max-w-[90%] bg-blue-500 text-white text-sm py-3 px-4 rounded-lg">
-              Hi there! I have a question about your products.
-            </div>
-          </div>
+          ))}
         </div>
       </CustomScroll>
     </div>
