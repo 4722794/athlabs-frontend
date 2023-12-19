@@ -112,7 +112,6 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
 
   const clearPage = () => {
     setActiveVideoData(null); 
-    console.log('aaaaaa')
   };
 
   return (
