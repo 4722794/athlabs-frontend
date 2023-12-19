@@ -1,5 +1,7 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { checkLogin } from "../services/apiUtils";
 
 interface HeaderProps {
   showButton?: boolean;
@@ -8,7 +10,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
   const [openmenu, setOpenMenu] = useState(false);
-
+  const router = useRouter();
   const mobileMenuOpen = () => {
     document.body.classList.add("overflow-hidden");
     setOpenMenu(true);
@@ -17,6 +19,15 @@ const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
   const mobileMenuClose = () => {
     document.body.classList.remove("overflow-hidden");
     setOpenMenu(false);
+  };
+
+  const goForLogin = (e: any) => {
+    e.preventDefault();
+    if (checkLogin()) {
+      router.push("/home");
+    } else {
+      router.push("/login");
+    }
   };
 
   return (
@@ -67,7 +78,8 @@ const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
                   REQUEST DEMO
                 </a>
                 <a
-                  href="/login"
+                  onClick={(e) => goForLogin(e)}
+                  href="/"
                   className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer
               
               hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white
