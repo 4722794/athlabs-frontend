@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
+import { useVideoContext } from "../services/VideoContext";
 
 interface SidebarProps {
   modalOpen: boolean;
@@ -17,6 +18,7 @@ interface GroupedVideos {
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
   const [activeVideo, setactiveVideo] = useState(false);
+  const { setVideoDetailData } = useVideoContext();
 
   useEffect(() => {
     getVideoHistory();
@@ -97,13 +99,14 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const groupedVideos = groupVideosByDate(videoData);
 
   const getVideoDetail = async (videoId: any) => {
-    const uriString = `getVideoDetailByVideoId/${videoId}`;
+    const uriString = `h/${videoId}`;
     const method = "GET";
     const contentType = "application/json";
     const responseData = await callApi(method, contentType, null, uriString);
     if (responseData.status) {
-      console.log(responseData);
+      // console.log(responseData);
       setactiveVideo(videoId);
+      setVideoDetailData(responseData.data);
     }
   };
 

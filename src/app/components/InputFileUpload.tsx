@@ -40,7 +40,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       if (actualFile instanceof Blob) {
         formData.append("video", actualFile, actualFile.name);
         const apiUrl = "https://api.athlabs.co";
-        const apiEndpoint = `${apiUrl}/video-upload`;
+        const apiEndpoint = `${apiUrl}`;
 
         // Include authentication headers
         const headers = {

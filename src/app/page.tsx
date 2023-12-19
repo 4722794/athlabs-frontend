@@ -10,7 +10,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
 const AppPage = () => {
   const [sliderItems, setSliderItems] = useState([
     {
@@ -183,7 +182,7 @@ const AppPage = () => {
                   <div className="w-full relative text-left">
                     <input
                       type="text"
-                      className="box-border shadow-none text-[#212121] bg-[#dadada] border-1 border-[#344054]  p-1 md:p-2 pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800"
+                      className="box-border shadow-none text-[#212121] bg-[#dadada] border-1 border-[#344054]   md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800"
                     />
                   </div>
 
@@ -253,7 +252,6 @@ const AppPage = () => {
           </div>
         </section>
       </div>
-
     </LandingLayout>
   );
 };

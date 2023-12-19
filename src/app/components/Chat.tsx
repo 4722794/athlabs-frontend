@@ -2,8 +2,13 @@
 import React, { useState } from "react";
 import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css"; // Import the styles
+import { useVideoContext } from "../services/VideoContext";
 
 const Chat = () => {
+  const { videoDetail } = useVideoContext();
+
+  console.log("Video Detail:", videoDetail);
+
   return (
     <div className="flex flex-col h-full">
       <CustomScroll className="" heightRelativeToParent="calc(100% - 20px)">
