@@ -1,5 +1,11 @@
 "use client";
-import React, { ReactNode, useEffect, useRef, useState,useContext } from "react";
+import React, {
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+  useContext,
+} from "react";
 // import "@/app/globals.css";
 import Tabs from "@/app/components/Tabs";
 import InputFileUpload from "../components/InputFileUpload";
@@ -8,6 +14,9 @@ import HomeLayout from "../layout/HomeLayout";
 import CustomScroll from "react-custom-scroll";
 import { callApi } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
+import moment from 'moment';
+import LoadingComp from "../components/LoadingComp";
+import { Spinner } from 'flowbite-react';
 interface Tab1ContentProps {
   compData: any;
 }
@@ -37,6 +46,7 @@ const Tab2Content = () => {
   const [textMsg, setText] = useState("");
   const { activeVideoDetail } = useVideoContext();
   const { setActiveVideoData } = useVideoContext();
+  const [loading, setLoading] = useState(false);
 
   const validateForm = () => {
     let valid = true;
@@ -50,33 +60,40 @@ const Tab2Content = () => {
   };
 
   const handleSubmit = async (e: any) => {
-    //const context = useVideoContext(VideoContext);
-    //console.log('context',context)
     e.preventDefault();
     let videoId = activeVideoDetail.video_id;
     if (validateForm() && videoId) {
+      setLoading(true);
       const uriString = `/c/${videoId}`;
       const method = "POST";
       const contentType = "application/x-www-form-urlencoded";
       const formData = new URLSearchParams();
       formData.append("text", textMsg);
-      console.log(formData);
-      const responseData = await callApi(method, contentType, formData, uriString);
+      const responseData = await callApi(
+        method,
+        contentType,
+        formData,
+        uriString
+      );
       if (responseData.status) {
         let userMsg = {
-          
-        }
+          text: textMsg,
+          sender: "user",
+          timestamp: moment().format('MMMM Do YYYY, h:mm:ss a'),
+        };
         const updatedData = { ...activeVideoDetail };
-        console.log('before',updatedData);
+        updatedData.messages.push(userMsg);
         updatedData.messages.push(responseData.data);
-        
-        setActiveVideoData(updatedData); 
-        console.log('after',updatedData);
+        setActiveVideoData(updatedData);
+        setText('')
+        setLoading(false);
       } else {
         console.log(responseData);
+        setLoading(false);
       }
-    }else{
-      alert('else')
+    } else {
+      console.log('Either video_id is empty or validation failed');
+      setLoading(false);
     }
   };
 
@@ -111,10 +128,18 @@ const Tab2Content = () => {
                   </p>
                 </span>
               )}
+
+{loading ? (
+            <div className="absolute right-2.5 top-2.5">
+            <Spinner aria-label="Default status example" />
+            </div>
+             
+            ):(
               <button
                 className=" absolute right-2.5 top-2.5 text-white hover:text-cyan-500"
                 type="submit"
               >
+                
                 <svg
                   width="31"
                   height="28"
@@ -128,6 +153,11 @@ const Tab2Content = () => {
                   />
                 </svg>
               </button>
+            )
+          
+          }
+              
+              
             </form>
           </div>
         </div>
@@ -152,7 +182,7 @@ const AdminPage = () => {
       content: <Tab1Content compData={dataFromChild} />,
     },
   ];
-  
+
   if (activeVideoDetail) {
     tabs.push({ id: "tab2", label: "Chat", content: <Tab2Content /> });
   }
