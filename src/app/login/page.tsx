@@ -45,7 +45,7 @@ const Login = () => {
   const handleSubmit = async (e: any) => {	
     e.preventDefault();
     if (validateForm()) {
-      const apiUrl = "https://api.athlabs.co/token";
+      const apiUrl = process.env.NEXT_PUBLIC_API_HOST+'/token';
       const formData = new URLSearchParams();
       formData.append("username", username);
       formData.append("password", password);
