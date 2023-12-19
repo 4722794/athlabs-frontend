@@ -190,20 +190,20 @@ const AdminPage = () => {
       <div className="flex w-full  px-6 pt-0">
         <div className="flex w-full flex-col lg:flex-row  gap-x-2 gap-y-2">
           <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl  ">
-            <div className=" min-h-[462px] bg-[#1B212E]  rounded-2xl">
+            
               {!activeVideoDetail?.video_url ? (
+                <div>
                 <InputFileUpload onDataFromChild={handleChildData} />
+                </div>
               ) : (
-                <video
-                  controls
-                  className="w-full"
-                  key={activeVideoDetail?.video_url}
-                >
+                <div className="  min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-2xl ">
+                <video controls className=" h-full mx-auto" key={activeVideoDetail?.video_url}>
                   <source src={activeVideoDetail?.video_url} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
+                </div>
               )}
-            </div>
+           
           </div>
           <div className="flex flex-col relative bg-[#1B212E]  w-full lg:w-4/12 rounded-2xl ">
             <div className=" min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-2xl">

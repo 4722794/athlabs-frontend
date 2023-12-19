@@ -126,7 +126,7 @@ const Login = () => {
               />
               {formErrors.username && (
                 <span>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-red-500 text-xs mt-1">
                     {formErrors.username}
                   </p>
                 </span>
@@ -149,7 +149,7 @@ const Login = () => {
               />
               {formErrors.password && (
                 <span>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-red-500 text-xs mt-1">
                     {formErrors.password}
                   </p>
                 </span>
