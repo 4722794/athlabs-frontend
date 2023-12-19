@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HealthApp from "./components/HealthApp";
 import LandingLayout from "./layout/LandingLayout";
 import { TypeAnimation } from "react-type-animation";
