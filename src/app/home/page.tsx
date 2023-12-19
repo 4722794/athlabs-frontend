@@ -135,7 +135,7 @@ const AdminPage = () => {
               {!activeVideoDetail?.video_url ? (
                 <InputFileUpload onDataFromChild={handleChildData} />
               ) : (
-                <video controls className="w-full">
+                <video controls className="w-full" key={activeVideoDetail?.video_url}>
                   <source src={activeVideoDetail?.video_url} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
