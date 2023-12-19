@@ -63,7 +63,9 @@ const Tab2Content = () => {
       console.log(formData);
       const responseData = await callApi(method, contentType, formData, uriString);
       if (responseData.status) {
-        
+        let userMsg = {
+          
+        }
         const updatedData = { ...activeVideoDetail };
         console.log('before',updatedData);
         updatedData.messages.push(responseData.data);

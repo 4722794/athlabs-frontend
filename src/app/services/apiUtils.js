@@ -1,5 +1,3 @@
-import * as UrlConfig from "../services/UrlConfig";
-
 const BASE_URL = process.env.NEXT_PUBLIC_API_HOST;
 
 const callApi = async (method, contentType, bodyData,uriString) => {
