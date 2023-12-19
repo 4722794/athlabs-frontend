@@ -4,7 +4,6 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/AdminHeader";
 import { useRouter } from "next/navigation";
 import { checkLogin } from "../services/apiUtils";
-import { VideoProvider } from "../services/VideoContext";
 
 interface HomeLayoutProps {
   children: ReactNode;
@@ -18,7 +17,6 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("sdsdss", checkLogin());
     if (!checkLogin()) {
       router.push("/login");
     } else {
@@ -27,7 +25,6 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
 
     const handleResize = () => {
       const isSmallScreen = window.innerWidth <= 1024;
-
       setSidebarOpen(!isSmallScreen);
     };
     handleResize();

@@ -1,14 +1,11 @@
-import * as UrlConfig from "../services/UrlConfig";
-
 const BASE_URL = process.env.NEXT_PUBLIC_API_HOST;
 
-const callApi = async (method, contentType, bodyData = null,uriString) => {
+const callApi = async (method, contentType, bodyData,uriString) => {
   const token = localStorage.getItem('athlabsAuthToken'); 
   if (!token) {
     // Handle token not available (e.g., redirect to login)
     return { error: 'Token not found' };
   }
-  console.log('->>> CSS')
   try {
     const headers = {
       'Content-Type': contentType,
@@ -23,6 +20,10 @@ const callApi = async (method, contentType, bodyData = null,uriString) => {
 
     const response = await fetch(BASE_URL+uriString, requestOptions);
     console.log('response',response.status)
+    if(response.status === 401){
+      localStorage.removeItem("athlabsAuthToken");
+      window.location.href = '/login'
+    }
     const data = await response.json();
     const status = response.status; // Get HTTP status
     return { data, status }; // Return both data and status
