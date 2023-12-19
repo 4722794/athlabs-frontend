@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const rewrites = () => {
-    const apiUrl = 'https://api.athlabs.co';
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
     return [
         {
             source: "/video-upload",

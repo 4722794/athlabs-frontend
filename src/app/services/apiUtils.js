@@ -1,4 +1,6 @@
-const BASE_URL = 'https://api.athlabs.co/'; // Replace with your API base URL
+import * as UrlConfig from "../services/UrlConfig";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_HOST;
 
 const callApi = async (method, contentType, bodyData = null,uriString) => {
   const token = localStorage.getItem('athlabsAuthToken'); 
