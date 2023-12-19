@@ -33,8 +33,8 @@ const Chat: React.FC = () => {
             activeVideoDetail.messages.map((message: Message) => (
               <div
                 key={message.id}
-                className={`flex ${
-                  message.sender === "user" ? "items-start" : "items-end"
+                className={`flex items-center ${
+                  message.sender === "user" ? " justify-end" : ""
                 }`}
               >
                 <div
