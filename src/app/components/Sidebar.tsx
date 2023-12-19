@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
-import { useRouter } from "next/navigation";
+import { useVideoContext } from "../services/VideoContext";
 
 interface SidebarProps {
   modalOpen: boolean;
@@ -18,7 +18,7 @@ interface GroupedVideos {
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
   const [activeVideo, setactiveVideo] = useState(false);
-  const router = useRouter();
+  const { setVideoDetailData } = useVideoContext();
 
   useEffect(() => {
     getVideoHistory();
@@ -99,23 +99,17 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const groupedVideos = groupVideosByDate(videoData);
 
   const getVideoDetail = async (videoId: any) => {
-    const uriString = `getVideoDetailByVideoId/${videoId}`;
+    const uriString = `h/${videoId}`;
     const method = "GET";
     const contentType = "application/json";
     const responseData = await callApi(method, contentType, null, uriString);
     if (responseData.status) {
-      console.log(responseData);
+      // console.log(responseData);
       setactiveVideo(videoId);
+      setVideoDetailData(responseData.data);
     }
   };
 
-  const logOut = () => {
-    localStorage.removeItem("athlabsAuthToken");
-    const tokenAfterRemoval = localStorage.getItem("athlabsAuthToken");
-    if (tokenAfterRemoval === null) {
-      router.push("/login");
-    }
-  };
   return (
     <div
       className={`dark flex-shrink-0  bg-[#1B212E] absolute h-full z-40 lg:relative  ${
@@ -225,9 +219,6 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                 className="flex items-center text-sm font-medium text-white rounded-full h-full w-full px-3 justify-between"
                 type="button"
               >
-                <a href="#" onClick={logOut}>
-                  dfdsfdfds
-                </a>
                 <span className=" inline-flex pe-1 items-center">
                   <span className="sr-only">Open user menu</span>
                   <Image

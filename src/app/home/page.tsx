@@ -11,14 +11,14 @@ interface Tab1ContentProps {
 }
 
 const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => (
-  <div>
+  <div className=" h-[calc(100vh-200px)]">
     {compData ? (
-      <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7">
+      <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7  h-[calc(100vh-200px)]">
         <CustomScroll
-          className="-mx-3"
-          heightRelativeToParent="calc(100% - 20px)"
+          className="-mx-3 "
+          heightRelativeToParent="calc(100% - 0px)"
         >
-          {compData}
+          <div className=" px-3 ">{compData}</div>
         </CustomScroll>
       </div>
     ) : (
@@ -74,7 +74,7 @@ const Tab2Content = () => (
 
 const AdminPage = () => {
   const [dataFromChild, setDataFromChild] = useState(null);
-  const [videoUrl, setVideoUrl] = useState(false);
+  const [videoUrl, setVideoUrl] = useState(null);
   const tabs = [
     {
       id: "tab1",
@@ -93,7 +93,7 @@ const AdminPage = () => {
 
   return (
     <HomeLayout>
-      <div className="flex w-full  px-6 pt-5">
+      <div className="flex w-full  px-6 pt-0">
         <div className="flex w-full flex-col lg:flex-row  gap-x-2 gap-y-2">
           <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl  ">
             <div className=" min-h-[462px] bg-[#1B212E]  rounded-2xl">
