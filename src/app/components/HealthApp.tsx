@@ -90,7 +90,7 @@ const HealthApp = () => {
           <div className="container mx-auto  px-6 lg:px-8 lg:min-h-screen flex  justify-center">
             <div className=" flex justify-center gap-x-20 w-full  ">
               <div className=" w-4/12"></div>
-              <div className=" w-3/12   lg:h-[calc(100%-120px)] mx-auto flex items-center justify-center ">
+              <div className=" w-3/12   h-[calc(100%-120px)] xl:h-[calc(100%-120px)] mx-auto flex items-center justify-center ">
                 <div className="relative  w-full h-auto flex justify-center">
                   <div className="  w-full h-auto z-10">
                     <Image
