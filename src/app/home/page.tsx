@@ -199,7 +199,7 @@ const AdminPage = () => {
     <HomeLayout>
       <div className="flex w-full  px-6 pt-0">
         <div className="flex w-full flex-col lg:flex-row  gap-x-5 gap-y-2  pb-5 lg:py-0">
-          <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl  ">
+          <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl overflow-hidden  ">
             {!activeVideoDetail?.video_url ? (
               <div className=" flex flex-col">
                 <InputFileUpload onDataFromChild={handleChildData} />
@@ -215,7 +215,7 @@ const AdminPage = () => {
                   Your browser does not support the video tag.
                 </video>
                 <div
-                  className=" text-lg px-3 flex items-center min-h-[66px] "
+                  className=" text-lg px-5 flex items-center min-h-[66px] drop-shadow-xl  border-t border-gray-900  bg-[#26313F]  "
                   style={{ color: "#fff" }}
                 >
                   {activeVideoDetail.name}
