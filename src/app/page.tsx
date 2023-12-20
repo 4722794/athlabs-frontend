@@ -13,6 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useAmp } from "next/amp";
 import { FECallApi } from "./services/apiUtils";
 import LoadingComp from "./components/LoadingComp";
+import ComonToast from "./components/ComonToast";
 
 const AppPage = () => {
   const [sliderItems, setSliderItems] = useState([
@@ -66,6 +67,7 @@ const AppPage = () => {
   const [mail, setMail] = useState("");
   const [formErrors, setFormErrors] = useState({ mail: "" });
   const [loading, setLoading] = useState(false);
+  const [toastTObj, setToastTObj] = useState({ type: "", msg: "" });
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const validateForm = () => {
@@ -83,7 +85,7 @@ const AppPage = () => {
     return valid;
   };
 
-  const handleSubmit = async (formId: any,e: any) => {
+  const handleSubmit = async (formId: any, e: any) => {
     e.preventDefault();
     if (validateForm()) {
       setLoading(true);
@@ -98,18 +100,26 @@ const AppPage = () => {
         uriString
       );
       console.log(responseData);
-      if (responseData.status) {
+      if (responseData.status === 200) {
+        toastTObj.type = "s";
+        toastTObj.msg =
+          "Thank you for Requesting Access code, We will get back to you.";
+        setToastTObj(toastTObj);
       } else {
+        toastTObj.type = "e";
+        toastTObj.msg = "Error submitting form";
+        setToastTObj(toastTObj);
       }
       setLoading(false);
-	  setMail("")
+      setMail("");
     }
   };
 
   /*Footer form (exclusive beta program)*/
   const [betaEmail, setBetaMail] = useState("");
-  const [betaFormErrors, setBetaFormErrors] = useState({ betaEmail:"" });
+  const [betaFormErrors, setBetaFormErrors] = useState({ betaEmail: "" });
   const [betaFormloading, setBetaFormLoading] = useState(false);
+  const [toastBetaObj, setToastBetaObj] = useState({ type: "", msg: "" });
 
   const validateBetaForm = () => {
     let valid = true;
@@ -126,7 +136,7 @@ const AppPage = () => {
     return valid;
   };
 
-  const handleSubmitBetaForm = async (formId: any,e: any) => {
+  const handleSubmitBetaForm = async (formId: any, e: any) => {
     e.preventDefault();
     if (validateBetaForm()) {
       setBetaFormLoading(true);
@@ -141,14 +151,20 @@ const AppPage = () => {
         uriString
       );
       console.log(responseBetaData);
-      if (responseBetaData.status) {
+      if (responseBetaData.status === 200) {
+		toastBetaObj.type = "s";
+        toastBetaObj.msg =
+          "Thank you for Joining beta program, We will get back to you.";
+		  setToastBetaObj(toastBetaObj);
       } else {
+		toastBetaObj.type = "e";
+        toastBetaObj.msg = "Error submitting form";
+        setToastBetaObj(toastBetaObj);
       }
       setBetaFormLoading(false);
-	  setBetaMail("")
+      setBetaMail("");
     }
   };
-
 
   return (
     <LandingLayout>
@@ -169,13 +185,13 @@ const AppPage = () => {
                   <div className="w-full lg:w-10/12 pt-5">
                     <form
                       className="flex items-center flex-1 justify-start mt-30 relative"
-                      onSubmit={(e) => handleSubmit('injuryFreeTraining', e)}
+                      onSubmit={(e) => handleSubmit("injuryFreeTraining", e)}
                     >
                       <div className="w-full relative text-left">
                         <input
                           type="text"
                           placeholder=" > enter your email"
-						  value={mail}
+                          value={mail}
                           onChange={(e) => setMail(e.target.value)}
                           className="box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] pl-5 md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800 "
                         />
@@ -191,6 +207,15 @@ const AppPage = () => {
                           <div className="mt-3">
                             <LoadingComp />
                           </div>
+                        )}
+
+                        {toastTObj.type && (
+                          <span className="mt-5">
+                            <ComonToast
+                              toastObj={toastTObj}
+                              setToastObj={setToastTObj}
+                            />
+                          </span>
                         )}
                       </div>
 
@@ -311,26 +336,38 @@ const AppPage = () => {
               </div>
 
               <div className="w-full lg:w-12/12 mx-auto pt-5">
-                <form className="flex items-center flex-1 justify-start mt-30 relative" onSubmit={(e) => handleSubmitBetaForm('betaProgram', e)}>
+                <form
+                  className="flex items-center flex-1 justify-start mt-30 relative"
+                  onSubmit={(e) => handleSubmitBetaForm("betaProgram", e)}
+                >
                   <div className="w-full relative text-left">
                     <input
                       type="text"
                       className="box-border shadow-none text-[#212121] bg-[#dadada] border-1 border-[#344054]   md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800"
-					  onChange={(e) => setBetaMail(e.target.value)}
-					  value={betaEmail}
+                      onChange={(e) => setBetaMail(e.target.value)}
+                      value={betaEmail}
                     />
-					{betaFormErrors.betaEmail && (
-                          <span>
-                            <p className="text-red-500 text-xs mt-1">
-                              {betaFormErrors.betaEmail}
-                            </p>
-                          </span>
+                    {betaFormErrors.betaEmail && (
+                      <span>
+                        <p className="text-red-500 text-xs mt-1">
+                          {betaFormErrors.betaEmail}
+                        </p>
+                      </span>
                     )}
 
                     {betaFormloading && (
                       <div className="mt-3">
                         <LoadingComp />
                       </div>
+                    )}
+
+                    {toastBetaObj.type && (
+                      <span className="mt-5">
+                        <ComonToast
+                          toastObj={toastBetaObj}
+                          setToastObj={setToastBetaObj}
+                        />
+                      </span>
                     )}
                   </div>
 
