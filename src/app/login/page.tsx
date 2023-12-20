@@ -96,85 +96,90 @@ const Login = () => {
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
-      <div className="bg-[#04080f] flex items-center justify-center pt-40 pb-20">
-        <div className="bg-black p-8 rounded-lg shadow-lg max-w-sm w-full border-[3px]  border-gray-400">
-          <h2 className="text-2xl font-semibold text-center mb-4 text-white">
-            Login
-          </h2>
-          <p className="text-white/90 text-center mb-10">
-            Login to use Athlabs
-          </p>
-
-          {toastObj.type && (
-            <ComonToast toastObj={toastObj} setToastObj={setToastObj} />
-          )}
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="block text-white/70  text-sm font-semibold mb-2"
-              >
-                Username *
-              </label>
-              <input
-                type="text"
-                id="username"
-                value={username}
-                className="form-input w-full px-4 py-2 border rounded-lg  border-gray-400 text-white/90  bg-transparent"
-                placeholder="hello@alignui.com"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {formErrors.username && (
-                <span>
-                  <p className="text-red-500 text-xs mt-1">
-                    {formErrors.username}
-                  </p>
-                </span>
-              )}
-            </div>
-            <div className="mb-6">
-              <label
-                htmlFor="password"
-                className="block text-white/70  text-sm font-semibold mb-2"
-              >
-                Password *
-              </label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                className="form-input w-full px-4 py-2 border rounded-lg  border-gray-400 text-white/90  bg-transparent"
-                placeholder="••••••••"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {formErrors.password && (
-                <span>
-                  <p className="text-red-500 text-xs mt-1">
-                    {formErrors.password}
-                  </p>
-                </span>
-              )}
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-            >
+      <div className="bg-[#04080f] flex items-center justify-center pt-40 pb-20 min-h-[550px] h-[calc(100%-100px)]  2xl:h-[calc(100%-121px)] ">
+        <div className="container mx-auto self-center px-6 md:px-8 flex justify-center items-center">
+          <div className="bg-black p-8 rounded-lg shadow-lg max-w-sm w-full border-[3px]  border-gray-400">
+            <h2 className="text-2xl font-semibold text-center mb-4 text-white">
               Login
-            </button>
-
-            {loading && (
-              <div className="mt-3">
-                <LoadingComp />
-              </div>
-            )}
-            <p className="text-white/70 text-xs text-center mt-4">
-              Don&apos;t have an account?
-              <a className="text-blue-500 hover:underline ml-1" target="_blank">
-                Request for access
-              </a>
-              .
+            </h2>
+            <p className="text-white/90 text-center mb-10">
+              Login to use Athlabs
             </p>
-          </form>
+
+            {toastObj.type && (
+              <ComonToast toastObj={toastObj} setToastObj={setToastObj} />
+            )}
+            <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block text-white/70  text-sm font-semibold mb-2"
+                >
+                  Username *
+                </label>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  className="form-input w-full px-4 py-2 border rounded-lg  border-gray-400 text-white/90  bg-transparent"
+                  placeholder="hello@alignui.com"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {formErrors.username && (
+                  <span>
+                    <p className="text-red-500 text-xs mt-1">
+                      {formErrors.username}
+                    </p>
+                  </span>
+                )}
+              </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="password"
+                  className="block text-white/70  text-sm font-semibold mb-2"
+                >
+                  Password *
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  className="form-input w-full px-4 py-2 border rounded-lg  border-gray-400 text-white/90  bg-transparent"
+                  placeholder="••••••••"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {formErrors.password && (
+                  <span>
+                    <p className="text-red-500 text-xs mt-1">
+                      {formErrors.password}
+                    </p>
+                  </span>
+                )}
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                Login
+              </button>
+
+              {loading && (
+                <div className="mt-3">
+                  <LoadingComp />
+                </div>
+              )}
+              <p className="text-white/70 text-xs text-center mt-4">
+                Don&apos;t have an account?
+                <a
+                  className="text-blue-500 hover:underline ml-1"
+                  target="_blank"
+                >
+                  Request for access
+                </a>
+                .
+              </p>
+            </form>
+          </div>
         </div>
       </div>
     </LandingLayout>

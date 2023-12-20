@@ -5,7 +5,7 @@ import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
-import { Spinner } from "flowbite-react";
+import { Spinner, Dropdown } from "flowbite-react";
 
 interface SidebarProps {
   modalOpen: boolean;
@@ -229,7 +229,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                       {groupedVideos[dateLabel]?.map((video) => (
                         <li
                           className={`relative text-white py-2.5 px-3 overflow-x-hidden hover:bg-[#171717] cursor-pointer ${
-                            activeVideo === video.video_id ? "bg-[#171717]" : ""
+                            activeVideo === video.video_id ? "bg-[#373D51]" : ""
                           }`}
                           key={video.video_id}
                         >
@@ -254,14 +254,16 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                               onClick={(event) => {
                                 event.preventDefault();
                                 getVideoDetail(video.video_id);
-                                
                               }}
                             >
                               {video.name}
                             </a>
                             {videoLoading && videoLoading[video.video_id] ? (
-                                <Spinner aria-label="Default status example" />
-                            ) :null}
+                              <Spinner
+                                className=" absolute right-5 z-20"
+                                aria-label="Default status example"
+                              />
+                            ) : null}
                           </div>
                           <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                         </li>
@@ -290,18 +292,34 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                   />
                   <span>{loggedInUser}</span>
                 </span>
-                <svg
-                  width="13"
-                  height="15"
-                  viewBox="0 0 13 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.18359 7.05176C1.2009 6.46842 1.44377 6.03092 1.9122 5.73926C2.39918 5.44759 2.88615 5.44759 3.37313 5.73926C3.84157 6.03092 4.08505 6.46842 4.10359 7.05176C4.08505 7.63509 3.84157 8.07259 3.37313 8.36426C2.88615 8.65592 2.39918 8.65592 1.9122 8.36426C1.44377 8.07259 1.2009 7.63509 1.18359 7.05176ZM5.35502 7.05176C5.37233 6.46842 5.6152 6.03092 6.08363 5.73926C6.57061 5.44759 7.05758 5.44759 7.54456 5.73926C8.01299 6.03092 8.25648 6.46842 8.27502 7.05176C8.25648 7.63509 8.01299 8.07259 7.54456 8.36426C7.05758 8.65592 6.57061 8.65592 6.08363 8.36426C5.6152 8.07259 5.37233 7.63509 5.35502 7.05176ZM10.9855 5.52148C11.5417 5.53963 11.9589 5.79435 12.237 6.28565C12.515 6.79639 12.515 7.30713 12.237 7.81787C11.9589 8.30917 11.5417 8.56454 10.9855 8.58398C10.4293 8.56454 10.0122 8.30917 9.7341 7.81787C9.456 7.30713 9.456 6.79639 9.7341 6.28565C10.0122 5.79435 10.4293 5.53963 10.9855 5.52148Z"
-                    fill="white"
-                  />
-                </svg>
+
+                <span className="">
+                  <Dropdown
+                    label=""
+                    dismissOnClick={false}
+                    className=" mt-1 bg-[#1a212f]  border-[#344054]  py-0 "
+                    renderTrigger={() => (
+                      <div className="inline-flex items-center  text-xl w-8 h-8  bg-transparent justify-center  rounded-md ">
+                        <svg
+                          width="13"
+                          height="15"
+                          viewBox="0 0 13 15"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M1.18359 7.05176C1.2009 6.46842 1.44377 6.03092 1.9122 5.73926C2.39918 5.44759 2.88615 5.44759 3.37313 5.73926C3.84157 6.03092 4.08505 6.46842 4.10359 7.05176C4.08505 7.63509 3.84157 8.07259 3.37313 8.36426C2.88615 8.65592 2.39918 8.65592 1.9122 8.36426C1.44377 8.07259 1.2009 7.63509 1.18359 7.05176ZM5.35502 7.05176C5.37233 6.46842 5.6152 6.03092 6.08363 5.73926C6.57061 5.44759 7.05758 5.44759 7.54456 5.73926C8.01299 6.03092 8.25648 6.46842 8.27502 7.05176C8.25648 7.63509 8.01299 8.07259 7.54456 8.36426C7.05758 8.65592 6.57061 8.65592 6.08363 8.36426C5.6152 8.07259 5.37233 7.63509 5.35502 7.05176ZM10.9855 5.52148C11.5417 5.53963 11.9589 5.79435 12.237 6.28565C12.515 6.79639 12.515 7.30713 12.237 7.81787C11.9589 8.30917 11.5417 8.56454 10.9855 8.58398C10.4293 8.56454 10.0122 8.30917 9.7341 7.81787C9.456 7.30713 9.456 6.79639 9.7341 6.28565C10.0122 5.79435 10.4293 5.53963 10.9855 5.52148Z"
+                            fill="white"
+                          />
+                        </svg>
+                      </div>
+                    )}
+                  >
+                    <Dropdown.Item className="text-white">
+                      Log out
+                    </Dropdown.Item>
+                  </Dropdown>
+                </span>
               </button>
             </div>
           </div>

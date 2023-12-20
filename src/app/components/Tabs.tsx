@@ -33,7 +33,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
           </button>
         ))}
       </div>
-      <div className="flex h-full w-full flex-col py-4">
+      <div className="flex h-[calc(100%-50px)] w-full flex-col pt-4">
         {tabs.map((tab) => (
           <div
             key={tab.id}
@@ -41,7 +41,9 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
               activeTab === tab.id ? "block" : "hidden"
             }`}
           >
-            <div className="flex h-full w-full flex-col">{tab.content}</div>
+            <div className="flex h-full w-full flex-col justify-between">
+              {tab.content}
+            </div>
           </div>
         ))}
       </div>

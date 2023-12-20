@@ -190,6 +190,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
                   border: "2px dashed #2F3747",
                   borderRadius: "8px",
                   backgroundColor: "#1B212E",
+
                   padding: "20px",
                   textAlign: "center",
                   overflow: "hidden",
@@ -203,6 +204,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
                   borderColor: "#2ecc71",
                 },
               }}
+              addClassNames={{ dropzone: " changeColorLabel" }}
             />
           </div>
           <input id="dropzone-file" type="file" className="hidden" />
@@ -215,33 +217,35 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         </span>
       )}
 
-      <input
-        type="text"
-        placeholder="Title"
-        className="my-5 h-11  px-5 w-full pr-10 bg-[#2F3747]  border border-white/40  rounded-lg      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600 "
-        value={name}
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-      />
-      {formErrors.name && (
-        <span>
-          <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
-        </span>
-      )}
-      <button
-        type="button"
-        disabled={loading}
-        className={`bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-7 2xl:h-10 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40    ${
-          loading
-            ? " cursor-progress "
-            : "hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white cursor-pointer"
-        }`}
-        value={"Submit"}
-        onClick={handleSubmit}
-      >
-        Submit
-      </button>
+      <div className=" flex gap-x-5 items-end mt-5">
+        <input
+          type="text"
+          placeholder="(optional) Enter exercise name"
+          className="h-11  px-5 w-full pr-10 bg-[#2F3747]  border border-white/40  rounded-lg      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600 "
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+        {formErrors.name && (
+          <span>
+            <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
+          </span>
+        )}
+        <button
+          type="button"
+          disabled={loading}
+          className={`bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-11 2xl:h-11 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40    ${
+            loading
+              ? " cursor-progress "
+              : "hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white cursor-pointer"
+          }`}
+          value={"Submit"}
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
+      </div>
     </>
   );
 };
