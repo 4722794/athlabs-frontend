@@ -91,7 +91,7 @@ const HealthApp = () => {
             <div className=" flex justify-center gap-x-20 w-full  ">
               <div className=" w-4/12"></div>
               <div className=" w-3/12   h-[calc(100%-120px)] xl:h-[calc(100%-120px)] mx-auto flex items-center justify-center ">
-                <div className="relative  w-full h-auto flex justify-center">
+                <div className="relative  w-full h-[426px] xl:h-auto flex justify-center">
                   <div className="  w-full h-auto z-10">
                     <Image
                       src="/images/iphone-x-png-29483.png"
@@ -103,7 +103,7 @@ const HealthApp = () => {
                     />
                   </div>
 
-                  <div className=" absolute overflow-hidden rounded-[50px]  top-1/2 transform -translate-y-1/2 h-[calc(100%-0px)] md:h-[calc(100%-0px)]  left-1/2  -translate-x-1/2  w-full px-1.5 ">
+                  <div className=" absolute overflow-hidden rounded-[50px]  top-1/2 transform -translate-y-1/2 h-full md:h-full  left-1/2  -translate-x-1/2  w-full px-1.5 ">
                     <div className=" relative  w-auto h-full">
                       <Image
                         src="/images/64d2e0a08848f53dee006f29_basisstack.png"
