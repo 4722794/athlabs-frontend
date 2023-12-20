@@ -67,9 +67,9 @@ const AppPage = () => {
   const [formErrors, setFormErrors] = useState({ mail: "" });
   const [loading, setLoading] = useState(false);
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const validateForm = () => {
     let valid = true;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const errors = { mail: "" };
 
     if (!mail) {
@@ -83,14 +83,13 @@ const AppPage = () => {
     return valid;
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (formId: any,e: any) => {
     e.preventDefault();
     if (validateForm()) {
       setLoading(true);
       const uriString = `/email`;
       const formData = new URLSearchParams();
       formData.append("email", mail);
-      setLoading(true);
       const contentType = "application/x-www-form-urlencoded";
       const responseData = await FECallApi(
         "POST",
@@ -103,8 +102,53 @@ const AppPage = () => {
       } else {
       }
       setLoading(false);
+	  setMail("")
     }
   };
+
+  /*Footer form (exclusive beta program)*/
+  const [betaEmail, setBetaMail] = useState("");
+  const [betaFormErrors, setBetaFormErrors] = useState({ betaEmail:"" });
+  const [betaFormloading, setBetaFormLoading] = useState(false);
+
+  const validateBetaForm = () => {
+    let valid = true;
+    const betaErrors = { betaEmail: "" };
+
+    if (!betaEmail) {
+      betaErrors.betaEmail = "Required a valid Email";
+      valid = false;
+    } else if (!emailRegex.test(betaEmail)) {
+      betaErrors.betaEmail = "Invalid email format";
+      valid = false;
+    }
+    setBetaFormErrors(betaErrors);
+    return valid;
+  };
+
+  const handleSubmitBetaForm = async (formId: any,e: any) => {
+    e.preventDefault();
+    if (validateBetaForm()) {
+      setBetaFormLoading(true);
+      const uriString = `/email`;
+      const formData = new URLSearchParams();
+      formData.append("email", betaEmail);
+      const contentType = "application/x-www-form-urlencoded";
+      const responseBetaData = await FECallApi(
+        "POST",
+        contentType,
+        formData,
+        uriString
+      );
+      console.log(responseBetaData);
+      if (responseBetaData.status) {
+      } else {
+      }
+      setBetaFormLoading(false);
+	  setBetaMail("")
+    }
+  };
+
 
   return (
     <LandingLayout>
@@ -125,12 +169,13 @@ const AppPage = () => {
                   <div className="w-full lg:w-10/12 pt-5">
                     <form
                       className="flex items-center flex-1 justify-start mt-30 relative"
-                      onSubmit={handleSubmit}
+                      onSubmit={(e) => handleSubmit('injuryFreeTraining', e)}
                     >
                       <div className="w-full relative text-left">
                         <input
                           type="text"
                           placeholder=" > enter your email"
+						  value={mail}
                           onChange={(e) => setMail(e.target.value)}
                           className="box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] pl-5 md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800 "
                         />
@@ -266,12 +311,27 @@ const AppPage = () => {
               </div>
 
               <div className="w-full lg:w-12/12 mx-auto pt-5">
-                <form className="flex items-center flex-1 justify-start mt-30 relative">
+                <form className="flex items-center flex-1 justify-start mt-30 relative" onSubmit={(e) => handleSubmitBetaForm('betaProgram', e)}>
                   <div className="w-full relative text-left">
                     <input
                       type="text"
                       className="box-border shadow-none text-[#212121] bg-[#dadada] border-1 border-[#344054]   md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800"
+					  onChange={(e) => setBetaMail(e.target.value)}
+					  value={betaEmail}
                     />
+					{betaFormErrors.betaEmail && (
+                          <span>
+                            <p className="text-red-500 text-xs mt-1">
+                              {betaFormErrors.betaEmail}
+                            </p>
+                          </span>
+                    )}
+
+                    {betaFormloading && (
+                      <div className="mt-3">
+                        <LoadingComp />
+                      </div>
+                    )}
                   </div>
 
                   <input
