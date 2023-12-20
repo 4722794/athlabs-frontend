@@ -16,12 +16,21 @@ interface GroupedVideos {
   [key: string]: any[] | undefined;
 }
 
+interface VideoLoading {
+  [videoId: string]: boolean;
+}
+
+interface Video {
+  video_id: string;
+  // Other properties of the Video object
+}
+
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
   const [activeVideo, setactiveVideo] = useState(false);
   const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
   const [loggedInUser, setLoggedInUser] = useState("");
-  const [videoLoading, setVideoLoading] = useState({});
+  const [videoLoading, setVideoLoading] = useState<VideoLoading>({});
 
   const setLoadingForVideo = (videoId: any, isLoading: any) => {
     setVideoLoading((prevLoading) => ({
@@ -136,6 +145,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
       if (responseData.status) {
         setactiveVideo(videoId);
         setActiveVideoData(responseData.data);
+        responseData.data.videos.forEach((video: Video) => {
+          videoLoading[video.video_id] = false; // Set default loading status to false
+        });
       }
     } catch (error) {
       // Handle error if needed
