@@ -13,6 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useAmp } from "next/amp";
 import { FECallApi } from "./services/apiUtils";
 import LoadingComp from "./components/LoadingComp";
+import { Spinner } from "flowbite-react";
 
 const AppPage = () => {
   const [sliderItems, setSliderItems] = useState([
@@ -143,8 +144,8 @@ const AppPage = () => {
                         )}
 
                         {loading && (
-                          <div className="mt-3">
-                            <LoadingComp />
+                          <div className=" absolute top-1/2  transform -translate-y-1/2  right-[250px]">
+                            <Spinner />
                           </div>
                         )}
                       </div>
