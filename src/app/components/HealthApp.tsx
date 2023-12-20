@@ -86,9 +86,9 @@ const HealthApp = () => {
   return (
     <>
       <div className="hp-slides__sticky-wrap z-20 pointer-events-none  absolute w-full h-full hidden lg:block">
-        <div className="hp-slides__center  sticky top-12  pt-10">
-          <div className="container mx-auto  px-6 lg:px-8">
-            <div className=" flex justify-center gap-x-20  lg:min-h-screen">
+        <div className="hp-slides__center  sticky top-12  pt-10 ">
+          <div className="container mx-auto  px-6 lg:px-8 lg:min-h-screen flex  justify-center">
+            <div className=" flex justify-center gap-x-20 w-full  ">
               <div className=" w-4/12"></div>
               <div className=" w-3/12   lg:h-[calc(100%-120px)] mx-auto flex items-center justify-center ">
                 <div className="relative  w-full h-auto flex justify-center">
