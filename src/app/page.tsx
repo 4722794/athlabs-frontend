@@ -14,6 +14,7 @@ import { useAmp } from "next/amp";
 import { FECallApi } from "./services/apiUtils";
 import LoadingComp from "./components/LoadingComp";
 import { Spinner } from "flowbite-react";
+import ComonToast from "./components/ComonToast";
 
 const AppPage = () => {
   const [sliderItems, setSliderItems] = useState([
@@ -67,6 +68,7 @@ const AppPage = () => {
   const [mail, setMail] = useState("");
   const [formErrors, setFormErrors] = useState({ mail: "" });
   const [loading, setLoading] = useState(false);
+  const [toastTObj, setToastTObj] = useState({ type: "", msg: "" });
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const validateForm = () => {
@@ -99,8 +101,15 @@ const AppPage = () => {
         uriString
       );
       console.log(responseData);
-      if (responseData.status) {
+      if (responseData.status === 200) {
+        toastTObj.type = "s";
+        toastTObj.msg =
+          "Thank you for Requesting Access code, We will get back to you.";
+        setToastTObj(toastTObj);
       } else {
+        toastTObj.type = "e";
+        toastTObj.msg = "Error submitting form";
+        setToastTObj(toastTObj);
       }
       setLoading(false);
       setMail("");
@@ -111,6 +120,7 @@ const AppPage = () => {
   const [betaEmail, setBetaMail] = useState("");
   const [betaFormErrors, setBetaFormErrors] = useState({ betaEmail: "" });
   const [betaFormloading, setBetaFormLoading] = useState(false);
+  const [toastBetaObj, setToastBetaObj] = useState({ type: "", msg: "" });
 
   const validateBetaForm = () => {
     let valid = true;
@@ -142,8 +152,15 @@ const AppPage = () => {
         uriString
       );
       console.log(responseBetaData);
-      if (responseBetaData.status) {
+      if (responseBetaData.status === 200) {
+        toastBetaObj.type = "s";
+        toastBetaObj.msg =
+          "Thank you for Joining beta program, We will get back to you.";
+        setToastBetaObj(toastBetaObj);
       } else {
+        toastBetaObj.type = "e";
+        toastBetaObj.msg = "Error submitting form";
+        setToastBetaObj(toastBetaObj);
       }
       setBetaFormLoading(false);
       setBetaMail("");
@@ -191,6 +208,15 @@ const AppPage = () => {
                           <div className=" absolute top-1/2  transform -translate-y-1/2  right-[250px]">
                             <Spinner />
                           </div>
+                        )}
+
+                        {toastTObj.type && (
+                          <span className="mt-5">
+                            <ComonToast
+                              toastObj={toastTObj}
+                              setToastObj={setToastTObj}
+                            />
+                          </span>
                         )}
                       </div>
 
@@ -333,6 +359,15 @@ const AppPage = () => {
                       <div className="mt-3">
                         <LoadingComp />
                       </div>
+                    )}
+
+                    {toastBetaObj.type && (
+                      <span className="mt-5">
+                        <ComonToast
+                          toastObj={toastBetaObj}
+                          setToastObj={setToastBetaObj}
+                        />
+                      </span>
                     )}
                   </div>
 
