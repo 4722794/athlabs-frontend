@@ -22,6 +22,7 @@ const callApi = async (method, contentType, bodyData,uriString) => {
     console.log('response',response.status)
     if(response.status === 401){
       localStorage.removeItem("athlabsAuthToken");
+      localStorage.removeItem("athlabsLoggedInUser");
       window.location.href = '/login'
     }
     const data = await response.json();

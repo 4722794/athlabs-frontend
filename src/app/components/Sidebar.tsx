@@ -20,6 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
   const [activeVideo, setactiveVideo] = useState(false);
   const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
+  const [loggedInUser, setLoggedInUser] = useState("");
 
   useEffect(() => {
     getVideoHistory();
@@ -28,6 +29,11 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     if (otherData.fetchVideoHistroy) {
       getVideoHistory();
       setOtherData({ ...otherData, fetchVideoHistroy: false });
+    }
+
+    const userFromLocalStorage = localStorage.getItem("athlabsLoggedInUser");
+    if (userFromLocalStorage) {
+      setLoggedInUser(userFromLocalStorage);
     }
   }, [otherData.fetchVideoHistroy]);
 
@@ -38,6 +44,12 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     const responseData = await callApi(method, contentType, null, uriString);
     if (responseData.status) {
       setVideoData(responseData.data.videos);
+      let TLoggedInUser = localStorage.getItem("athlabsLoggedInUser");
+      console.log("TLoggedInUser", TLoggedInUser);
+      if (responseData?.data?.email && TLoggedInUser === null) {
+        localStorage.setItem("athlabsLoggedInUser", responseData.data.email);
+        setLoggedInUser(responseData.data.email);
+      }
     }
   };
 
@@ -244,7 +256,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     width={50}
                     height={50}
                   />
-                  Bonnie Green
+                  <span>{loggedInUser}</span>
                 </span>
 
                 <span className="">
