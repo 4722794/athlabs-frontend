@@ -5,7 +5,7 @@ import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
-import { Dropdown } from "flowbite-react";
+import { Spinner, Dropdown } from "flowbite-react";
 
 interface SidebarProps {
   modalOpen: boolean;
@@ -21,6 +21,14 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [activeVideo, setactiveVideo] = useState(false);
   const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
   const [loggedInUser, setLoggedInUser] = useState("");
+  const [videoLoading, setVideoLoading] = useState({});
+
+  const setLoadingForVideo = (videoId: any, isLoading: any) => {
+    setVideoLoading((prevLoading) => ({
+      ...prevLoading,
+      [videoId]: isLoading,
+    }));
+  };
 
   useEffect(() => {
     getVideoHistory();
@@ -118,13 +126,21 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const groupedVideos = groupVideosByDate(videoData);
 
   const getVideoDetail = async (videoId: any) => {
+    setLoadingForVideo(videoId, true);
     const uriString = `/h/${videoId}`;
     const method = "GET";
     const contentType = "application/json";
-    const responseData = await callApi(method, contentType, null, uriString);
-    if (responseData.status) {
-      setactiveVideo(videoId);
-      setActiveVideoData(responseData.data);
+    try {
+      const responseData = await callApi(method, contentType, null, uriString);
+
+      if (responseData.status) {
+        setactiveVideo(videoId);
+        setActiveVideoData(responseData.data);
+      }
+    } catch (error) {
+      // Handle error if needed
+    } finally {
+      setLoadingForVideo(videoId, false); // Set loading to false after fetching details
     }
   };
 
@@ -230,6 +246,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                             >
                               {video.name}
                             </a>
+                            {videoLoading && videoLoading[video.video_id] ? (
+                              <Spinner aria-label="Default status example" />
+                            ) : null}
                           </div>
                           <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                         </li>
@@ -265,7 +284,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     dismissOnClick={false}
                     className=" mt-1 bg-[#1a212f]  border-[#344054]  py-0 "
                     renderTrigger={() => (
-                      <div className="inline-flex items-center  text-xl w-8 h-8  bg-transparent justify-center  rounded-md border border-gray-300">
+                      <div className="inline-flex items-center  text-xl w-8 h-8  bg-transparent justify-center  rounded-md ">
                         <svg
                           width="13"
                           height="15"
