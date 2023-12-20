@@ -259,7 +259,10 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                               {video.name}
                             </a>
                             {videoLoading && videoLoading[video.video_id] ? (
-                              <Spinner aria-label="Default status example" />
+                              <Spinner
+                                className=" absolute right-5 z-20"
+                                aria-label="Default status example"
+                              />
                             ) : null}
                           </div>
                           <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
