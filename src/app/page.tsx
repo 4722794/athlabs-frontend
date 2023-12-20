@@ -11,6 +11,8 @@ import Typewriter from "typewriter-effect";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useAmp } from "next/amp";
+import { FECallApi } from "./services/apiUtils";
+import LoadingComp from "./components/LoadingComp";
 
 const AppPage = () => {
   const [sliderItems, setSliderItems] = useState([
@@ -61,6 +63,48 @@ const AppPage = () => {
     autoplaySpeed: 5000,
     arrows: false,
   };
+  const [mail, setMail] = useState("");
+  const [formErrors, setFormErrors] = useState({ mail: "" });
+  const [loading, setLoading] = useState(false);
+
+  const validateForm = () => {
+    let valid = true;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const errors = { mail: "" };
+
+    if (!mail) {
+      errors.mail = "Required a valid Email";
+      valid = false;
+    } else if (!emailRegex.test(mail)) {
+      errors.mail = "Invalid email format";
+      valid = false;
+    }
+    setFormErrors(errors);
+    return valid;
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (validateForm()) {
+      setLoading(true);
+      const uriString = `/email`;
+      const formData = new URLSearchParams();
+      formData.append("email", mail);
+      setLoading(true);
+      const contentType = "application/x-www-form-urlencoded";
+      const responseData = await FECallApi(
+        "POST",
+        contentType,
+        formData,
+        uriString
+      );
+      console.log(responseData);
+      if (responseData.status) {
+      } else {
+      }
+      setLoading(false);
+    }
+  };
 
   return (
     <LandingLayout>
@@ -79,13 +123,30 @@ const AppPage = () => {
 
                 <div>
                   <div className="w-full lg:w-10/12 pt-5">
-                    <form className="flex items-center flex-1 justify-start mt-30 relative">
+                    <form
+                      className="flex items-center flex-1 justify-start mt-30 relative"
+                      onSubmit={handleSubmit}
+                    >
                       <div className="w-full relative text-left">
                         <input
                           type="text"
                           placeholder=" > enter your email"
+                          onChange={(e) => setMail(e.target.value)}
                           className="box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] pl-5 md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800 "
                         />
+                        {formErrors.mail && (
+                          <span>
+                            <p className="text-red-500 text-xs mt-1">
+                              {formErrors.mail}
+                            </p>
+                          </span>
+                        )}
+
+                        {loading && (
+                          <div className="mt-3">
+                            <LoadingComp />
+                          </div>
+                        )}
                       </div>
 
                       <input
