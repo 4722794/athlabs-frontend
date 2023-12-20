@@ -5,7 +5,7 @@ import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
-
+import { Spinner } from "flowbite-react";
 
 interface SidebarProps {
   modalOpen: boolean;
@@ -19,19 +19,27 @@ interface GroupedVideos {
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
   const [activeVideo, setactiveVideo] = useState(false);
-  const { setActiveVideoData,setOtherData,otherData } = useVideoContext();
-  const [loggedInUser, setLoggedInUser] = useState('');
+  const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
+  const [loggedInUser, setLoggedInUser] = useState("");
+  const [videoLoading, setVideoLoading] = useState({});
+
+  const setLoadingForVideo = (videoId: any, isLoading: any) => {
+    setVideoLoading((prevLoading) => ({
+      ...prevLoading,
+      [videoId]: isLoading,
+    }));
+  };
 
   useEffect(() => {
     getVideoHistory();
   }, []);
   useEffect(() => {
-    if(otherData.fetchVideoHistroy){
+    if (otherData.fetchVideoHistroy) {
       getVideoHistory();
-      setOtherData({...otherData,fetchVideoHistroy:false});
+      setOtherData({ ...otherData, fetchVideoHistroy: false });
     }
 
-    const userFromLocalStorage = localStorage.getItem('athlabsLoggedInUser');
+    const userFromLocalStorage = localStorage.getItem("athlabsLoggedInUser");
     if (userFromLocalStorage) {
       setLoggedInUser(userFromLocalStorage);
     }
@@ -45,8 +53,8 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     if (responseData.status) {
       setVideoData(responseData.data.videos);
       let TLoggedInUser = localStorage.getItem("athlabsLoggedInUser");
-      console.log('TLoggedInUser',TLoggedInUser)
-      if(responseData?.data?.email && TLoggedInUser === null){
+      console.log("TLoggedInUser", TLoggedInUser);
+      if (responseData?.data?.email && TLoggedInUser === null) {
         localStorage.setItem("athlabsLoggedInUser", responseData.data.email);
         setLoggedInUser(responseData.data.email);
       }
@@ -118,13 +126,21 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const groupedVideos = groupVideosByDate(videoData);
 
   const getVideoDetail = async (videoId: any) => {
+    setLoadingForVideo(videoId, true);
     const uriString = `/h/${videoId}`;
     const method = "GET";
     const contentType = "application/json";
-    const responseData = await callApi(method, contentType, null, uriString);
-    if (responseData.status) {
-      setactiveVideo(videoId);
-      setActiveVideoData(responseData.data);
+    try {
+      const responseData = await callApi(method, contentType, null, uriString);
+
+      if (responseData.status) {
+        setactiveVideo(videoId);
+        setActiveVideoData(responseData.data);
+      }
+    } catch (error) {
+      // Handle error if needed
+    } finally {
+      setLoadingForVideo(videoId, false); // Set loading to false after fetching details
     }
   };
 
@@ -226,10 +242,14 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                               onClick={(event) => {
                                 event.preventDefault();
                                 getVideoDetail(video.video_id);
+                                
                               }}
                             >
                               {video.name}
                             </a>
+                            {videoLoading && videoLoading[video.video_id] ? (
+                                <Spinner aria-label="Default status example" />
+                            ) :null}
                           </div>
                           <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                         </li>
@@ -256,7 +276,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     width={50}
                     height={50}
                   />
-                   <span>{loggedInUser}</span>
+                  <span>{loggedInUser}</span>
                 </span>
                 <svg
                   width="13"
