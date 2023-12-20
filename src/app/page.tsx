@@ -143,6 +143,7 @@ const AppPage = () => {
                                       autoPlay
                                       muted
                                       loop
+                                      playsInline
                                       className="  h-full w-full "
                                     >
                                       <source

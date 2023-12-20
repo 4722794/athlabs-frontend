@@ -145,6 +145,7 @@ const HealthApp = () => {
                             autoPlay
                             muted
                             loop
+                            playsInline
                             className="  w-full h-full"
                           >
                             <source
@@ -368,7 +369,13 @@ const HealthApp = () => {
                 /> */}
 
                 <div className="my_slider_image absolute w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto  px-1 my-1.5 rounded-[50px] overflow-hidden">
-                  <video autoPlay muted loop className="  w-full h-full">
+                  <video
+                    playsInline
+                    autoPlay
+                    muted
+                    loop
+                    className="  w-full h-full"
+                  >
                     <source
                       src={"/images/web/golfswing.webm"}
                       type="video/webm"

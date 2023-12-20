@@ -32,7 +32,9 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => {
             className="-mx-3 "
             heightRelativeToParent="calc(100% - 0px)"
           >
-            <div className=" px-3 " style={{whiteSpace: 'pre-line'}}>{activeVideoDetail.feedback}</div>
+            <div className=" px-3 " style={{ whiteSpace: "pre-line" }}>
+              {activeVideoDetail.feedback}
+            </div>
           </CustomScroll>
         </div>
       ) : (
@@ -207,6 +209,7 @@ const AdminPage = () => {
             ) : (
               <div className=" min-h-[300px] lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-2xl ">
                 <video
+                  playsInline
                   controls
                   className=" h-[calc(100%-66px)] mx-auto"
                   key={activeVideoDetail?.video_url}
