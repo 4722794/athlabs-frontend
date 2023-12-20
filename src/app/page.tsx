@@ -17,19 +17,19 @@ const AppPage = () => {
     {
       id: 1,
       type: "image",
-      src: "/images/web/kettlebelldl.webm",
+      src: "/images/mp4/kettlebelldl.mp4",
       text: "Push hips back…",
     },
     {
       id: 2,
       type: "image",
-      src: "/images/web/boxjumps.webm",
+      src: "/images/mp4/boxjumps.mp4",
       text: "Land softly,extend hips at top...",
     },
     {
       id: 3,
       type: "image",
-      src: "/images/web/deadlift.webm",
+      src: "/images/mp4/deadlift.mp4",
       text: "Back straight, Engage your Glutes…",
     },
   ]);
@@ -146,10 +146,7 @@ const AppPage = () => {
                                       playsInline
                                       className="  h-full w-full "
                                     >
-                                      <source
-                                        src={item.src}
-                                        type="video/webm"
-                                      />
+                                      <source src={item.src} type="video/mp4" />
                                     </video>
                                   </div>
 
