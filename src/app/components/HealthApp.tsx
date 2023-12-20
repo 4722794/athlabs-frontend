@@ -149,8 +149,8 @@ const HealthApp = () => {
                             className="  w-full h-full"
                           >
                             <source
-                              src={"/images/web/golfswing.webm"}
-                              type="video/webm"
+                              src={"/images/mp4/golfswingfull.mp4"}
+                              type="video/mp4"
                             />
                           </video>
                         </div>
@@ -377,8 +377,8 @@ const HealthApp = () => {
                     className="  w-full h-full"
                   >
                     <source
-                      src={"/images/web/golfswing.webm"}
-                      type="video/webm"
+                      src={"/images/mp4/golfswingfull.mp4"}
+                      type="video/mp4"
                     />
                   </video>
                 </div>
