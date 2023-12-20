@@ -33,7 +33,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
           </button>
         ))}
       </div>
-      <div className="flex h-[calc(100%-75px)] w-full flex-col py-4">
+      <div className="flex h-[calc(100%-50px)] w-full flex-col pt-4">
         {tabs.map((tab) => (
           <div
             key={tab.id}

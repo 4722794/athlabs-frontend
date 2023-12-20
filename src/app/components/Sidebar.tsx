@@ -6,7 +6,6 @@ import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
 
-
 interface SidebarProps {
   modalOpen: boolean;
   toggleSidebar: () => void;
@@ -19,15 +18,15 @@ interface GroupedVideos {
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
   const [activeVideo, setactiveVideo] = useState(false);
-  const { setActiveVideoData,setOtherData,otherData } = useVideoContext();
+  const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
 
   useEffect(() => {
     getVideoHistory();
   }, []);
   useEffect(() => {
-    if(otherData.fetchVideoHistroy){
+    if (otherData.fetchVideoHistroy) {
       getVideoHistory();
-      setOtherData({...otherData,fetchVideoHistroy:false});
+      setOtherData({ ...otherData, fetchVideoHistroy: false });
     }
   }, [otherData.fetchVideoHistroy]);
 
@@ -189,7 +188,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                       {groupedVideos[dateLabel]?.map((video) => (
                         <li
                           className={`relative text-white py-2.5 px-3 overflow-x-hidden hover:bg-[#171717] cursor-pointer ${
-                            activeVideo === video.video_id ? "bg-[#171717]" : ""
+                            activeVideo === video.video_id ? "bg-[#373D51]" : ""
                           }`}
                           key={video.video_id}
                         >

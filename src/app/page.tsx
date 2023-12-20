@@ -98,7 +98,7 @@ const AppPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="   w-[226px] sm:w-[326px] md:w-[326px] lg:w-4/12 2xl:w-4/12  flex justify-center lg:justify-center mx-auto lg:mr-0">
+              <div className="   w-[266px] sm:w-[356px] md:w-[326px] lg:w-4/12 2xl:w-4/12  flex justify-center lg:justify-center mx-auto lg:mr-0">
                 <div className="relative w-full   lg:w-10/12 xl:w-7/12 2xl:w-8/12 ">
                   {/* <div className=" w-[calc(100%-8px)] h-full absolute bg-white  rounded-[50px] z-0 left-1"></div> */}
                   <Image
@@ -209,6 +209,7 @@ const AppPage = () => {
                   <div className="w-full relative text-left">
                     <input
                       type="text"
+                      placeholder=" > enter your email"
                       className="box-border shadow-none text-[#212121] bg-[#dadada] border-1 border-[#344054]   md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800"
                     />
                   </div>
@@ -217,7 +218,7 @@ const AppPage = () => {
                     type="submit"
                     value="Get access"
                     data-wait="..."
-                    className="px-3 md:px-0 md:w-[200px] cursor-pointer text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded-sm bg-[#a11043] h-10 xl:h-12 2xl:min-h-[60px] absolute right-1 xl:right-1 2xl:right-2 top-1 xl:top-1 2xl:top-2 overflow-visible"
+                    className="px-3 md:px-0 md:w-[200px] cursor-pointer text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded-sm bg-gradient-to-r from-[#101828] to-[#44366a]  h-10 xl:h-12 2xl:min-h-[60px] absolute right-1 xl:right-1 2xl:right-2 top-1 xl:top-1 2xl:top-2 overflow-visible"
                   />
                 </form>
               </div>

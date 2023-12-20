@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { checkLogin } from "../services/apiUtils";
+import { Dropdown } from "flowbite-react";
 
 interface HeaderProps {
   showButton?: boolean;
@@ -34,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
     <>
       <header className="bg-[#04080f]   text-white text-left items-center flex fixed w-full top-0 z-30 h-14 md:h-16  lg:h-16 xl:h-16 2xl:h-24 border-b border-gray-800">
         <div className="container mx-auto self-center px-6 md:px-8 flex justify-between items-center">
-          <a  href="/" className=" inline-flex h-8 xl:h-8 2xl:h-10 ">
+          <a href="/" className=" inline-flex h-8 xl:h-8 2xl:h-10 ">
             <Image
               src={"/images/logo.svg"}
               width={230}
@@ -47,6 +48,51 @@ const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
           {showButton ? (
             <>
               <div
+                className="inline-flex lg:hidden 
+              "
+              >
+                <Dropdown
+                  label=""
+                  dismissOnClick={false}
+                  className=" mt-1 bg-[#1a212f]  border-[#344054]  py-0 "
+                  renderTrigger={() => (
+                    <div className="inline-flex items-center  text-xl w-8 h-8  bg-transparent justify-center  rounded-full border border-gray-300">
+                      <svg
+                        stroke="currentColor"
+                        fill="currentColor"
+                        strokeWidth="0"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        height="1em"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+                          clipRule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                  )}
+                >
+                  <Dropdown.Item onClick={joinUSAction} className="text-white">
+                    JOIN US
+                  </Dropdown.Item>
+                  <Dropdown.Item className="text-white ">
+                    REQUEST DEMO
+                  </Dropdown.Item>
+                  <a
+                    className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
+                    onClick={(e) => goForLogin(e)}
+                    href="/"
+                  >
+                    GO TO APP
+                  </a>
+                </Dropdown>
+              </div>
+
+              {/* <div
                 onClick={mobileMenuOpen}
                 className="inline-flex lg:hidden items-center  text-xl w-8 h-8  bg-transparent justify-center  rounded-full border border-gray-300"
               >
@@ -66,7 +112,8 @@ const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
                     clipRule="evenodd"
                   ></path>
                 </svg>
-              </div>
+                
+              </div> */}
               <div className=" hidden lg:inline-flex items-center gap-x-5">
                 <a
                   className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"

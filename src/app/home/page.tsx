@@ -104,12 +104,12 @@ const Tab2Content = () => {
   };
 
   return (
-    <div className=" flex h-full w-full">
+    <div className=" flex  h-[calc(100vh-200px)] lg:h-full w-full">
       <div className=" flex flex-col w-full h-full justify-between">
-        <div className=" h-full">
+        <div className="h-[calc(100%-70px)]">
           <CustomScroll
             className="-mx-2"
-            heightRelativeToParent="calc(100% - 20px)"
+            heightRelativeToParent="calc(100% - 0px)"
           >
             <Chat />
           </CustomScroll>
@@ -123,7 +123,7 @@ const Tab2Content = () => {
             >
               <input
                 type="text"
-                className=" h-11  px-5 w-full pr-10 bg-[#2F3747]  border border-white/40  rounded-lg
+                className=" h-11  px-5 w-full pr-16 bg-[#2F3747]  border border-white/40  rounded-lg
 
                    ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600
                   "
@@ -145,7 +145,7 @@ const Tab2Content = () => {
                 </div>
               ) : (
                 <button
-                  className=" absolute right-2.5 top-2.5 text-white hover:text-cyan-500"
+                  className=" absolute right-5 top-1/2 transform -translate-y-1/2 text-white hover:text-cyan-500"
                   type="submit"
                 >
                   <svg
@@ -198,14 +198,14 @@ const AdminPage = () => {
   return (
     <HomeLayout>
       <div className="flex w-full  px-6 pt-0">
-        <div className="flex w-full flex-col lg:flex-row  gap-x-5 gap-y-2">
+        <div className="flex w-full flex-col lg:flex-row  gap-x-5 gap-y-2  pb-5 lg:py-0">
           <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl  ">
             {!activeVideoDetail?.video_url ? (
-              <div>
+              <div className=" flex flex-col">
                 <InputFileUpload onDataFromChild={handleChildData} />
               </div>
             ) : (
-              <div className="min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-2xl ">
+              <div className=" min-h-[300px] lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-2xl ">
                 <video
                   controls
                   className=" h-[calc(100%-66px)] mx-auto"
