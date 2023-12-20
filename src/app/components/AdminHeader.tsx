@@ -7,6 +7,7 @@ const Header = () => {
 
   const logOut = () => {
     localStorage.removeItem("athlabsAuthToken");
+    localStorage.removeItem("athlabsLoggedInUser");
     const tokenAfterRemoval = localStorage.getItem("athlabsAuthToken");
     if (tokenAfterRemoval === null) {
       router.push("/login");

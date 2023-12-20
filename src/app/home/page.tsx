@@ -32,7 +32,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => {
             className="-mx-3 "
             heightRelativeToParent="calc(100% - 0px)"
           >
-            <div className=" px-3 ">{activeVideoDetail.feedback}</div>
+            <div className=" px-3 " style={{whiteSpace: 'pre-line'}}>{activeVideoDetail.feedback}</div>
           </CustomScroll>
         </div>
       ) : (
