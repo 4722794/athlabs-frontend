@@ -115,7 +115,7 @@ const RequestDemo: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
                       {/* <Button color="dark">Submit</Button>  */}
                       <input
                         type="submit"
-                        value="Join Us"
+                        value="Get access"
                         data-wait="..."
                         className=" z-30 cursor-pointer group flex items-center justify-center p-0.5 px-3 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-gray-800 border border-transparent enabled:hover:bg-gray-900 focus:ring-gray-300 dark:bg-gray-800 dark:enabled:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 rounded focus:ring-2
                       bg-gradient-to-r from-[#101828] to-[#44366a]
