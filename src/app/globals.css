@@ -82,3 +82,7 @@ html {
 .react-confirm-alert-button-group button {
   @apply first:bg-red-600;
 }
+
+/* .myTypewriter .Typewriter__cursor {
+  @apply hidden;
+} */
