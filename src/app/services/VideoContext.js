@@ -6,7 +6,10 @@ const VideoContext = createContext();
 
 export const VideoProvider = ({ children }) => {
   const [activeVideoDetail, setVideoDetail] = useState(null);
-  const [otherData, setOtherData] = useState({ fetchVideoHistroy: false });
+  const [otherData, setOtherData] = useState({
+    fetchVideoHistroy: false,
+    enableTypeWritter: false,
+  });
 
   const setActiveVideoData = (data) => {
     setVideoDetail(data);
