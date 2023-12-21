@@ -67,3 +67,18 @@ html {
 .changeColorLabel {
   @apply hover:!bg-[#373D51] hover:!border-white;
 }
+
+.react-confirm-alert-body {
+  @apply !text-center;
+}
+.react-confirm-alert-body h1 {
+  @apply text-center text-2xl mb-4 text-gray-800;
+}
+
+.react-confirm-alert-button-group {
+  @apply !justify-center;
+}
+
+.react-confirm-alert-button-group button {
+  @apply first:bg-red-600;
+}
