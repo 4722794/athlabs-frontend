@@ -265,14 +265,14 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     <ul className="">
                       {groupedVideos[dateLabel]?.map((video) => (
                         <li
-                          className={`relative text-white py-2.5 px-3   ${
+                          className={`relative text-white py-1 px-3   ${
                             activeVideo === video.video_id
                               ? "bg-[#373D51]"
                               : "hover:bg-[#171717] cursor-pointer"
                           }`}
                           key={video.video_id}
                         >
-                          <i className=" absolute left-3 z-0">
+                          <i className=" absolute left-3 z-0 top-3">
                             <svg
                               width="16"
                               height="16"
@@ -286,9 +286,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                               />
                             </svg>
                           </i>
-                          <div className="pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden">
+                          <div className="pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden h-8 flex items-center">
                             {" "}
-                            <div className=" relative">
+                            <div className=" relative overflow-hidden self-center w-full">
                               <div className="text-ellipsis overflow-hidden pr-2 ">
                                 <a
                                   href="/"
@@ -302,14 +302,13 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                               </div>
 
                               {/* <input className=" h-5 !bg-transparent border-0 border-white/40  rounded-md      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600" /> */}
-
-                              {videoLoading && videoLoading[video.video_id] ? (
-                                <Spinner
-                                  className=" absolute right-5 z-20"
-                                  aria-label="Default status example"
-                                />
-                              ) : null}
                             </div>
+                            {videoLoading && videoLoading[video.video_id] ? (
+                              <Spinner
+                                className=" absolute right-5 z-20"
+                                aria-label="Default status example"
+                              />
+                            ) : null}
                           </div>
 
                           {activeVideo === video.video_id ? (
@@ -317,7 +316,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                               label=""
                               dismissOnClick={false}
                               renderTrigger={() => (
-                                <span className=" absolute right-2 top-1 z-20">
+                                <span className=" absolute right-2 top-1.5 z-20">
                                   <button
                                     className="inline-flex items-center p-1.5 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-transparent dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                                     type="button"
