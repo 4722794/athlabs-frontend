@@ -177,7 +177,7 @@ const AppPage = () => {
           <div className="py-0 bg-[#04080f]   min-h-[550px] items-center 2xl:pt-5 pb-10 md:pb-0">
             <div className="container mx-auto  px-6 md:px-8 flex flex-wrap lg:flex-nowrap items-center justify-between pt-20 2xl:pt-24  pb-20 h-full gap-y-12">
               <div className=" w-full lg:w-8/12">
-                <h2 className=" text-3xl  md:text-5xl  xl:text-6xl  2xl:text-8xl font-bold mb-6 text-[#98a2b3] leading-10 md:leading-[4rem] xl:leading-[5rem] 2xl:leading-[7.5rem] text-center md:text-left">
+                <h2 className=" text-3xl  md:text-5xl  xl:text-6xl  2xl:text-8xl font-bold mb-6 text-[#98a2b3] leading-10 md:leading-[4rem] xl:leading-[5rem] 2xl:leading-[7.5rem] text-center lg:text-left">
                   <div>Precision feedback</div>
                   Peak performance
                 </h2>
@@ -197,7 +197,7 @@ const AppPage = () => {
                           placeholder=" > enter your email"
                           value={mail}
                           onChange={(e) => setMail(e.target.value)}
-                          className="box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] pl-5 md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800 "
+                          className="box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] pl-5 md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800 rounded "
                         />
                         {formErrors.mail && (
                           <span>
@@ -214,10 +214,12 @@ const AppPage = () => {
                         )}
 
                         {toastTObj.type && (
-                          <ComonToast
-                            toastObj={toastTObj}
-                            setToastObj={setToastTObj}
-                          />
+                          <div className=" absolute mt-0 top-0">
+                            <ComonToast
+                              toastObj={toastTObj}
+                              setToastObj={setToastTObj}
+                            />
+                          </div>
                         )}
                       </div>
 
@@ -225,7 +227,7 @@ const AppPage = () => {
                         type="submit"
                         value="Get access"
                         data-wait="..."
-                        className=" px-3 md:px-0 md:w-[200px] cursor-pointer  text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded-sm bg-gradient-to-r from-[#101828] to-[#44366a] h-10 xl:h-12 2xl:h-[60px] absolute right-1 2xl:right-2 top-1 2xl:top-2 overflow-visible"
+                        className=" px-3 md:px-0 md:w-[200px] cursor-pointer  text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded bg-gradient-to-r from-[#101828] to-[#44366a] h-10 xl:h-12 2xl:h-[60px] absolute right-1 2xl:right-2 top-1 2xl:top-2 overflow-visible"
                       />
                     </form>
                   </div>
@@ -344,7 +346,7 @@ const AppPage = () => {
                     <input
                       type="text"
                       placeholder=" > enter your email"
-                      className="box-border shadow-none text-[#212121] bg-[#dadada] border-1 border-[#344054]   md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800"
+                      className="box-border shadow-none text-[#212121] bg-[#dadada] border-1 border-[#344054]   md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800 rounded"
                       onChange={(e) => setBetaMail(e.target.value)}
                       value={betaEmail}
                     />
@@ -357,26 +359,25 @@ const AppPage = () => {
                     )}
 
                     {betaFormloading && (
-                      <div className="mt-3">
-                        <LoadingComp />
+                      <div className=" absolute top-1/2  transform -translate-y-1/2  right-[250px]">
+                        <Spinner color="purple" />
                       </div>
-                    )}
-
-                    {toastBetaObj.type && (
-                      <span className="mt-5">
-                        <ComonToast
-                          toastObj={toastBetaObj}
-                          setToastObj={setToastBetaObj}
-                        />
-                      </span>
                     )}
                   </div>
 
+                  {toastBetaObj.type && (
+                    <span className=" absolute mt-0 top-0">
+                      <ComonToast
+                        toastObj={toastBetaObj}
+                        setToastObj={setToastBetaObj}
+                      />
+                    </span>
+                  )}
                   <input
                     type="submit"
                     value="Get access"
                     data-wait="..."
-                    className="px-3 md:px-0 md:w-[200px] cursor-pointer text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded-sm bg-gradient-to-r from-[#101828] to-[#44366a]  h-10 xl:h-12 2xl:min-h-[60px] absolute right-1 xl:right-1 2xl:right-2 top-1 xl:top-1 2xl:top-2 overflow-visible"
+                    className="px-3 md:px-0 md:w-[200px] cursor-pointer text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded-sm bg-gradient-to-r from-[#101828] to-[#44366a]  h-10 xl:h-12 2xl:min-h-[60px] absolute right-1 xl:right-1 2xl:right-2 top-1 xl:top-1 2xl:top-2 overflow-visible rounded"
                   />
                 </form>
               </div>
