@@ -160,6 +160,42 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     setActiveVideoData(null);
   };
 
+  const removeVideoHistory = async (videoId: any) => {
+    setLoadingForVideo(videoId, true);
+    const uriString = `/h/${videoId}`;
+    const method = "DELETE";
+    const contentType = "application/json";
+    try {
+      const responseData = await callApi(method, contentType, null, uriString);
+      if (responseData.status) { 
+        getVideoHistory(); 
+      }
+    } catch (error) {
+      // Handle error if needed
+    } finally {
+      setLoadingForVideo(videoId, false); // Set loading to false after fetching details
+    }
+  };
+
+  const updateVideoTitle = async (videoId: any) => {
+    setLoadingForVideo(videoId, true);
+    const videoName = encodeURIComponent('CSS_test');
+    const uriString = `/h/${videoId}?name=${videoName}`;
+    const method = "PATCH";
+    const contentType = "application/json";
+    
+    try {
+      const responseData = await callApi(method, contentType, null, uriString);
+      if (responseData.status) { 
+        getVideoHistory(); 
+      }
+    } catch (error) {
+      // Handle error if needed
+    } finally {
+      setLoadingForVideo(videoId, false); // Set loading to false after fetching details
+    }
+  };
+
   return (
     <div
       className={`dark flex-shrink-0  bg-[#1B212E] absolute h-full z-40 lg:relative  ${
@@ -257,6 +293,16 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                               }}
                             >
                               {video.name}
+                            </a>
+                            |
+                            <a
+                              href="/"
+                              onClick={(event) => {
+                                event.preventDefault();
+                                removeVideoHistory(video.video_id);
+                              }}
+                            >
+                              Delete
                             </a>
                             {videoLoading && videoLoading[video.video_id] ? (
                               <Spinner
