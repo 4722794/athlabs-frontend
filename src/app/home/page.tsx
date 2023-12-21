@@ -121,7 +121,7 @@ const Tab2Content = () => {
           </CustomScroll>
         </div>
         <div className=" ">
-          <div className=" inline-flex  w-full">
+          <div className=" inline-flex  w-full flex-col">
             <form
               className=" relative w-full"
               onSubmit={handleSubmit}
@@ -137,13 +137,6 @@ const Tab2Content = () => {
                 value={textMsg}
                 onChange={(e) => setText(e.target.value)}
               />
-              {formErrors.textMsg && (
-                <span>
-                  <p className="text-red-500 text-xs mt-1">
-                    {formErrors.textMsg}
-                  </p>
-                </span>
-              )}
 
               {loading ? (
                 <div className="absolute right-2.5 top-2.5">
@@ -169,6 +162,14 @@ const Tab2Content = () => {
                 </button>
               )}
             </form>
+
+            {formErrors.textMsg && (
+              <span>
+                <p className="text-red-500 text-xs mt-1">
+                  {formErrors.textMsg}
+                </p>
+              </span>
+            )}
           </div>
         </div>
       </div>

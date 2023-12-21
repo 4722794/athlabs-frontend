@@ -102,7 +102,9 @@ const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
                 )}
 
                 {toastObj.type && (
-                  <span className="mt-5"><ComonToast toastObj={toastObj} setToastObj={setToastObj} /></span>
+                  <span className="mt-5">
+                    <ComonToast toastObj={toastObj} setToastObj={setToastObj} />
+                  </span>
                 )}
               </div>
 
@@ -112,7 +114,7 @@ const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
                   type="submit"
                   value="Submit"
                   data-wait="..."
-                  className="group flex items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-gray-800 border border-transparent enabled:hover:bg-gray-900 focus:ring-gray-300 dark:bg-gray-800 dark:enabled:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 rounded-lg focus:ring-2"
+                  className="group flex items-center justify-center p-0.5 px-3 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-gray-800 border border-transparent enabled:hover:bg-gray-900 focus:ring-gray-300 dark:bg-gray-800 dark:enabled:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 rounded-lg focus:ring-2"
                   color="dark"
                 />
               </div>

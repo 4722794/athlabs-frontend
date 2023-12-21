@@ -223,6 +223,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
           placeholder="(optional) Enter exercise name"
           className="h-11  px-5 w-full pr-10 bg-[#2F3747]  border border-white/40  rounded-lg      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600 "
           value={name}
+          maxLength={30}
           onChange={(e) => {
             setName(e.target.value);
           }}

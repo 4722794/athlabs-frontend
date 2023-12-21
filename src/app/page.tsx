@@ -170,7 +170,7 @@ const AppPage = () => {
   return (
     <LandingLayout>
       <div className="relative z-20">
-        <section className="  lg:sticky top-0  ">
+        <section className="  xl:sticky top-0  ">
           <div className="py-0 bg-[#04080f]   min-h-[550px] items-center 2xl:pt-5 pb-10 md:pb-0">
             <div className="container mx-auto  px-6 md:px-8 flex flex-wrap lg:flex-nowrap items-center justify-between pt-20 2xl:pt-24  pb-20 h-full gap-y-12">
               <div className=" w-full lg:w-8/12">

@@ -7,7 +7,7 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ className }) => {
   return (
     <footer
-      className={`bg-[#04080f]  text-white text-left items-center flex w-full top-auto bottom-0 z-10  border-b border-gray-800 sticky ${className}`}
+      className={`bg-[#04080f]  text-white text-left items-center flex w-full top-auto bottom-0 z-10  border-b border-gray-800 xl:sticky ${className}`}
     >
       <div className="container mx-auto self-center px-6 md:px-8 ">
         <div className="flex flex-wrap lg:flex-nowrap justify-end pt-14 pb-7 md:pt-10 xl:pb-7 2xl:pb-10 gap-y-10">
