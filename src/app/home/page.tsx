@@ -202,13 +202,13 @@ const AdminPage = () => {
     <HomeLayout>
       <div className="flex w-full  px-6 pt-0">
         <div className="flex w-full flex-col lg:flex-row  gap-x-5 gap-y-2  pb-5 lg:py-0">
-          <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-2xl overflow-hidden  ">
+          <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-md xl:rounded-xl 2xl:rounded-xl overflow-hidden  ">
             {!activeVideoDetail?.video_url ? (
               <div className=" flex flex-col">
                 <InputFileUpload onDataFromChild={handleChildData} />
               </div>
             ) : (
-              <div className=" min-h-[300px] lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-2xl ">
+              <div className=" min-h-[300px] lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-xl ">
                 <video
                   playsInline
                   controls
@@ -227,8 +227,8 @@ const AdminPage = () => {
               </div>
             )}
           </div>
-          <div className="flex flex-col relative bg-[#1B212E]  w-full lg:w-4/12 rounded-2xl ">
-            <div className=" min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-2xl">
+          <div className="flex flex-col relative bg-[#1B212E]  w-full lg:w-4/12 rounded-xl ">
+            <div className=" min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-xl">
               <Tabs tabs={tabs} />
             </div>
           </div>

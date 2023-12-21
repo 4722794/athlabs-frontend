@@ -5,7 +5,7 @@ import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
-import { Spinner, Dropdown } from "flowbite-react";
+import { Spinner, Dropdown, Avatar } from "flowbite-react";
 
 interface SidebarProps {
   modalOpen: boolean;
@@ -172,7 +172,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
             <div className="sticky left-0 right-0 top-0 z-20 bg-[#1B212E] py-2.5 min-h-[56px]">
               <div className=" flex justify-between px-3 gap-x-3">
                 <button
-                  className=" grow  text-white border border-[#484A4E] px-3 py-2.5 rounded-md"
+                  className=" grow  text-white border border-[#484A4E] px-3 py-2.5 rounded-md hover:bg-[#373D51]"
                   onClick={() => clearPage()}
                 >
                   <div className=" flex items-center gap-x-2">
@@ -192,7 +192,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                   </div>
                 </button>
                 <button
-                  className=" grow-0 toggle-button  text-white w-10 border border-[#484A4E] inline-flex justify-center items-center rounded-md "
+                  className=" grow-0 toggle-button  text-white w-10 border border-[#484A4E] inline-flex justify-center items-center rounded-md  hover:bg-[#373D51]"
                   onClick={toggleSidebar}
                 >
                   {modalOpen ? (
@@ -281,15 +281,17 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                 className="flex items-center text-sm font-medium text-white rounded-full h-full w-full px-3 justify-between"
                 type="button"
               >
-                <span className=" inline-flex pe-1 items-center">
+                <span className=" inline-flex pe-1 items-center gap-2">
                   <span className="sr-only">Open user menu</span>
-                  <Image
+                  {/* <Image
                     className="w-8 h-8 me-2 rounded-lg"
                     src="/images/2.jpg"
                     alt="user photo"
                     width={50}
                     height={50}
-                  />
+                  /> */}
+
+                  <Avatar size={"md"} rounded />
                   <span>{loggedInUser}</span>
                 </span>
 
