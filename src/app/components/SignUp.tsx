@@ -101,7 +101,7 @@ const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
                   <div className=" relative  drop-shadow-2xl ">
                     <input
                       className="block w-full border disabled:cursor-not-allowed disabled:opacity-50 box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] sm:text-md rounded
-                      pr-[230px]
+                      pr-[130px] lg:pr-[230px]
                       px-4 py-3
                       lg:p-4 
 

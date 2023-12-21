@@ -99,7 +99,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   const Preview = ({ meta }: any) => {
     const { name, percent, status } = meta;
     return (
-      <div className="flex items-center justify-center w-full min-h-[200px] h-full bg-[#1B212E] rounded-md border-dash border-2 border-[#2F3747]  flex-col lg:flex-row py-5  lg:py-7 ">
+      <div className="flex items-center justify-center w-full min-h-[200px] h-full bg-[#1B212E] rounded-md border-dash border-2 border-[#2F3747]  flex-col lg:flex-row py-5  lg:py-7 px-4 ">
         <div className=" relative">
           {loading && <Spinner aria-label="Default status example" size="xl" />}
         </div>

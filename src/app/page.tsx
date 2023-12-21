@@ -197,7 +197,9 @@ const AppPage = () => {
                           placeholder=" > enter your email"
                           value={mail}
                           onChange={(e) => setMail(e.target.value)}
-                          className="box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] pl-5 md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800 rounded "
+                          className="box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] pl-5 md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800 rounded
+                          
+                          pr-[130px] lg:pr-[230px]"
                         />
                         {formErrors.mail && (
                           <span>
@@ -214,7 +216,7 @@ const AppPage = () => {
                         )}
 
                         {toastTObj.type && (
-                          <div className=" absolute mt-0 top-0">
+                          <div className=" absolute mt-0 top-0 z-20">
                             <ComonToast
                               toastObj={toastTObj}
                               setToastObj={setToastTObj}
@@ -346,7 +348,7 @@ const AppPage = () => {
                     <input
                       type="text"
                       placeholder=" > enter your email"
-                      className="box-border shadow-none text-[#212121] bg-[#dadada] border-1 border-[#344054]   md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800 rounded"
+                      className="box-border shadow-none text-[#212121] bg-[#dadada] border-1 border-[#344054]   md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800 rounded   pr-[130px] lg:pr-[230px]"
                       onChange={(e) => setBetaMail(e.target.value)}
                       value={betaEmail}
                     />
@@ -366,7 +368,7 @@ const AppPage = () => {
                   </div>
 
                   {toastBetaObj.type && (
-                    <span className=" absolute mt-0 top-0">
+                    <span className=" absolute mt-0 top-0 z-20">
                       <ComonToast
                         toastObj={toastBetaObj}
                         setToastObj={setToastBetaObj}
