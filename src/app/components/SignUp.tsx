@@ -1,6 +1,13 @@
 "use client";
 
-import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
+import {
+  Button,
+  Checkbox,
+  Label,
+  Modal,
+  Spinner,
+  TextInput,
+} from "flowbite-react";
 import { useState } from "react";
 import { FECallApi } from "../services/apiUtils";
 import LoadingComp from "./LoadingComp";
@@ -41,7 +48,7 @@ const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
       const uriString = `/mail`;
       const formData = new URLSearchParams();
       formData.append("email", mail);
-      formData.append("type", 'coach');
+      formData.append("type", "coach");
       const contentType = "application/x-www-form-urlencoded";
       const responseData = await FECallApi(
         "POST",
@@ -52,7 +59,9 @@ const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
       console.log(responseData);
       if (responseData.status === 200) {
         toastObj.type = "s";
-        toastObj.msg = responseData?.data?.message || "Thank you for Sign up, We will get back to you.";
+        toastObj.msg =
+          responseData?.data?.message ||
+          "Thank you for Sign up, We will get back to you.";
         setToastObj(toastObj);
       } else {
         toastObj.type = "e";
@@ -77,47 +86,66 @@ const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
         <form onSubmit={(e) => handleSubmit("demoForm", e)}>
           <div className="space-y-6 flex flex-col justify-center relative z-20">
             <h3 className="text-4xl font-bold text-gray-900 dark:text-white text-center py-7">
-              Sign up for our beta software today.
+              Are you a coach?
             </h3>
 
-            <div className=" w-full md:w-10/12 flex lg:w-6/12 gap-x-5 mx-auto pt-12 pb-16 ">
-              <div className=" w-full">
-                <TextInput
-                  id="email"
-                  placeholder="name@company.com"
-                  value={mail}
-                  onChange={(event) => setMail(event.target.value)}
-                />
-                {formErrors.mail && (
-                  <span>
-                    <p className="text-red-500 text-xs mt-1">
-                      {formErrors.mail}
-                    </p>
-                  </span>
-                )}
+            <p className=" text-center text-2xl">
+              Join Athlabs to deliver precise, instructive feedback that drives
+              <br />
+              your athletes and clients to peak performance
+            </p>
 
-                {loading && (
-                  <div className="mt-3">
-                    <LoadingComp />
+            <div className=" w-full md:w-10/12 flex lg:w-9/12 gap-x-5 mx-auto pt-12 pb-16 ">
+              <div className=" w-full">
+                <div className=" relative">
+                  <div className=" relative">
+                    <input
+                      className="block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 sm:text-md rounded
+                      pr-[230px]
+                      px-4 py-3
+                      lg:p-4 
+
+                      "
+                      id="email"
+                      placeholder="> enter your email"
+                      value={mail}
+                      onChange={(event) => setMail(event.target.value)}
+                    />
+
+                    <div className="inline-flex absolute top-1/2 transform -translate-y-1/2 right-1">
+                      {/* <Button color="dark">Submit</Button>  */}
+                      <input
+                        type="submit"
+                        value="Join Us"
+                        data-wait="..."
+                        className=" z-30 cursor-pointer group flex items-center justify-center p-0.5 px-3 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-gray-800 border border-transparent enabled:hover:bg-gray-900 focus:ring-gray-300 dark:bg-gray-800 dark:enabled:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 rounded focus:ring-2
+                      bg-gradient-to-r from-[#101828] to-[#44366a]
+                      h-11 w-[120px] lg:w-[200px]  2xl:w-[200px] lg:h-[50px] 2xl:h-[50px]
+                      "
+                        color="dark"
+                      />
+                    </div>
                   </div>
-                )}
+                  {formErrors.mail && (
+                    <span>
+                      <p className="text-red-500 text-xs mt-1">
+                        {formErrors.mail}
+                      </p>
+                    </span>
+                  )}
+
+                  {loading && (
+                    <div className=" absolute top-1/2  transform -translate-y-1/2 right-[130px]  lg:right-[250px]">
+                      <Spinner color="purple" />
+                    </div>
+                  )}
+                </div>
 
                 {toastObj.type && (
                   <span className="mt-5">
                     <ComonToast toastObj={toastObj} setToastObj={setToastObj} />
                   </span>
                 )}
-              </div>
-
-              <div className="inline-flex">
-                {/* <Button color="dark">Submit</Button>  */}
-                <input
-                  type="submit"
-                  value="Submit"
-                  data-wait="..."
-                  className="group flex items-center justify-center p-0.5 px-3 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-gray-800 border border-transparent enabled:hover:bg-gray-900 focus:ring-gray-300 dark:bg-gray-800 dark:enabled:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 rounded-lg focus:ring-2"
-                  color="dark"
-                />
               </div>
             </div>
           </div>
