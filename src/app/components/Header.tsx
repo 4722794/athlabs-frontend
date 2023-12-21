@@ -7,9 +7,10 @@ import { Dropdown } from "flowbite-react";
 interface HeaderProps {
   showButton?: boolean;
   joinUSAction?: any;
+  requestAction?:any;
 }
 
-const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
+const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction, requestAction }) => {
   const [openmenu, setOpenMenu] = useState(false);
   const router = useRouter();
   const mobileMenuOpen = () => {
@@ -79,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
                   <Dropdown.Item onClick={joinUSAction} className="text-white">
                     JOIN US
                   </Dropdown.Item>
-                  <Dropdown.Item className="text-white ">
+                  <Dropdown.Item onClick={requestAction} className="text-white ">
                     REQUEST DEMO
                   </Dropdown.Item>
                   <a
@@ -121,7 +122,7 @@ const Header: React.FC<HeaderProps> = ({ showButton = true, joinUSAction }) => {
                 >
                   JOIN US
                 </a>
-                <a className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer">
+                <a onClick={requestAction} className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer">
                   REQUEST DEMO
                 </a>
                 <a

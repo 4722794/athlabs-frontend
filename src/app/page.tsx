@@ -90,9 +90,10 @@ const AppPage = () => {
     e.preventDefault();
     if (validateForm()) {
       setLoading(true);
-      const uriString = `/email`;
+      const uriString = `/mail`;
       const formData = new URLSearchParams();
       formData.append("email", mail);
+      formData.append("type", 'client');
       const contentType = "application/x-www-form-urlencoded";
       const responseData = await FECallApi(
         "POST",
@@ -103,8 +104,7 @@ const AppPage = () => {
       console.log(responseData);
       if (responseData.status === 200) {
         toastTObj.type = "s";
-        toastTObj.msg =
-          "Thank you for Requesting Access code, We will get back to you.";
+        toastTObj.msg = responseData?.data?.message || "Thank you for Requesting Access code, We will get back to you.";
         setToastTObj(toastTObj);
       } else {
         toastTObj.type = "e";
@@ -141,9 +141,10 @@ const AppPage = () => {
     e.preventDefault();
     if (validateBetaForm()) {
       setBetaFormLoading(true);
-      const uriString = `/email`;
+      const uriString = `/mail`;
       const formData = new URLSearchParams();
       formData.append("email", betaEmail);
+      formData.append("type", 'client');
       const contentType = "application/x-www-form-urlencoded";
       const responseBetaData = await FECallApi(
         "POST",
@@ -151,11 +152,9 @@ const AppPage = () => {
         formData,
         uriString
       );
-      console.log(responseBetaData);
       if (responseBetaData.status === 200) {
         toastBetaObj.type = "s";
-        toastBetaObj.msg =
-          "Thank you for Joining beta program, We will get back to you.";
+        toastBetaObj.msg = responseBetaData?.data?.message || "Thank you for Joining beta program, We will get back to you.";
         setToastBetaObj(toastBetaObj);
       } else {
         toastBetaObj.type = "e";

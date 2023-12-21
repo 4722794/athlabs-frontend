@@ -11,7 +11,7 @@ interface SignUpProps {
   onCloseModal: () => void;
 }
 
-const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
+const RequestDemo: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
   const [mail, setMail] = useState("");
   const [formErrors, setFormErrors] = useState({ mail: "" });
   const [loading, setLoading] = useState(false);
@@ -49,7 +49,7 @@ const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
         formData,
         uriString
       );
-      console.log(responseData);
+      
       if (responseData.status === 200) {
         toastObj.type = "s";
         toastObj.msg = responseData?.data?.message || "Thank you for Sign up, We will get back to you.";
@@ -149,4 +149,4 @@ const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
   );
 };
 
-export default SignUp;
+export default RequestDemo;

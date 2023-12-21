@@ -105,6 +105,10 @@ const Tab2Content = () => {
     }
   };
 
+  useEffect(() => {
+    setFormErrors({ textMsg: "" });
+  }, [activeVideoDetail]);
+
   return (
     <div className=" flex  h-[calc(100vh-200px)] lg:h-full w-full">
       <div className=" flex flex-col w-full h-full justify-between">
