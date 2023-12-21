@@ -9,6 +9,8 @@ import { Spinner, Dropdown, Avatar } from "flowbite-react";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import Typewriter from "typewriter-effect";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 interface SidebarProps {
   modalOpen: boolean;
@@ -432,7 +434,22 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                               <Dropdown.Item
                                 icon={CiTrash}
                                 onClick={() => {
-                                  removeVideoHistory(video.video_id);
+                                  confirmAlert({
+                                    title: "Delete video?",
+                                    message:
+                                      "This will delete Video and Chats.",
+                                    buttons: [
+                                      {
+                                        label: "Yes",
+                                        onClick: () =>
+                                          removeVideoHistory(video.video_id),
+                                      },
+                                      {
+                                        label: "No",
+                                        //onClick: () => alert('Click No')
+                                      },
+                                    ],
+                                  });
                                 }}
                               >
                                 Delete
