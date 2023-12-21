@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
@@ -37,6 +37,8 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [loggedInUser, setLoggedInUser] = useState("");
   const [videoLoading, setVideoLoading] = useState<VideoLoading>({});
   const [videoEdit, setVideoEdit] = useState<VideoEdit>({});
+  const [editTitle, setEditTitle] = useState("");
+  const componentRef = useRef(null);
 
   const setLoadingForVideo = (videoId: any, isLoading: any) => {
     setVideoLoading((prevLoading) => ({
@@ -147,6 +149,10 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const groupedVideos = groupVideosByDate(videoData);
 
   const getVideoDetail = async (videoId: any) => {
+    let oldRecord = videoEdit;
+    oldRecord[activeVideo.toString()] = false
+    setVideoEdit(oldRecord)
+    setEditTitle("")
     setLoadingForVideo(videoId, true);
     const uriString = `/h/${videoId}`;
     const method = "GET";
@@ -190,30 +196,38 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     }
   };
 
-  const updateVideoTitle = async (videoId: any) => {
-    setLoadingForVideo(videoId, true);
-    const videoName = encodeURIComponent("CSS_test");
-    const uriString = `/h/${videoId}?name=${videoName}`;
-    const method = "PATCH";
-    const contentType = "application/json";
+  const updateVideoTitle = async (e:any) => {
+    if (e.key === "Enter") {
+      let videoId = activeVideo;
+      let videoTitle = editTitle;
+      setLoadingForVideo(videoId, true);
+      const videoName = encodeURIComponent(videoTitle);
+      const uriString = `/h/${videoId}?name=${videoName}`;
+      const method = "PATCH";
+      const contentType = "application/json";
 
-    try {
-      const responseData = await callApi(method, contentType, null, uriString);
-      if (responseData.status) {
-        getVideoHistory();
+      try {
+        const responseData = await callApi(
+          method,
+          contentType,
+          null,
+          uriString
+        );
+        if (responseData.status) {
+          getVideoHistory();
+        }
+      } catch (error) {
+        // Handle error if needed
+      } finally {
+        setLoadingForVideo(videoId, false); // Set loading to false after fetching details
+        setEditForVideo(videoId, false); // Set edit to false after fetching details
       }
-    } catch (error) {
-      // Handle error if needed
-    } finally {
-      setLoadingForVideo(videoId, false); // Set loading to false after fetching details
     }
   };
 
-  const openEditBox = (videoId: any) => {
-    console.log(videoEdit);
-    console.log(videoEdit[videoId]);
+  const openEditBox = (videoId: any, titleNeedToEdit: any) => {
     setEditForVideo(videoId, true);
-    console.log(videoEdit[videoId]);
+    setEditTitle(titleNeedToEdit);
   };
 
   return (
@@ -221,6 +235,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
       className={`dark flex-shrink-0  bg-[#1B212E] absolute h-full z-40 lg:relative  ${
         modalOpen ? " w-[260px] visible" : " w-0 invisible"
       }`}
+      ref={componentRef}
     >
       <div className="h-full w-[260px]">
         <div className="flex h-full min-h-0 flex-col">
@@ -309,7 +324,13 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                             {" "}
                             <div className=" relative overflow-hidden self-center w-full">
                               {videoEdit && videoEdit[video.video_id] ? (
-                                <input className=" h-5 !bg-transparent border-0 border-white/40  rounded-md ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600" />
+                                <input
+                                  value={editTitle}
+                                  onChange={(e) => setEditTitle(e.target.value)}
+                                  onKeyPress={(e) => updateVideoTitle(e)}
+                                  className="h-5 !bg-transparent border border-blue-400 text-white placeholder:text-gray-400 
+                                  outline-none "
+                                />
                               ) : (
                                 <div className="text-ellipsis overflow-hidden pr-2 ">
                                   <a
@@ -358,7 +379,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                               <Dropdown.Item
                                 icon={CiEdit}
                                 onClick={() => {
-                                  openEditBox(video.video_id);
+                                  openEditBox(video.video_id, video.name);
                                 }}
                               >
                                 Rename
