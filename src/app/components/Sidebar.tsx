@@ -21,6 +21,10 @@ interface VideoLoading {
   [videoId: string]: boolean;
 }
 
+interface VideoEdit {
+  [videoId: string]: boolean;
+}
+
 interface Video {
   video_id: string;
   // Other properties of the Video object
@@ -32,11 +36,19 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
   const [loggedInUser, setLoggedInUser] = useState("");
   const [videoLoading, setVideoLoading] = useState<VideoLoading>({});
+  const [videoEdit, setVideoEdit] = useState<VideoEdit>({});
 
   const setLoadingForVideo = (videoId: any, isLoading: any) => {
     setVideoLoading((prevLoading) => ({
       ...prevLoading,
       [videoId]: isLoading,
+    }));
+  };
+
+  const setEditForVideo = (videoId: any, isEdit: any) => {
+    setVideoEdit((prevLoading) => ({
+      ...prevLoading,
+      [videoId]: isEdit,
     }));
   };
 
@@ -63,7 +75,6 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     if (responseData.status) {
       setVideoData(responseData.data.videos);
       let TLoggedInUser = localStorage.getItem("athlabsLoggedInUser");
-      console.log("TLoggedInUser", TLoggedInUser);
       if (responseData?.data?.email && TLoggedInUser === null) {
         localStorage.setItem("athlabsLoggedInUser", responseData.data.email);
         setLoggedInUser(responseData.data.email);
@@ -148,6 +159,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
         setActiveVideoData(responseData.data);
         responseData.data.videos.forEach((video: Video) => {
           videoLoading[video.video_id] = false; // Set default loading status to false
+          videoEdit[video.video_id] = false; // Set default Edit to false
         });
       }
     } catch (error) {
@@ -195,6 +207,13 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     } finally {
       setLoadingForVideo(videoId, false); // Set loading to false after fetching details
     }
+  };
+
+  const openEditBox = (videoId: any) => {
+    console.log(videoEdit)
+    console.log(videoEdit[videoId])
+    setEditForVideo(videoId, true);
+    console.log(videoEdit[videoId])
   };
 
   return (
@@ -289,19 +308,21 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                           <div className="pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden">
                             {" "}
                             <div className=" relative">
-                              <div className="text-ellipsis overflow-hidden pr-2 ">
-                                <a
-                                  href="/"
-                                  onClick={(event) => {
-                                    event.preventDefault();
-                                    getVideoDetail(video.video_id);
-                                  }}
-                                >
-                                  {video.name}
-                                </a>
-                              </div>
-
-                              {/* <input className=" h-5 !bg-transparent border-0 border-white/40  rounded-md      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600" /> */}
+                              {videoEdit && videoEdit[video.video_id] ? (
+                                <input className=" h-5 !bg-transparent border-0 border-white/40  rounded-md ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600" />
+                              ) : (
+                                <div className="text-ellipsis overflow-hidden pr-2 ">
+                                  <a
+                                    href="/"
+                                    onClick={(event) => {
+                                      event.preventDefault();
+                                      getVideoDetail(video.video_id);
+                                    }}
+                                  >
+                                    {video.name}
+                                  </a>
+                                </div>
+                              )}
 
                               {videoLoading && videoLoading[video.video_id] ? (
                                 <Spinner
@@ -335,13 +356,16 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                                 </span>
                               )}
                             >
-                              <Dropdown.Item icon={CiEdit}>
+                              <Dropdown.Item icon={CiEdit}
+                              onClick={() => {
+                                openEditBox(video.video_id);
+                              }}
+                              >
                                 Rename
                               </Dropdown.Item>
                               <Dropdown.Item
                                 icon={CiTrash}
-                                onClick={(event) => {
-                                  event.preventDefault();
+                                onClick={() => {
                                   removeVideoHistory(video.video_id);
                                 }}
                               >
