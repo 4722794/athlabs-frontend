@@ -311,7 +311,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                       {dateLabel}
                     </h5>
                     <ul className="">
-                      {groupedVideos[dateLabel]?.map((video) => (
+                      {groupedVideos[dateLabel]?.map((video,index) => (
                         <li
                           className={`relative text-white py-1 px-3   ${
                             activeVideo === video.video_id
@@ -377,17 +377,18 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                                         />
                                       </svg>
                                     </i>
-                                    {/* <Typewriter
+                                    {otherData.enableTypeWritter && index === 0 ?
+                                     (<Typewriter
                                       options={{
                                         strings: video.name,
                                         autoStart: true,
-                                        loop: true,
+                                        loop: false,
                                         delay: 100,
                                       }}
-                                    /> */}
+                                    />):(
                                     <div className=" pl-6 text-ellipsis overflow-hidden">
                                       {video.name}
-                                    </div>
+                                    </div>)}
                                   </a>
                                 </div>
                               )}

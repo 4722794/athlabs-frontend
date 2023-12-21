@@ -82,7 +82,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         const response = JSON.parse(xhr.responseText);
         setName("");
         //setChildData(response);
-        setOtherData({ ...otherData, fetchVideoHistroy: true });
+        setOtherData({ ...otherData, fetchVideoHistroy: true,enableTypeWritter:true });
         setActiveVideoData(response);
       }
     } else if (status === "error") {
