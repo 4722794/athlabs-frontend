@@ -153,10 +153,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const groupedVideos = groupVideosByDate(videoData);
 
   const getVideoDetail = async (videoId: any) => {
-    let oldRecord = videoEdit;
-    oldRecord[activeVideo.toString()] = false;
-    setVideoEdit(oldRecord);
-    setEditTitle("");
+    clearEditScreen();
     setLoadingForVideo(videoId, true);
     const uriString = `/h/${videoId}`;
     const method = "GET";
@@ -180,7 +177,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   };
 
   const clearPage = () => {
+	setactiveVideo(false)
     setActiveVideoData(null);
+	clearEditScreen();
   };
 
   const removeVideoHistory = async (videoId: any) => {
@@ -243,6 +242,13 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
       router.push("/login");
     }
   };
+
+  const clearEditScreen = () => {
+	let oldRecord = videoEdit;
+    oldRecord[activeVideo.toString()] = false;
+    setVideoEdit(oldRecord);
+    setEditTitle("");
+  }
 
   return (
     <div
