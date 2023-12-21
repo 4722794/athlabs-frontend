@@ -6,6 +6,7 @@ import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
 import { Spinner, Dropdown, Avatar } from "flowbite-react";
+import { CiEdit, CiTrash } from "react-icons/ci";
 
 interface SidebarProps {
   modalOpen: boolean;
@@ -228,8 +229,10 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     <ul className="">
                       {groupedVideos[dateLabel]?.map((video) => (
                         <li
-                          className={`relative text-white py-2.5 px-3 overflow-x-hidden hover:bg-[#171717] cursor-pointer ${
-                            activeVideo === video.video_id ? "bg-[#373D51]" : ""
+                          className={`relative text-white py-2.5 px-3   ${
+                            activeVideo === video.video_id
+                              ? "bg-[#373D51]"
+                              : "hover:bg-[#171717] cursor-pointer"
                           }`}
                           key={video.video_id}
                         >
@@ -249,22 +252,64 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                           </i>
                           <div className="pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden">
                             {" "}
-                            <a
-                              href="/"
-                              onClick={(event) => {
-                                event.preventDefault();
-                                getVideoDetail(video.video_id);
-                              }}
-                            >
-                              {video.name}
-                            </a>
-                            {videoLoading && videoLoading[video.video_id] ? (
-                              <Spinner
-                                className=" absolute right-5 z-20"
-                                aria-label="Default status example"
-                              />
-                            ) : null}
+                            <div className=" relative">
+                              <div className="text-ellipsis overflow-hidden pr-2 ">
+                                <a
+                                  href="/"
+                                  onClick={(event) => {
+                                    event.preventDefault();
+                                    getVideoDetail(video.video_id);
+                                  }}
+                                >
+                                  {video.name}
+                                </a>
+                              </div>
+
+                              {/* <input className=" h-5 !bg-transparent border-0 border-white/40  rounded-md      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600" /> */}
+
+                              {videoLoading && videoLoading[video.video_id] ? (
+                                <Spinner
+                                  className=" absolute right-5 z-20"
+                                  aria-label="Default status example"
+                                />
+                              ) : null}
+                            </div>
                           </div>
+
+                          {activeVideo === video.video_id ? (
+                            <Dropdown
+                              label=""
+                              dismissOnClick={false}
+                              renderTrigger={() => (
+                                <span className=" absolute right-2 top-1 z-20">
+                                  <button
+                                    className="inline-flex items-center p-1.5 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-transparent dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                    type="button"
+                                  >
+                                    <svg
+                                      className="w-4 h-4"
+                                      aria-hidden="true"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="currentColor"
+                                      viewBox="0 0 4 15"
+                                    >
+                                      <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                    </svg>
+                                  </button>
+                                </span>
+                              )}
+                            >
+                              <Dropdown.Item icon={CiEdit}>
+                                Rename
+                              </Dropdown.Item>
+                              <Dropdown.Item icon={CiTrash}>
+                                Delete
+                              </Dropdown.Item>
+                            </Dropdown>
+                          ) : (
+                            ""
+                          )}
+
                           <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                         </li>
                       ))}
