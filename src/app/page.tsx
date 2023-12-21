@@ -93,7 +93,7 @@ const AppPage = () => {
       const uriString = `/mail`;
       const formData = new URLSearchParams();
       formData.append("email", mail);
-      formData.append("type", 'client');
+      formData.append("type", "client");
       const contentType = "application/x-www-form-urlencoded";
       const responseData = await FECallApi(
         "POST",
@@ -104,7 +104,9 @@ const AppPage = () => {
       console.log(responseData);
       if (responseData.status === 200) {
         toastTObj.type = "s";
-        toastTObj.msg = responseData?.data?.message || "Thank you for Requesting Access code, We will get back to you.";
+        toastTObj.msg =
+          responseData?.data?.message ||
+          "Thank you for Requesting Access code, We will get back to you.";
         setToastTObj(toastTObj);
       } else {
         toastTObj.type = "e";
@@ -144,7 +146,7 @@ const AppPage = () => {
       const uriString = `/mail`;
       const formData = new URLSearchParams();
       formData.append("email", betaEmail);
-      formData.append("type", 'client');
+      formData.append("type", "client");
       const contentType = "application/x-www-form-urlencoded";
       const responseBetaData = await FECallApi(
         "POST",
@@ -154,7 +156,9 @@ const AppPage = () => {
       );
       if (responseBetaData.status === 200) {
         toastBetaObj.type = "s";
-        toastBetaObj.msg = responseBetaData?.data?.message || "Thank you for Joining beta program, We will get back to you.";
+        toastBetaObj.msg =
+          responseBetaData?.data?.message ||
+          "Thank you for Joining beta program, We will get back to you.";
         setToastBetaObj(toastBetaObj);
       } else {
         toastBetaObj.type = "e";
@@ -210,12 +214,10 @@ const AppPage = () => {
                         )}
 
                         {toastTObj.type && (
-                          <span className="mt-5">
-                            <ComonToast
-                              toastObj={toastTObj}
-                              setToastObj={setToastTObj}
-                            />
-                          </span>
+                          <ComonToast
+                            toastObj={toastTObj}
+                            setToastObj={setToastTObj}
+                          />
                         )}
                       </div>
 
