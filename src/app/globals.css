@@ -64,3 +64,6 @@ html {
 .changeColorLabel .dzu-inputLabel {
   @apply text-white;
 }
+.changeColorLabel {
+  @apply hover:!bg-[#373D51] hover:!border-white;
+}

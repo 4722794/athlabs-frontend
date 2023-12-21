@@ -5,7 +5,8 @@ import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
-import { Spinner, Dropdown } from "flowbite-react";
+import { Spinner, Dropdown, Avatar } from "flowbite-react";
+import { CiEdit, CiTrash } from "react-icons/ci";
 
 interface SidebarProps {
   modalOpen: boolean;
@@ -167,8 +168,8 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     const contentType = "application/json";
     try {
       const responseData = await callApi(method, contentType, null, uriString);
-      if (responseData.status) { 
-        getVideoHistory(); 
+      if (responseData.status) {
+        getVideoHistory();
       }
     } catch (error) {
       // Handle error if needed
@@ -179,15 +180,15 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
 
   const updateVideoTitle = async (videoId: any) => {
     setLoadingForVideo(videoId, true);
-    const videoName = encodeURIComponent('CSS_test');
+    const videoName = encodeURIComponent("CSS_test");
     const uriString = `/h/${videoId}?name=${videoName}`;
     const method = "PATCH";
     const contentType = "application/json";
-    
+
     try {
       const responseData = await callApi(method, contentType, null, uriString);
-      if (responseData.status) { 
-        getVideoHistory(); 
+      if (responseData.status) {
+        getVideoHistory();
       }
     } catch (error) {
       // Handle error if needed
@@ -208,7 +209,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
             <div className="sticky left-0 right-0 top-0 z-20 bg-[#1B212E] py-2.5 min-h-[56px]">
               <div className=" flex justify-between px-3 gap-x-3">
                 <button
-                  className=" grow  text-white border border-[#484A4E] px-3 py-2.5 rounded-md"
+                  className=" grow  text-white border border-[#484A4E] px-3 py-2.5 rounded-md hover:bg-[#373D51]"
                   onClick={() => clearPage()}
                 >
                   <div className=" flex items-center gap-x-2">
@@ -228,7 +229,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                   </div>
                 </button>
                 <button
-                  className=" grow-0 toggle-button  text-white w-10 border border-[#484A4E] inline-flex justify-center items-center rounded-md "
+                  className=" grow-0 toggle-button  text-white w-10 border border-[#484A4E] inline-flex justify-center items-center rounded-md  hover:bg-[#373D51]"
                   onClick={toggleSidebar}
                 >
                   {modalOpen ? (
@@ -264,8 +265,10 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     <ul className="">
                       {groupedVideos[dateLabel]?.map((video) => (
                         <li
-                          className={`relative text-white py-2.5 px-3 overflow-x-hidden hover:bg-[#171717] cursor-pointer ${
-                            activeVideo === video.video_id ? "bg-[#373D51]" : ""
+                          className={`relative text-white py-2.5 px-3   ${
+                            activeVideo === video.video_id
+                              ? "bg-[#373D51]"
+                              : "hover:bg-[#171717] cursor-pointer"
                           }`}
                           key={video.video_id}
                         >
@@ -285,32 +288,70 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                           </i>
                           <div className="pl-6 whitespace-nowrap text-xs font-medium pr-2 overflow-x-hidden">
                             {" "}
-                            <a
-                              href="/"
-                              onClick={(event) => {
-                                event.preventDefault();
-                                getVideoDetail(video.video_id);
-                              }}
-                            >
-                              {video.name}
-                            </a>
-                            |
-                            <a
-                              href="/"
-                              onClick={(event) => {
-                                event.preventDefault();
-                                removeVideoHistory(video.video_id);
-                              }}
-                            >
-                              Delete
-                            </a>
-                            {videoLoading && videoLoading[video.video_id] ? (
-                              <Spinner
-                                className=" absolute right-5 z-20"
-                                aria-label="Default status example"
-                              />
-                            ) : null}
+                            <div className=" relative">
+                              <div className="text-ellipsis overflow-hidden pr-2 ">
+                                <a
+                                  href="/"
+                                  onClick={(event) => {
+                                    event.preventDefault();
+                                    getVideoDetail(video.video_id);
+                                  }}
+                                >
+                                  {video.name}
+                                </a>
+                              </div>
+
+                              {/* <input className=" h-5 !bg-transparent border-0 border-white/40  rounded-md      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600" /> */}
+
+                              {videoLoading && videoLoading[video.video_id] ? (
+                                <Spinner
+                                  className=" absolute right-5 z-20"
+                                  aria-label="Default status example"
+                                />
+                              ) : null}
+                            </div>
                           </div>
+
+                          {activeVideo === video.video_id ? (
+                            <Dropdown
+                              label=""
+                              dismissOnClick={false}
+                              renderTrigger={() => (
+                                <span className=" absolute right-2 top-1 z-20">
+                                  <button
+                                    className="inline-flex items-center p-1.5 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-transparent dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                    type="button"
+                                  >
+                                    <svg
+                                      className="w-4 h-4"
+                                      aria-hidden="true"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="currentColor"
+                                      viewBox="0 0 4 15"
+                                    >
+                                      <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                    </svg>
+                                  </button>
+                                </span>
+                              )}
+                            >
+                              <Dropdown.Item icon={CiEdit}>
+                                Rename
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                icon={CiTrash}
+                                onClick={(event) => {
+                                  event.preventDefault();
+                                  removeVideoHistory(video.video_id);
+                                }}
+                              >
+                                Delete
+                              </Dropdown.Item>
+                            </Dropdown>
+                          ) : (
+                            ""
+                          )}
+
                           <div className="absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-[#1B212E] via-[#1B212E]/50 to-[#1B212E]/30"></div>
                         </li>
                       ))}
@@ -327,15 +368,17 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                 className="flex items-center text-sm font-medium text-white rounded-full h-full w-full px-3 justify-between"
                 type="button"
               >
-                <span className=" inline-flex pe-1 items-center">
+                <span className=" inline-flex pe-1 items-center gap-2">
                   <span className="sr-only">Open user menu</span>
-                  <Image
+                  {/* <Image
                     className="w-8 h-8 me-2 rounded-lg"
                     src="/images/2.jpg"
                     alt="user photo"
                     width={50}
                     height={50}
-                  />
+                  /> */}
+
+                  <Avatar size={"md"} rounded />
                   <span>{loggedInUser}</span>
                 </span>
 
