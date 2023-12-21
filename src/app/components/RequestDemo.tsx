@@ -75,21 +75,21 @@ const RequestDemo: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
 
   return (
     <Modal
-      className=" z-50"
+      className=" z-50 setCostomeModal"
       show={popupAction}
       size="5xl"
       onClose={onCloseModal}
       popup
     >
-      <Modal.Header className=" z-10" />
-      <Modal.Body>
+      <Modal.Header className=" z-10 header_ !text-white" />
+      <Modal.Body className=" body_">
         <form onSubmit={(e) => handleSubmit("demoForm", e)}>
           <div className="space-y-6 flex flex-col justify-center relative z-20">
-            <h3 className="text-4xl font-bold text-gray-900 dark:text-white text-center py-7">
+            <h3 className="text-4xl font-bold text-white text-center py-7">
               Get Early Access
             </h3>
 
-            <p className=" text-center text-2xl">
+            <p className=" text-center text-2xl  text-white">
               Elevate your training today. <br />
               Enter your email below to join our exclusive beta access
             </p>
@@ -99,7 +99,7 @@ const RequestDemo: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
                 <div className=" relative">
                   <div className=" relative">
                     <input
-                      className="block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 sm:text-md rounded
+                      className="block w-full border disabled:cursor-not-allowed disabled:opacity-50 box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] sm:text-md rounded
                       pr-[230px]
                       px-4 py-3
                       lg:p-4 
@@ -150,7 +150,7 @@ const RequestDemo: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
             </div>
           </div>
 
-          <svg
+          {/* <svg
             className="absolute inset-0 w-full h-full z-0"
             preserveAspectRatio="xMidYMid slice"
             xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +170,7 @@ const RequestDemo: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
               d="M-217.088 544.086L1544.761 72l134.327 501.316-1761.849 472.086z"
               data-v-77b1cd82=""
             ></path>
-          </svg>
+          </svg> */}
         </form>
       </Modal.Body>
     </Modal>

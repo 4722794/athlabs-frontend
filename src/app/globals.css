@@ -86,3 +86,14 @@ html {
 /* .myTypewriter .Typewriter__cursor {
   @apply hidden;
 } */
+
+.setCostomeModal .header_ {
+  @apply bg-[#101828];
+}
+.setCostomeModal .body_ {
+  @apply bg-[#101828];
+}
+
+.setCostomeModal {
+  @apply !bg-opacity-10;
+}
