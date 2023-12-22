@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoEdit, setVideoEdit] = useState<VideoEdit>({});
   const [editTitle, setEditTitle] = useState("");
   const componentRef = useRef(null);
-  const { activeVideoDetail } = useVideoContext();
+  const { activeVideoDetail, setDefaultData } = useVideoContext();
 
   const setLoadingForVideo = (videoId: any, isLoading: any) => {
     setVideoLoading((prevLoading) => ({
@@ -178,9 +178,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   };
 
   const clearPage = () => {
-	setactiveVideo(false)
+    setactiveVideo(false);
     setActiveVideoData(null);
-	clearEditScreen();
+    clearEditScreen();
   };
 
   const removeVideoHistory = async (videoId: any) => {
@@ -198,7 +198,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     } finally {
       setLoadingForVideo(videoId, false); // Set loading to false after fetching details
     }
-    clearPage()
+    clearPage();
   };
 
   const updateVideoTitle = async (e: any) => {
@@ -221,7 +221,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
         if (responseData.status) {
           getVideoHistory();
           setActiveVideoData(responseData.data);
-          activeVideoDetail.name = videoTitle
+          activeVideoDetail.name = videoTitle;
         }
       } catch (error) {
         // Handle error if needed
@@ -238,22 +238,22 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   };
 
   const router = useRouter();
-  const logOut = () => { 
+  const logOut = () => {
     localStorage.removeItem("athlabsAuthToken");
     localStorage.removeItem("athlabsLoggedInUser");
     const tokenAfterRemoval = localStorage.getItem("athlabsAuthToken");
     if (tokenAfterRemoval === null) {
-      clearPage()
+      setDefaultData();
       router.push("/login");
     }
   };
 
   const clearEditScreen = () => {
-	let oldRecord = videoEdit;
+    let oldRecord = videoEdit;
     oldRecord[activeVideo.toString()] = false;
     setVideoEdit(oldRecord);
     setEditTitle("");
-  }
+  };
 
   return (
     <div
@@ -358,6 +358,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                                   <input
                                     autoFocus
                                     value={editTitle}
+                                    maxLength={30}
                                     onChange={(e) =>
                                       setEditTitle(e.target.value)
                                     }
@@ -390,17 +391,16 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                                       </svg>
                                     </i>
                                     {otherData.enableTypeWritter &&
-                                    index === 0 ? (
-                                      <div className=" pl-6 text-ellipsis overflow-hidden myTypewriter">
-                                        <Typewriter
-                                          options={{
-                                            strings: video.name,
-                                            autoStart: true,
-                                            loop: false,
-                                            delay: 100,
-                                          }}
-                                        />
-                                      </div>
+                                    index === 0 &&
+                                    dateLabel == "Today" ? (
+                                      <Typewriter
+                                        options={{
+                                          strings: video.name,
+                                          autoStart: true,
+                                          loop: false,
+                                          delay: 100,
+                                        }}
+                                      />
                                     ) : (
                                       <div className=" pl-6 text-ellipsis overflow-hidden">
                                         {video.name}
