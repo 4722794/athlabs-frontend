@@ -136,12 +136,12 @@ const RequestDemo: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
                     </p>
                   </span>
                 )}
-
+                {/* 
                 {loading && (
                   <div className=" absolute top-1/2  transform -translate-y-1/2 right-[130px]  lg:right-[250px]">
                     <Spinner color="purple" />
                   </div>
-                )}
+                )} */}
 
                 {toastObj.type && (
                   <span className="mt-5">

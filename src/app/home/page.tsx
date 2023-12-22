@@ -25,9 +25,9 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => {
   const { activeVideoDetail } = useVideoContext();
 
   return (
-    <div className=" h-[calc(100vh-200px)]">
+    <div className=" landscape:min-h-[300px]  lg:h-[calc(100vh-200px)]">
       {activeVideoDetail ? (
-        <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7  h-[calc(100vh-200px)]">
+        <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7  landscape:h-[300px] landscape:lg:h-[calc(100vh-200px)] h-[calc(100vh-200px)]">
           <CustomScroll
             className="-mx-3 "
             heightRelativeToParent="calc(100% - 0px)"
@@ -110,7 +110,7 @@ const Tab2Content = () => {
   }, [activeVideoDetail]);
 
   return (
-    <div className=" flex  h-[calc(100vh-200px)] lg:h-full w-full">
+    <div className=" flex  landscape:h-[300px] landscape:lg:h-[calc(100vh-200px)] h-[calc(100vh-200px)] lg:h-full w-full">
       <div className=" flex flex-col w-full h-full justify-between">
         <div className="h-[calc(100%-70px)]">
           <CustomScroll
@@ -212,11 +212,11 @@ const AdminPage = () => {
                 <InputFileUpload onDataFromChild={handleChildData} />
               </div>
             ) : (
-              <div className=" min-h-[300px] lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-xl ">
+              <div className=" landscape:min-h-screen landscape:lg:min-h-[calc(100vh-100px)] landscape:lg:h-[calc(100vh-100px)]  min-h-[300px] lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-xl flex justify-between flex-col ">
                 <video
                   playsInline
                   controls
-                  className=" h-[calc(100%-66px)] mx-auto"
+                  className=" landscape:h-[calc(100vh-45px)] landscape:w-auto landscape:lg:h-[calc(100%-66px)] lg:h-[calc(100%-66px)] my-auto mx-auto"
                   key={activeVideoDetail?.video_url}
                 >
                   <source src={activeVideoDetail?.video_url} type="video/mp4" />
@@ -232,7 +232,7 @@ const AdminPage = () => {
             )}
           </div>
           <div className="flex flex-col relative bg-[#1B212E]  w-full lg:w-4/12 rounded-xl ">
-            <div className=" min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-xl">
+            <div className=" lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-xl">
               <Tabs tabs={tabs} />
             </div>
           </div>
