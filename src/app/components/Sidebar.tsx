@@ -355,6 +355,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                                     </svg>
                                   </i>
                                   <input
+                                    autoFocus
                                     value={editTitle}
                                     onChange={(e) =>
                                       setEditTitle(e.target.value)
