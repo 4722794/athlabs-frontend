@@ -507,7 +507,12 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                   /> */}
 
                   <Avatar size={"md"} rounded />
-                  <span>{loggedInUser}</span>
+                  <div className="truncate max-w-[150px] ">
+                    <span>
+                      {loggedInUser}
+                      {loggedInUser}
+                    </span>
+                  </div>
                 </span>
 
                 <span className="">
