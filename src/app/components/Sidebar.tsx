@@ -43,6 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoEdit, setVideoEdit] = useState<VideoEdit>({});
   const [editTitle, setEditTitle] = useState("");
   const componentRef = useRef(null);
+  const { activeVideoDetail } = useVideoContext();
 
   const setLoadingForVideo = (videoId: any, isLoading: any) => {
     setVideoLoading((prevLoading) => ({
@@ -219,6 +220,8 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
         );
         if (responseData.status) {
           getVideoHistory();
+          setActiveVideoData(responseData.data);
+          activeVideoDetail.name = videoTitle
         }
       } catch (error) {
         // Handle error if needed
