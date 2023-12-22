@@ -171,7 +171,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   const inputContent = (files: any, extra: any): any => {
     if (extra.reject) {
       return (
-        <div className=" gap-y-4 flex flex-col">
+        <div className=" gap-y-4 flex flex-col px-4">
           <p className=" text-xl font-semibold">
             Drag Files or Click to Browse
           </p>
@@ -187,7 +187,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       );
     } else {
       return (
-        <div className=" gap-y-4 flex flex-col">
+        <div className=" gap-y-4 flex flex-col px-4">
           <p className=" text-xl font-semibold">
             Drag Files or Click to Browse
           </p>
