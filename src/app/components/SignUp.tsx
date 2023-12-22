@@ -83,7 +83,7 @@ const SignUp: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
     >
       <Modal.Header className=" z-10" />
       <Modal.Body>
-        <form onSubmit={(e) => handleSubmit("demoForm", e)}>
+        <form onSubmit={(e) => handleSubmit("signUpForm", e)}>
           <div className="space-y-6 flex flex-col justify-center relative z-20">
             <h3 className="text-4xl font-bold text-gray-900 dark:text-white text-center py-7">
               Are you a coach?
