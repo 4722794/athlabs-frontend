@@ -95,7 +95,7 @@ html {
 }
 
 .setCostomeModal {
-  @apply !bg-opacity-10;
+  @apply !bg-black/80;
 }
 
 .react-confirm-alert-overlay {
