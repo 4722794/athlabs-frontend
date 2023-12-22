@@ -5,14 +5,14 @@ import { useVideoContext } from "../services/VideoContext";
 
 const Header = () => {
   const router = useRouter();
-  const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
+  const { setDefaultData } = useVideoContext();
 
   const logOut = () => {
     localStorage.removeItem("athlabsAuthToken");
     localStorage.removeItem("athlabsLoggedInUser");
     const tokenAfterRemoval = localStorage.getItem("athlabsAuthToken");
     if (tokenAfterRemoval === null) {
-      setActiveVideoData(null);
+      setDefaultData();
       router.push("/login");
     }
   };

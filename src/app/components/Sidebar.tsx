@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoEdit, setVideoEdit] = useState<VideoEdit>({});
   const [editTitle, setEditTitle] = useState("");
   const componentRef = useRef(null);
-  const { activeVideoDetail } = useVideoContext();
+  const { activeVideoDetail,setDefaultData } = useVideoContext();
 
   const setLoadingForVideo = (videoId: any, isLoading: any) => {
     setVideoLoading((prevLoading) => ({
@@ -243,7 +243,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     localStorage.removeItem("athlabsLoggedInUser");
     const tokenAfterRemoval = localStorage.getItem("athlabsAuthToken");
     if (tokenAfterRemoval === null) {
-      clearPage()
+      setDefaultData()
       router.push("/login");
     }
   };
