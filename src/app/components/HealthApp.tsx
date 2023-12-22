@@ -122,7 +122,7 @@ const HealthApp = () => {
                         height={850}
                       />
                       <Image
-                        src="/images/3_.png"
+                        src="/images/mp4/new/newsection3.png"
                         loading="lazy"
                         alt=""
                         className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0"
@@ -312,7 +312,7 @@ const HealthApp = () => {
             <div className="hp-slide__phone-stub w-full lg:w-3/12 lg:min-h-[600px] lg:h-screen opacity-100 lg:opacity-0">
               <div className=" relative">
                 <Image
-                  src="/images/3_.png"
+                  src="/images/mp4/new/newsection3.png"
                   loading="lazy"
                   alt=""
                   className="my_slider_image  absolute w-7/12 sm:w-7/12 md:w-6/12 lg:w-full mx-auto lg:mt-0 rounded-2xl  scale-[1.009]"

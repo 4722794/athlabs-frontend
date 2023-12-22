@@ -221,11 +221,11 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         </span>
       )}
 
-      <div className=" flex gap-x-5 items-end mt-5">
+      <div className=" flex gap-x-2 lg:gap-x-5 items-end mt-2 lg:mt-5">
         <input
           type="text"
           placeholder="(optional) Enter exercise name"
-          className="h-11  px-5 w-full pr-10 bg-[#2F3747]  border border-white/40  rounded-lg      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600 "
+          className="h-11 text-sm md:text-md pl-4 px-2.5  md:px-5 md:pl-5 w-full bg-[#2F3747]  border border-white/40  rounded-lg      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600 "
           value={name}
           maxLength={30}
           onChange={(e) => {
@@ -240,7 +240,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         <button
           type="button"
           disabled={loading}
-          className={`bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-11 2xl:h-11 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40    ${
+          className={`bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-11 2xl:h-11 min-w-[90px] md:min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40    ${
             loading
               ? " cursor-progress "
               : "hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white cursor-pointer"

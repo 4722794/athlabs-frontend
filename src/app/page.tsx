@@ -209,12 +209,6 @@ const AppPage = () => {
                           </span>
                         )}
 
-                        {loading && (
-                          <div className=" absolute top-1/2  transform -translate-y-1/2  right-[250px]">
-                            <Spinner />
-                          </div>
-                        )}
-
                         {toastTObj.type && (
                           <div className=" absolute mt-0 top-0 z-20">
                             <ComonToast
@@ -225,12 +219,13 @@ const AppPage = () => {
                         )}
                       </div>
 
-                      <input
+                      <button
                         type="submit"
-                        value="Get access"
                         data-wait="..."
                         className=" px-3 md:px-0 md:w-[200px] cursor-pointer  text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded bg-gradient-to-r from-[#101828] to-[#44366a] h-10 xl:h-12 2xl:h-[60px] absolute right-1 2xl:right-2 top-1 2xl:top-2 overflow-visible"
-                      />
+                      >
+                        {loading && <Spinner />} Get access
+                      </button>
                     </form>
                   </div>
                 </div>
@@ -359,12 +354,6 @@ const AppPage = () => {
                         </p>
                       </span>
                     )}
-
-                    {betaFormloading && (
-                      <div className=" absolute top-1/2  transform -translate-y-1/2  right-[250px]">
-                        <Spinner color="purple" />
-                      </div>
-                    )}
                   </div>
 
                   {toastBetaObj.type && (
@@ -375,12 +364,16 @@ const AppPage = () => {
                       />
                     </span>
                   )}
-                  <input
+                  <button
                     type="submit"
-                    value="Get access"
                     data-wait="..."
                     className="px-3 md:px-0 md:w-[200px] cursor-pointer text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded-sm bg-gradient-to-r from-[#101828] to-[#44366a]  h-10 xl:h-12 2xl:min-h-[60px] absolute right-1 xl:right-1 2xl:right-2 top-1 xl:top-1 2xl:top-2 overflow-visible rounded"
-                  />
+                  >
+                    {betaFormloading && (
+                      <Spinner color="purple" className="mr-1" />
+                    )}{" "}
+                    Get access
+                  </button>
                 </form>
               </div>
             </div>

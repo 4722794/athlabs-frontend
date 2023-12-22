@@ -113,16 +113,18 @@ const RequestDemo: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
 
                     <div className="inline-flex absolute top-1/2 transform -translate-y-1/2 right-1">
                       {/* <Button color="dark">Submit</Button>  */}
-                      <input
+                      <button
                         type="submit"
-                        value="Get access"
                         data-wait="..."
-                        className=" z-30 cursor-pointer group flex items-center justify-center p-0.5 px-3 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-gray-800 border border-transparent enabled:hover:bg-gray-900 focus:ring-gray-300 dark:bg-gray-800 dark:enabled:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 rounded focus:ring-2
+                        className=" z-30 cursor-pointer group flex items-center justify-center p-0.5 px-3 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-gray-800 border-0 border-transparent enabled:hover:bg-gray-900 focus:ring-gray-300 dark:bg-gray-800 dark:enabled:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 rounded focus:ring-0
                       bg-gradient-to-r from-[#101828] to-[#44366a]
                       h-11 w-[120px] lg:w-[200px]  2xl:w-[200px] lg:h-[50px] 2xl:h-[50px]
                       "
                         color="dark"
-                      />
+                      >
+                        {loading && <Spinner color="purple" />}
+                        Get access
+                      </button>
                     </div>
                   </div>
                 </div>
