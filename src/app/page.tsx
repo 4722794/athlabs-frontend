@@ -110,7 +110,7 @@ const AppPage = () => {
         setToastTObj(toastTObj);
       } else {
         toastTObj.type = "e";
-        toastTObj.msg = "Error submitting form"+'---'+JSON.stringify(responseData);
+        toastTObj.msg = "Error submitting form";
         setToastTObj(toastTObj);
       }
       setLoading(false);

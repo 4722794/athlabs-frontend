@@ -48,7 +48,7 @@ const RequestDemo: React.FC<SignUpProps> = ({ popupAction, onCloseModal }) => {
       const uriString = `/mail`;
       const formData = new URLSearchParams();
       formData.append("email", mail);
-      formData.append("type", "coach");
+      formData.append("type", "client");
       const contentType = "application/x-www-form-urlencoded";
       const responseData = await FECallApi(
         "POST",
