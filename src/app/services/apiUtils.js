@@ -42,12 +42,7 @@ const checkLogin = ()=>{
   }
 }
 
-const FECallApi = async (method, contentType, bodyData,uriString) => {
-  const token = localStorage.getItem('athlabsAuthToken'); 
-  if (!token) {
-    // Handle token not available (e.g., redirect to login)
-    return { error: 'Token not found' };
-  }
+const FECallApi = async (method, contentType, bodyData,uriString) => { 
   try {
     const headers = {
       'Content-Type': contentType
