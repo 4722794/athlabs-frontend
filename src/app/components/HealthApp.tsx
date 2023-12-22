@@ -238,14 +238,30 @@ const HealthApp = () => {
                 />
               </div>
             </div>
-            <Image
+
+            <div className="hp-slide__img  w-full lg:w-4/12 order-1 lg:order-2 mt-10 lg:mt-0">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="  w-full h-auto"
+              >
+                <source
+                  src={"/images/mp4/new/chatvideo.mp4"}
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+
+            {/* <Image
               src="/images/chatinfo2.png"
               loading="eager"
               alt=""
               className="hp-slide__img  w-full lg:w-4/12 order-1 lg:order-2 mt-10 lg:mt-0"
               width={488}
               height={554}
-            />
+            /> */}
           </div>
         </div>
       </div>
