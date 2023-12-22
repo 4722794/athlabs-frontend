@@ -39,7 +39,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
     <div className="relative z-0 flex h-full w-full overflow-hidden">
       <Sidebar modalOpen={open} toggleSidebar={toggleSidebar} />
       <div
-        // onClick={toggleSidebar}
+        onClick={toggleSidebar}
         className={` lg:hidden bg-black/50 absolute w-full h-full top-0 left-0 z-10 ${
           open ? " translate-x-[260px] " : "translate-x-[0px] hidden "
         }transform  -translate-y-2/2 rotate-0 translate-z-0`}
