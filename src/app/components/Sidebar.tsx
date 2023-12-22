@@ -203,6 +203,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
 
   const updateVideoTitle = async (e: any) => {
     if (e.key === "Enter") {
+      alert("enter");
       let videoId = activeVideo;
       let videoTitle = editTitle;
       setLoadingForVideo(videoId, true);

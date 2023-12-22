@@ -176,8 +176,8 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
             Drag Files or Click to Browse
           </p>
           <p className=" text-[15px]  font-normal">
-            “Please upload an exercise video, optionally the exercise name and
-            click “submit” to perform an analysis.
+            Please upload an exercise video, optionally the exercise name and
+            click <strong>“submit”</strong> to perform an analysis.
           </p>
           <p className=" text-[12px] font-light">
             Note: .mov, .mp4 video formats currently supported. Upload videos
@@ -192,8 +192,8 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
             Drag Files or Click to Browse
           </p>
           <p className=" text-[15px]  font-normal">
-            “Please upload an exercise video, optionally the exercise name and
-            click “submit” to perform an analysis.
+            Please upload an exercise video, optionally the exercise name and
+            click <strong>“submit”</strong> to perform an analysis.
           </p>
           <p className=" text-[12px] font-light">
             Note: .mov, .mp4 video formats currently supported. Upload videos

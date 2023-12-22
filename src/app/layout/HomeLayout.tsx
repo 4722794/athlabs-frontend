@@ -14,6 +14,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   const router = useRouter();
   const toggleSidebar = () => {
     setSidebarOpen(!open);
+    alert("side bar");
   };
 
   useEffect(() => {
