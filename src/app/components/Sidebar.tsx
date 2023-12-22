@@ -238,11 +238,12 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   };
 
   const router = useRouter();
-  const logOut = () => {
+  const logOut = () => { 
     localStorage.removeItem("athlabsAuthToken");
     localStorage.removeItem("athlabsLoggedInUser");
     const tokenAfterRemoval = localStorage.getItem("athlabsAuthToken");
     if (tokenAfterRemoval === null) {
+      clearPage()
       router.push("/login");
     }
   };
