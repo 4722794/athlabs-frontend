@@ -197,6 +197,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
     } finally {
       setLoadingForVideo(videoId, false); // Set loading to false after fetching details
     }
+    clearPage()
   };
 
   const updateVideoTitle = async (e: any) => {
