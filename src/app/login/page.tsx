@@ -5,17 +5,21 @@ import ComonToast from "../components/ComonToast";
 import LoadingComp from "../components/LoadingComp";
 import { useRouter } from "next/navigation";
 import { checkLogin } from "../services/apiUtils";
+import { useVideoContext } from "../services/VideoContext";
 
 const Login = () => {
   const footerClass = "!relative";
   const router = useRouter();
+  const { setOtherData, otherData } = useVideoContext();
 
   const [username, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [formErrors, setFormErrors] = useState({ username: "", password: "" });
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
-
+  const handleRequestDemo = () => {
+    setOtherData({ ...otherData, requestDemoShow: true });
+  };
   const validateForm = () => {
     let valid = true;
     const errors = { username: "", password: "" };
@@ -171,6 +175,7 @@ const Login = () => {
               <p className="text-white/70 text-xs text-center mt-4">
                 Don&apos;t have an account?
                 <a
+                  onClick={handleRequestDemo}
                   className="text-blue-500 hover:underline ml-1"
                   target="_blank"
                 >
