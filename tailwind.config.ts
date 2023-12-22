@@ -9,13 +9,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      screens: {
-        sm: "480px",
-        md: "768px",
-        lg: "976px",
-        xl: "1440px",
-        "2xl": "1537px", // Add or customize the breakpoint for 2xl
-      },
+      // screens: {
+      //   sm: "480px",
+      //   md: "768px",
+      //   lg: "976px",
+      //   xl: "1440px",
+      //   "2xl": "1537px", // Add or customize the breakpoint for 2xl
+      // },
       fontFamily: {
         custom: [
           "ui-sans-serif",
