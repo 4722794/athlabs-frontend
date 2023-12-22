@@ -168,6 +168,42 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
     }
   };
 
+  const inputContent = (files: any, extra: any): any => {
+    if (extra.reject) {
+      return (
+        <div className=" gap-y-4 flex flex-col">
+          <p className=" text-xl font-semibold">
+            Drag Files or Click to Browse
+          </p>
+          <p className=" text-[15px]  font-normal">
+            “Please upload an exercise video, optionally the exercise name and
+            click “submit” to perform an analysis.
+          </p>
+          <p className=" text-[12px] font-light">
+            Note: .mov, .mp4 video formats currently supported. Upload videos
+            less than 20 seconds for best results
+          </p>
+        </div>
+      );
+    } else {
+      return (
+        <div className=" gap-y-4 flex flex-col">
+          <p className=" text-xl font-semibold">
+            Drag Files or Click to Browse
+          </p>
+          <p className=" text-[15px]  font-normal">
+            “Please upload an exercise video, optionally the exercise name and
+            click “submit” to perform an analysis.
+          </p>
+          <p className=" text-[12px] font-light">
+            Note: .mov, .mp4 video formats currently supported. Upload videos
+            less than 20 seconds for best results
+          </p>
+        </div>
+      );
+    }
+  };
+
   return (
     <>
       <div className="flex items-center justify-center w-full h-full">
@@ -186,6 +222,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
               autoUpload={false}
               PreviewComponent={Preview}
               disabled={selectedFile}
+              inputContent={inputContent}
               styles={{
                 dropzone: {
                   minHeight: 200,
