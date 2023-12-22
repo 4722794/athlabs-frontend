@@ -206,7 +206,7 @@ const AdminPage = () => {
     <HomeLayout>
       <div className="flex w-full  px-6 pt-0">
         <div className="flex w-full flex-col lg:flex-row  gap-x-5  gap-y-7 lg:gap-y-2  pb-5 lg:py-0">
-          <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-md xl:rounded-xl 2xl:rounded-xl overflow-hidden  ">
+          <div className="flex flex-col items-left relative w-full lg:w-8/12 rounded-md xl:rounded-xl 2xl:rounded-xl overflow-hidden   ">
             {!activeVideoDetail?.video_url ? (
               <div className=" flex flex-col">
                 <InputFileUpload onDataFromChild={handleChildData} />
