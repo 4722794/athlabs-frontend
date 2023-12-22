@@ -394,14 +394,16 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                                     {otherData.enableTypeWritter &&
                                     index === 0 &&
                                     dateLabel == "Today" ? (
-                                      <Typewriter
-                                        options={{
-                                          strings: video.name,
-                                          autoStart: true,
-                                          loop: false,
-                                          delay: 100,
-                                        }}
-                                      />
+                                      <div className="pl-6">
+                                        <Typewriter
+                                          options={{
+                                            strings: video.name,
+                                            autoStart: true,
+                                            loop: false,
+                                            delay: 100,
+                                          }}
+                                        />
+                                      </div>
                                     ) : (
                                       <div className=" pl-6 text-ellipsis overflow-hidden">
                                         {video.name}
