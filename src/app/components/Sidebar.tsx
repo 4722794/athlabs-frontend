@@ -389,7 +389,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                                         />
                                       </svg>
                                     </i>
-                                    {otherData.enableTypeWritter && index === 0 ?
+                                    {otherData.enableTypeWritter && index === 0 && dateLabel=='Today' ?
                                      (<Typewriter
                                       options={{
                                         strings: video.name,
