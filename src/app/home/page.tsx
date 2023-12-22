@@ -232,7 +232,7 @@ const AdminPage = () => {
             )}
           </div>
           <div className="flex flex-col relative bg-[#1B212E]  w-full lg:w-4/12 rounded-xl ">
-            <div className=" lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-xl">
+            <div className=" landscape:lg:h-[calc(100vh-100px)]  landscape:lg:min-h-[calc(100vh-100px)] lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-xl">
               <Tabs tabs={tabs} />
             </div>
           </div>
