@@ -5,7 +5,7 @@ import CustomScroll from "react-custom-scroll";
 import "react-custom-scroll/dist/customScroll.css";
 import { callApi } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
-import { Spinner, Dropdown, Avatar } from "flowbite-react";
+import { Spinner, Dropdown, Avatar, Tooltip } from "flowbite-react";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import Typewriter from "typewriter-effect";
@@ -493,10 +493,10 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
               <button
                 id="dropdownAvatarNameButton"
                 data-dropdown-toggle="dropdownAvatarName"
-                className="flex items-center text-sm font-medium text-white rounded-full h-full w-full px-3 justify-between"
+                className="flex items-center text-sm font-medium text-white rounded-full h-full w-full pl-3 justify-between"
                 type="button"
               >
-                <span className=" inline-flex pe-1 items-center gap-2">
+                <span className=" inline-flex pe-1 items-center gap-1">
                   <span className="sr-only">Open user menu</span>
                   {/* <Image
                     className="w-8 h-8 me-2 rounded-lg"
@@ -506,12 +506,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     height={50}
                   /> */}
 
-                  <Avatar size={"md"} rounded />
-                  <div className="truncate max-w-[150px] ">
-                    <span>
-                      {loggedInUser}
-                      {loggedInUser}
-                    </span>
+                  <Avatar size={"sm"} rounded />
+                  <div className="truncate max-w-[175px] text-sm ">
+                    <span>{loggedInUser}</span>
                   </div>
                 </span>
 
