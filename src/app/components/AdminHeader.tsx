@@ -1,15 +1,18 @@
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useVideoContext } from "../services/VideoContext";
 
 const Header = () => {
   const router = useRouter();
+  const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
 
   const logOut = () => {
     localStorage.removeItem("athlabsAuthToken");
     localStorage.removeItem("athlabsLoggedInUser");
     const tokenAfterRemoval = localStorage.getItem("athlabsAuthToken");
     if (tokenAfterRemoval === null) {
+      setActiveVideoData(null);
       router.push("/login");
     }
   };
