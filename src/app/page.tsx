@@ -21,7 +21,7 @@ const AppPage = () => {
     {
       id: 1,
       type: "image",
-      src: "/images/mp4/kettlebelldl.mp4",
+      src: "/images/mp4/new/kettlebelldl.mp4",
       text: "Push hips back…",
     },
     {
@@ -33,7 +33,7 @@ const AppPage = () => {
     {
       id: 3,
       type: "image",
-      src: "/images/mp4/deadlift.mp4",
+      src: "/images/mp4/new/deadliftCrop.mp4",
       text: "Back straight, Engage your Glutes…",
     },
   ]);
@@ -62,7 +62,7 @@ const AppPage = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 7000,
     arrows: false,
   };
   const [mail, setMail] = useState("");
