@@ -230,7 +230,7 @@ const AppPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="   w-[266px] sm:w-[356px] md:w-[326px] lg:w-4/12 2xl:w-4/12  flex justify-center lg:justify-center mx-auto lg:mr-0">
+              <div className="   w-[266px] sm:w-[356px] md:w-[326px] lg:w-4/12 xl:w-3/12 2xl:w-4/12  flex justify-center lg:justify-center mx-auto lg:mr-0">
                 <div className="relative w-full   lg:w-10/12 xl:w-7/12 2xl:w-8/12 ">
                   {/* <div className=" w-[calc(100%-8px)] h-full absolute bg-white  rounded-[50px] z-0 left-1"></div> */}
                   <Image
