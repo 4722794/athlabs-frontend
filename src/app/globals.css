@@ -101,3 +101,24 @@ html {
 .react-confirm-alert-overlay {
   @apply !bg-black/50;
 }
+
+@media (min-width: 1024px) {
+  .setCustomINdex {
+    @apply !scale-[1.05] overflow-hidden;
+  }
+}
+
+@media (min-width: 1280px) {
+  .setCustomINdex {
+    @apply !scale-[1.010] overflow-hidden;
+  }
+}
+
+@media (min-width: 1537px) {
+  .setCustomMedia {
+    height: auto !important;
+  }
+  .setCustomINdex {
+    @apply !scale-105 overflow-hidden;
+  }
+}

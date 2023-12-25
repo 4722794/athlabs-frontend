@@ -15,6 +15,7 @@ const config: Config = {
       //   lg: "976px",
       //   xl: "1440px",
       //   "2xl": "1537px", // Add or customize the breakpoint for 2xl
+      //   "3xl": "1537px", // Add or customize the breakpoint for 2xl
       // },
       fontFamily: {
         custom: [
