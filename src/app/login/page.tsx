@@ -176,7 +176,7 @@ const Login = () => {
                 Don&apos;t have an account?
                 <a
                   onClick={handleRequestDemo}
-                  className="text-blue-500 hover:underline ml-1"
+                  className="text-blue-500 hover:underline ml-1 cursor-pointer"
                   target="_blank"
                 >
                   Request for access

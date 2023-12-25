@@ -91,25 +91,25 @@ const HealthApp = () => {
             <div className=" flex justify-center gap-x-20 w-full  ">
               <div className=" w-4/12"></div>
               <div className=" w-3/12   h-[calc(100%-120px)] xl:h-[calc(100%-120px)] mx-auto flex items-center justify-center ">
-                <div className="relative  w-full h-[436px] xl:h-auto flex justify-center">
+                <div className="relative  w-full h-[436px] xl:h-[366px] 2xl:h-auto flex justify-center">
                   <div className="  w-full h-auto z-10">
                     <Image
                       src="/images/newIphon.png"
                       loading="lazy"
                       alt=""
-                      className=" w-auto h-full "
+                      className=" w-auto h-full mx-auto "
                       width={422}
                       height={850}
                     />
                   </div>
 
                   <div className=" absolute overflow-hidden rounded-[40px] xl:rounded-[60px]  top-1/2 transform -translate-y-1/2 h-full md:h-full  left-1/2  -translate-x-1/2  w-full px-0 py-0 xl:px-0 xl:py-0">
-                    <div className=" relative  w-auto h-full scale-95 xl:scale-95">
+                    <div className=" relative  w-auto h-full 2xl:w-auto 2xl:h-full scale-95 2xl:scale-95 ">
                       <Image
                         src="/images/1_.png"
                         loading="lazy"
                         alt=""
-                        className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-100"
+                        className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-100  xl:rounded-[20px] 2xl:rounded-none"
                         width={422}
                         height={850}
                       />
@@ -117,7 +117,7 @@ const HealthApp = () => {
                         src="/images/2_.png"
                         loading="lazy"
                         alt=""
-                        className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0 "
+                        className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0  xl:rounded-[20px] 2xl:rounded-none"
                         width={422}
                         height={850}
                       />
@@ -125,13 +125,13 @@ const HealthApp = () => {
                         src="/images/mp4/new/newsection3.png"
                         loading="lazy"
                         alt=""
-                        className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0"
+                        className=" absolute w-auto h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0  xl:rounded-[20px] 2xl:rounded-none"
                         width={422}
                         height={850}
                       />
 
-                      <div className=" absolute w-full h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0 px-1">
-                        <div className=" h-full   scale-105  ">
+                      <div className=" absolute w-full h-full left-1/2 transform -translate-x-1/2 setIndex_  opacity-0 px-1.5 ">
+                        <div className=" h-full  scale-105 xl:scale-[0.99]  2xl:scale-105  ">
                           {/* <Image
                             src="/images/64d2e3acd32aebafaef11531_basiscalendar.png"
                             loading="lazy"
@@ -146,7 +146,7 @@ const HealthApp = () => {
                             muted
                             loop
                             playsInline
-                            className="  w-full h-full"
+                            className="  w-full h-full "
                           >
                             <source
                               src={"/images/mp4/golfswingfull.mp4"}
