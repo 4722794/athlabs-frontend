@@ -110,7 +110,7 @@ html {
 
 @media (min-width: 1280px) {
   .setCustomINdex {
-    @apply !scale-[1.010] overflow-hidden;
+    @apply !scale-[1.010] overflow-hidden rounded-[55px];
   }
 }
 
