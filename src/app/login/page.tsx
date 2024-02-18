@@ -126,7 +126,7 @@ const Login = () => {
                   id="username"
                   value={username}
                   className="form-input w-full px-4 py-2 border rounded-lg  border-gray-400 text-white/90  bg-transparent"
-                  placeholder="hello@alignui.com"
+                  placeholder="john@gmail.com"
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 {formErrors.username && (
