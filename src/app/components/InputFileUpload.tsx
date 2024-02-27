@@ -9,6 +9,7 @@ import { checkLogin } from "../services/apiUtils";
 import LoadingComp from "./LoadingComp";
 import { useVideoContext } from "../services/VideoContext";
 import { Spinner } from "flowbite-react";
+import ComonToast from "./ComonToast";
 
 interface InputFileUploadProps {
   //children: ReactNode;
@@ -22,6 +23,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   const [loading, setLoading] = useState(false); // New state for loading indicator
   const [selectedFile, setSelectedFile] = useState(false); // New state for loading indicator
   const [formErrors, setFormErrors] = useState({ name: "", file: "" });
+  const [toastObj, setToastObj] = useState({ type: "", msg: "" });
   const [name, setName] = useState(""); // New state for loading indicator
 
   // Reference to Dropzone instance
@@ -89,6 +91,15 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         });
         setActiveVideoData(response);
       }
+    } else if (status === "error_upload") {
+      setLoading(false); // Set loading to false on error
+      console.log(xhr);
+      // Have a toast object to display error message
+      toastObj.type = "error";
+      toastObj.msg = "Could not process the video. Try again later";
+      setToastObj(toastObj);
+      console.error(`${meta.name} failed to upload`);
+      setSelectedFile(true);
     } else if (status === "error") {
       setLoading(false); // Set loading to false on error
       console.error(`${meta.name} failed to upload`);
@@ -279,14 +290,19 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
           disabled={loading}
           className={`bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-11 2xl:h-11 min-w-[90px] md:min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40    ${
             loading
-              ? " cursor-progress "
-              : "hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white cursor-pointer"
+            ? " cursor-progress "
+            : "hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white cursor-pointer"
           }`}
           value={"Submit"}
           onClick={handleSubmit}
-        >
+          >
           Submit
         </button>
+      </div>
+        <div className="flex items-center justify-center w-full h-full mt-2 lg:mt-5">
+          {toastObj.type && (
+                <ComonToast toastObj={toastObj} setToastObj={setToastObj} />
+              )}
       </div>
     </>
   );
