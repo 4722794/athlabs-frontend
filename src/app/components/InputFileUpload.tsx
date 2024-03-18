@@ -51,7 +51,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       if (actualFile instanceof Blob) {
         formData.append("video", actualFile, actualFile.name);
         formData.append("name", name);
-        const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
+        const apiUrl = process.env.NEXT_PUBLIC_API_HOST +'/process';
         const apiEndpoint = `${apiUrl}`;
 
         // Include authentication headers
