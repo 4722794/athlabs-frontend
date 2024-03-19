@@ -16,13 +16,34 @@ import { callApi } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
 import moment from "moment";
 import LoadingComp from "../components/LoadingComp";
-import { Spinner } from "flowbite-react";
+import { Accordion, Spinner } from "flowbite-react";
+import ProgressBar from "../components/ProgressBar";
+import AccordionMy from "../components/AccordionMy";
 interface Tab1ContentProps {
   compData: any;
 }
 
 const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => {
   const { activeVideoDetail } = useVideoContext();
+
+  const Content: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
+    <div>
+      <p>This content is {isOpen ? "open" : "closed"}.</p>
+    </div>
+  );
+
+  const items = [
+    {
+      id: 1,
+      title: "Highlight",
+      content: <Content isOpen={true} />,
+    },
+    {
+      id: 2,
+      title: "Feedback",
+      content: "This is the content for item 2.",
+    },
+  ];
 
   return (
     <div className=" landscape:min-h-[300px]  lg:h-[calc(100vh-200px)]">
@@ -40,6 +61,29 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => {
       ) : (
         ""
       )}
+
+      <div className=" bg-[#171717] text-white p-4 rounded-xl  font-normal leading-7  landscape:h-[300px] landscape:lg:h-[calc(100vh-200px)] h-[calc(100vh-200px)]">
+        <CustomScroll
+          className="-mx-3 "
+          heightRelativeToParent="calc(100% - 0px)"
+        >
+          <div className=" px-3 " style={{ whiteSpace: "pre-line" }}>
+            <div className=" mb-4">
+              Performance Score
+              <ProgressBar
+                progress={40}
+                height="30px"
+                backgroundColor="#777"
+                progressColor="#44366a"
+                progressTextColor="#fff"
+                className="my-custom-class"
+              />
+            </div>
+
+            <AccordionMy items={items} />
+          </div>
+        </CustomScroll>
+      </div>
     </div>
   );
 };

@@ -91,9 +91,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (!checkLogin()) {
-      router.push("/login");
-    } else {
+    if (checkLogin()) {
       router.push("/home");
     }
   }, [toastObj]);
@@ -104,10 +102,10 @@ const Login = () => {
         <div className="container mx-auto self-center px-6 md:px-8 flex justify-center items-center">
           <div className="bg-black p-8 rounded-lg shadow-lg max-w-sm w-full border-[3px]  border-gray-400">
             <h2 className="text-2xl font-semibold text-center mb-4 text-white">
-              Login
+              Sign Up
             </h2>
             <p className="text-white/90 text-center mb-10">
-              Login to use Athlabs
+              Sign Up to use Athlabs
             </p>
 
             {toastObj.type && (
@@ -119,7 +117,7 @@ const Login = () => {
                   htmlFor="email"
                   className="block text-white/70  text-sm font-semibold mb-2"
                 >
-                  Username *
+                  Email Address *
                 </label>
                 <input
                   type="text"
@@ -164,7 +162,7 @@ const Login = () => {
                 type="submit"
                 className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               >
-                Login
+                Sign Up
               </button>
 
               {loading && (
@@ -173,17 +171,18 @@ const Login = () => {
                 </div>
               )}
               <p className="text-white/70 text-xs text-center mt-4">
-                Don&apos;t have an account?
+                Forgot Password?
                 <a
                   onClick={handleRequestDemo}
                   className="text-blue-500 hover:underline ml-1 cursor-pointer"
                   target="_blank"
                 >
-                  Request for access
+                  Recover your password here
                 </a>
                 .
               </p>
             </form>
+
             <div className="flex items-center justify-center  mt-7">
               <button className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
                 <img
