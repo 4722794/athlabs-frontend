@@ -98,7 +98,7 @@ const UserForm = () => {
       <div className="bg-[#04080f] flex items-center justify-center pt-20 sm:pt-40  pb-10 sm:pb-20 min-h-[550px]  2xl:h-[calc(100%-121px)] ">
         <div className="container mx-auto self-center px-6 md:px-8 flex justify-center items-center">
           <form
-            className="bg-gray-900 sm:w-7/12 px-12 py-6 rounded-2xl"
+            className="bg-gray-900 sm:w-7/12 px-12 py-6 rounded-2xl border-[3px]  border-gray-400"
             onSubmit={handleSubmit}
           >
             <h2 className="text-2xl font-semibold text-white pb-6 border-gray-700 text-left border-b  mb-5">
@@ -203,7 +203,7 @@ const UserForm = () => {
                   Interests
                 </label>
                 <div className="flex gap-x-5">
-                  <label className="text-white inline-flex gap-x-2 items-center">
+                  <label className="text-white inline-flex gap-x-2 items-center border border-gray-500 px-4 py-2 rounded-3xl">
                     <input
                       type="checkbox"
                       value="Reading"
@@ -212,7 +212,7 @@ const UserForm = () => {
                     />
                     Reading
                   </label>
-                  <label className="text-white inline-flex gap-x-2 items-center">
+                  <label className="text-white inline-flex gap-x-2 items-center border border-gray-500 px-4 py-2 rounded-3xl">
                     <input
                       type="checkbox"
                       value="Sports"
@@ -221,7 +221,7 @@ const UserForm = () => {
                     />
                     Sports
                   </label>
-                  <label className="text-white inline-flex gap-x-2 items-center">
+                  <label className="text-white inline-flex gap-x-2 items-center border border-gray-500 px-4 py-2 rounded-3xl">
                     <input
                       type="checkbox"
                       value="Music"
