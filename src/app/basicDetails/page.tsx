@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { checkLogin } from "../services/apiUtils";
 import { useRouter } from "next/navigation";
 import LandingLayout from "../layout/LandingLayout";
+import { FaRegUser } from "react-icons/fa";
+import { HiOutlinePlus } from "react-icons/hi";
+import InterestCheckboxes from "../components/InterestCheckboxes";
 
 const UserForm = () => {
   const footerClass = "!relative";
@@ -11,6 +14,7 @@ const UserForm = () => {
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
   const [profileImage, setProfileImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
   const [interests, setInterests] = useState([]);
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
   const router = useRouter();
@@ -32,7 +36,18 @@ const UserForm = () => {
   };
 
   const handleProfileImageChange = (e) => {
-    setProfileImage(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(file);
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setProfileImage(null);
+      setPreviewImage(null);
+    }
   };
 
   const handleInterestChange = (e) => {
@@ -105,6 +120,36 @@ const UserForm = () => {
               Basic Details
             </h2>
             <div className="-mx-3 flex flex-wrap gap-y-5">
+              <div className="w-full px-3  flex justify-center">
+                <div>
+                  {!previewImage && (
+                    <label className=" inline-flex relative mx-auto">
+                      <input
+                        type="file"
+                        id="profileImage"
+                        onChange={handleProfileImageChange}
+                        accept="image/*"
+                        className="w-full absolute opacity-0  rounded-md border border-gray-600 bg-transparent py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                      />
+                      <span className=" w-24 h-24 inline-flex border rounded-full justify-center items-center text-gray-300 text-4xl cursor-pointer relative">
+                        <FaRegUser />
+                        <span className=" absolute right-0 bottom-0 w-7 h-7 text-base bg-blue-700 rounded-full text-white inline-flex justify-center items-center">
+                          <HiOutlinePlus />
+                        </span>
+                      </span>
+                    </label>
+                  )}
+                  {previewImage && (
+                    <div className="mt-2">
+                      <img
+                        src={previewImage}
+                        alt="Profile Preview"
+                        className="  max-w-[100px] rounded-md"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className="w-full px-3 sm:w-1/2">
                 <label
                   htmlFor="name"
@@ -182,60 +227,15 @@ const UserForm = () => {
                 />
               </div>
 
-              <div className="w-full px-3">
-                <label
-                  htmlFor="profileImage"
-                  className="mb-3 block text-base font-medium text-white/80"
-                >
-                  Profile Image
-                </label>
-                <input
-                  type="file"
-                  id="profileImage"
-                  onChange={handleProfileImageChange}
-                  accept="image/*"
-                  className="w-full rounded-md border border-gray-600 bg-transparent py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-              </div>
+              <InterestCheckboxes
+                interests={interests}
+                handleInterestChange={handleInterestChange}
+              />
 
-              <div className="w-full px-3">
-                <label className="mb-3 block text-base font-medium text-white/80">
-                  Interests
-                </label>
-                <div className="flex gap-x-5">
-                  <label className="text-white inline-flex gap-x-2 items-center border border-gray-500 px-4 py-2 rounded-3xl">
-                    <input
-                      type="checkbox"
-                      value="Reading"
-                      onChange={handleInterestChange}
-                      checked={interests.includes("Reading")}
-                    />
-                    Reading
-                  </label>
-                  <label className="text-white inline-flex gap-x-2 items-center border border-gray-500 px-4 py-2 rounded-3xl">
-                    <input
-                      type="checkbox"
-                      value="Sports"
-                      onChange={handleInterestChange}
-                      checked={interests.includes("Sports")}
-                    />
-                    Sports
-                  </label>
-                  <label className="text-white inline-flex gap-x-2 items-center border border-gray-500 px-4 py-2 rounded-3xl">
-                    <input
-                      type="checkbox"
-                      value="Music"
-                      onChange={handleInterestChange}
-                      checked={interests.includes("Music")}
-                    />
-                    Music
-                  </label>
-                </div>
-              </div>
               <div className="w-full px-3 my-5">
                 <button
                   type="submit"
-                  className="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-2 px-8 text-center text-base font-semibold text-white outline-none"
+                  className="hover:shadow-form w-full rounded-md bg-blue-600 hover:bg-blue-700  py-2 px-8 text-center text-base font-semibold text-white outline-none"
                 >
                   Submit Now
                 </button>
