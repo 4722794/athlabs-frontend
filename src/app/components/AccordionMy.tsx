@@ -12,13 +12,13 @@ interface AccordionProps {
 }
 
 const AccordionMy: React.FC<AccordionProps> = ({ items }: any) => {
-  const [openItems, setOpenItems] = useState<number[]>([]);
+  const [closeItems, setCloseItems] = useState<number[]>([]);
 
   const toggleItem = (itemId: number) => {
-    if (openItems.includes(itemId)) {
-      setOpenItems(openItems.filter((id) => id !== itemId));
+    if (closeItems.includes(itemId)) {
+      setCloseItems(closeItems.filter((id) => id !== itemId));
     } else {
-      setOpenItems([...openItems, itemId]);
+      setCloseItems([...closeItems, itemId]);
     }
   };
 
@@ -28,20 +28,20 @@ const AccordionMy: React.FC<AccordionProps> = ({ items }: any) => {
         <div key={item.id} className="border border-gray-700 rounded mb-4">
           <div
             className={`flex justify-between items-center px-4 py-2 bg-gray-700 cursor-pointer ${
-              openItems.includes(item.id) ? "rounded-b-none" : "rounded"
+              closeItems.includes(item.id) ? "rounded-b-none" : "rounded"
             }`}
             onClick={() => toggleItem(item.id)}
           >
             <h3 className="text-lg font-semibold">{item.title}</h3>
-            {openItems.includes(item.id) ? (
-              <FaChevronDown className="text-gray-100 transition-transform duration-300 transform rotate-180" />
-            ) : (
+            {closeItems.includes(item.id) ? (
               <FaChevronRight className="text-gray-100 transition-transform duration-300" />
+            ) : (
+              <FaChevronDown className="text-gray-100 transition-transform duration-300 transform rotate-180" />
             )}
           </div>
           <div
             className={`px-4 py-2 ${
-              openItems.includes(item.id) ? "block" : "hidden"
+              closeItems.includes(item.id) ? "hidden" : "block"
             }`}
           >
             <p>{item.content}</p>
