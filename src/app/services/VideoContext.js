@@ -7,7 +7,7 @@ const VideoContext = createContext();
 export const VideoProvider = ({ children }) => {
   const [activeVideoDetail, setVideoDetail] = useState(null);
   const defaultValue = {
-    fetchVideoHistroy: false,
+    fetchVideoHistroy: true,
     enableTypeWritter: false,
     requestDemoShow: false,
   };
