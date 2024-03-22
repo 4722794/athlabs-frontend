@@ -1,6 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { checkLogin } from "../services/apiUtils";
+import {
+  FECallApi,
+  callApi,
+  checkLogin,
+  callApiData,
+} from "../services/apiUtils";
 import { useRouter } from "next/navigation";
 import LandingLayout from "../layout/LandingLayout";
 import { FaRegUser } from "react-icons/fa";
@@ -18,6 +23,7 @@ const UserForm = () => {
   const [interests, setInterests] = useState([]);
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
   const router = useRouter();
+  const [userData, setUserData] = useState(null);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -61,26 +67,52 @@ const UserForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validate form data
-    if (!name || !phone || !gender || !dob) {
+    if (!name || !gender || !dob) {
       setToastObj({ type: "error", msg: "Please fill in all required fields" });
       return;
     }
 
-    // Create form data object
-    const formData = new FormData();
+    var myHeaders = new Headers();
+    myHeaders.append(
+      "Authorization",
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhdGlmQGNzc2luZGlhb25saW5lLmNvbSIsImV4cCI6MTcxNjI4OTAzN30.4ZmPZCOOX8ExBJmWNdd69Yx48WQQaQCDvtUQyWmof70"
+    );
+
+    var formdata = new FormData();
+    formdata.append("name", name);
+    formdata.append("gender", "Male");
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch("https://api.dev.athlabs.co/u/profile", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+
+    /* // Create form data object
+    let formData = new FormData();
     formData.append("name", name);
-    formData.append("phone", phone);
+    // formData.append("phone", phone);
     formData.append("gender", gender);
     formData.append("dob", dob);
-    formData.append("profileImage", profileImage);
-    formData.append("interests", JSON.stringify(interests));
 
     // Send form data to server (replace with your API call)
-    fetch("/api/submit-form", {
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/u/profile";
+    const uriString = `/u/profile`;
+    const method = "POST";
+    const contentType = "application/json";
+    const header = { accept: "application/json" };
+    const responseData = await callApiData(method, header, formData, uriString); */
+    /* fetch(apiUrl, {
       method: "POST",
       body: formData,
     })
@@ -89,24 +121,50 @@ const UserForm = () => {
         console.log("Form submission successful:", data);
         setToastObj({ type: "success", msg: "Form submitted successfully" });
         // Reset form fields
-        setName("");
-        setPhone("");
-        setGender("");
-        setDob("");
-        setProfileImage(null);
-        setInterests([]);
+        // setName("");
+        // // setPhone("");
+        // setGender("");
+        // setDob("");
+        // setProfileImage(null);
+        // setInterests([]);
       })
       .catch((error) => {
         console.error("Error submitting form:", error);
         setToastObj({ type: "error", msg: "Error submitting form" });
-      });
+      }); */
+  };
+
+  const fetchUserData = async () => {
+    try {
+      const uriString = ``;
+      const method = "GET";
+      const contentType = "application/json";
+      const responseData = await callApi(method, contentType, null, uriString);
+
+      if (responseData.status) {
+        setUserData(responseData.data.profile);
+      }
+
+      console.log("User data:", userData);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setToastObj({ type: "error", msg: "Error fetching user data" });
+    }
   };
 
   useEffect(() => {
-    if (checkLogin()) {
-      router.push("/home");
-    }
-  }, [toastObj]);
+    fetchUserData();
+  }, []);
+
+  const handleSkipNow = () => {
+    router.push("/home");
+  };
+
+  // useEffect(() => {
+  //   if (checkLogin()) {
+  //     router.push("/home");
+  //   }
+  // }, [toastObj]);
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
@@ -150,7 +208,7 @@ const UserForm = () => {
                   )}
                 </div>
               </div>
-              <div className="w-full px-3 sm:w-1/2">
+              <div className="w-full px-3 sm:w-full">
                 <label
                   htmlFor="name"
                   className="mb-3 block text-base font-medium text-white/80"
@@ -168,7 +226,7 @@ const UserForm = () => {
                   required
                 />
               </div>
-              <div className="w-full px-3 sm:w-1/2">
+              {/* <div className="w-full px-3 sm:w-1/2">
                 <label
                   htmlFor="phone"
                   className="mb-3 block text-base font-medium text-white/80"
@@ -186,7 +244,7 @@ const UserForm = () => {
                   className="w-full rounded-md border border-gray-600 bg-transparent py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   required
                 />
-              </div>
+              </div> */}
 
               <div className="w-1/2 px-3 sm:w-1/2">
                 <label
@@ -232,12 +290,18 @@ const UserForm = () => {
                 handleInterestChange={handleInterestChange}
               />
 
-              <div className="w-full px-3 my-5">
+              <div className="w-full px-3 my-5 grid gap-x-4 grid-cols-[_1fr_145px] ">
                 <button
                   type="submit"
-                  className="hover:shadow-form w-full rounded-md bg-blue-600 hover:bg-blue-700  py-2 px-8 text-center text-base font-semibold text-white outline-none"
+                  className="hover:shadow-form  w-full rounded-md bg-blue-600 hover:bg-blue-700  py-2 px-8 text-center text-base font-semibold text-white outline-none"
                 >
                   Submit Now
+                </button>
+                <button
+                  className="hover:shadow-form text-center   w-full rounded-md bg-white hover:text-white hover:bg-blue-700  py-2 px-8 text-center text-base font-semibold text-gray-700 outline-none "
+                  onClick={handleSkipNow}
+                >
+                  Skip now
                 </button>
               </div>
             </div>

@@ -6,6 +6,8 @@ import LoadingComp from "../components/LoadingComp";
 import { useRouter } from "next/navigation";
 import { checkLogin } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
+import Image from "next/image";
+import Link from "next/link";
 
 const Login = () => {
   const footerClass = "!relative";
@@ -88,6 +90,21 @@ const Login = () => {
     } else {
       //validation failed
     }
+  };
+
+  const initiateGoogleLogin = async () => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/login/google";
+    window.location.href = apiUrl;
+    /* try {
+      const response = await fetch(apiUrl); // Make a request to your API endpoint for Google OAuth
+      const { authorizationUrl } = await response.json();
+      window.location.href = authorizationUrl; // Redirect to Google's authentication page
+    } catch (error) {
+      console.error("Error initiating Google login:", error);
+      toastObj.type = "e";
+      toastObj.msg = "Error initiating Google login";
+      setToastObj(toastObj);
+    } */
   };
 
   useEffect(() => {
@@ -174,26 +191,37 @@ const Login = () => {
               )}
               <p className="text-white/70 text-xs text-center mt-4">
                 Don&apos;t have an account?
-                <a
-                  onClick={handleRequestDemo}
+                <Link
+                  href="/signup"
+                  // onClick={handleRequestDemo}
+
                   className="text-blue-500 hover:underline ml-1 cursor-pointer"
-                  target="_blank"
                 >
-                  Request for access
-                </a>
-                .
+                  Create an account .
+                </Link>
               </p>
             </form>
+
+            <div className=" grid grid-cols-[1fr_45px_1fr] items-center px-5 pt-5">
+              <div className=" h-[1px] bg-white/80"></div>
+              <div className=" text-white text-center text-sm">Or</div>
+              <div className=" h-[1px] bg-white/80"></div>
+            </div>
+
             <div className="flex items-center justify-center  mt-7">
-              <button className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
-                <img
-                  className="w-6 h-6"
-                  src="https://www.svgrepo.com/show/475656/google-color.svg"
-                  loading="lazy"
-                  alt="google logo"
+              <a
+                onClick={initiateGoogleLogin}
+                target="_blank"
+                className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
+              >
+                <Image
+                  src={"/images/google-color.svg"}
+                  width={24}
+                  height={24}
+                  alt="logo"
                 />
                 <span>Login with Google</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>

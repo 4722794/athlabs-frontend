@@ -6,27 +6,29 @@ import LoadingComp from "../components/LoadingComp";
 import { useRouter } from "next/navigation";
 import { checkLogin } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
+import Image from "next/image";
 
 const Login = () => {
   const footerClass = "!relative";
   const router = useRouter();
   const { setOtherData, otherData } = useVideoContext();
 
-  const [username, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
-  const [formErrors, setFormErrors] = useState({ username: "", password: "" });
+  const [formErrors, setFormErrors] = useState({ email: "", password: "" });
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
+
   const handleRequestDemo = () => {
     setOtherData({ ...otherData, requestDemoShow: true });
   };
   const validateForm = () => {
     let valid = true;
-    const errors = { username: "", password: "" };
+    const errors = { email: "", password: "" };
 
     // Username validation
-    if (!username) {
-      errors.username = "Username is required";
+    if (!email) {
+      errors.email = "Email is required";
       valid = false;
     }
 
@@ -48,40 +50,69 @@ const Login = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (validateForm()) {
-      const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/token";
-      const formData = new URLSearchParams();
-      formData.append("username", username);
-      formData.append("password", password);
-      setLoading(true);
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/u/create";
+    if (validateForm()) {
+      setLoading(true);
       try {
+        // Create form data object
+
+        let urlencoded = new URLSearchParams();
+        urlencoded.append("email", email);
+        urlencoded.append("password", password);
+
         const response = await fetch(apiUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-          body: formData,
-          redirect: "follow",
+          body: urlencoded,
         });
 
-        // Handling response based on status
-        if (response.status === 200) {
-          const result = await response.json();
-          localStorage.setItem("athlabsAuthToken", result.access_token);
-          router.push("/home");
-        } else {
-          let result1 = await response.text();
-          const errorMessage = JSON.parse(result1).detail;
+        const apiUrlToke = process.env.NEXT_PUBLIC_API_HOST + "/token";
+        const formData = new URLSearchParams();
+        formData.append("username", email);
+        formData.append("password", password);
+        setLoading(true);
+
+        try {
+          const response = await fetch(apiUrlToke, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: formData,
+            redirect: "follow",
+          });
+
+          // Handling response based on status
+          if (response.status === 200) {
+            const result = await response.json();
+            localStorage.setItem("athlabsAuthToken", result.access_token);
+            setTimeout(() => {
+              router.push("/basicDetails");
+            }, 1);
+          } else {
+            let result1 = await response.text();
+            const errorMessage = JSON.parse(result1).detail;
+            toastObj.type = "e";
+            toastObj.msg = errorMessage || "Error submitting form";
+            setToastObj(toastObj);
+          }
+        } catch (error) {
+          console.error("Error submitting form:", error);
           toastObj.type = "e";
-          toastObj.msg = errorMessage || "Error submitting form";
+          toastObj.msg = "Error submitting form";
           setToastObj(toastObj);
         }
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        // Handle successful signup
+        console.log("Signup successful");
       } catch (error) {
-        console.error("Error submitting form:", error);
-        toastObj.type = "e";
-        toastObj.msg = "Error submitting form";
-        setToastObj(toastObj);
       } finally {
         setLoading(false);
       }
@@ -122,15 +153,15 @@ const Login = () => {
                 <input
                   type="text"
                   id="username"
-                  value={username}
+                  value={email}
                   className="form-input w-full px-4 py-2 border rounded-lg  border-gray-400 text-white/90  bg-transparent"
                   placeholder="john@gmail.com"
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {formErrors.username && (
+                {formErrors.email && (
                   <span>
                     <p className="text-red-500 text-xs mt-1">
-                      {formErrors.username}
+                      {formErrors.email}
                     </p>
                   </span>
                 )}
@@ -175,7 +206,6 @@ const Login = () => {
                 <a
                   onClick={handleRequestDemo}
                   className="text-blue-500 hover:underline ml-1 cursor-pointer"
-                  target="_blank"
                 >
                   Recover your password here
                 </a>
@@ -183,15 +213,21 @@ const Login = () => {
               </p>
             </form>
 
+            <div className=" grid grid-cols-[1fr_45px_1fr] items-center px-5 pt-5">
+              <div className=" h-[1px] bg-white/80"></div>
+              <div className=" text-white text-center text-sm">Or</div>
+              <div className=" h-[1px] bg-white/80"></div>
+            </div>
+
             <div className="flex items-center justify-center  mt-7">
               <button className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
-                <img
-                  className="w-6 h-6"
-                  src="https://www.svgrepo.com/show/475656/google-color.svg"
-                  loading="lazy"
-                  alt="google logo"
+                <Image
+                  src={"/images/google-color.svg"}
+                  width={24}
+                  height={24}
+                  alt="logo"
                 />
-                <span>Login with Google</span>
+                <span>Signup with Google</span>
               </button>
             </div>
           </div>
