@@ -65,7 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   useEffect(() => {
     if (otherData.fetchVideoHistroy) {
       getVideoHistory();
-      setOtherData({ ...otherData, fetchVideoHistroy: false });
+      setOtherData({ ...otherData, fetchVideoHistroy: true });
     }
 
     const userFromLocalStorage = localStorage.getItem("athlabsLoggedInUser");
@@ -374,6 +374,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                                   onClick={(event) => {
                                     event.preventDefault();
                                     getVideoDetail(video.video_id);
+                                    setOtherData({ ...otherData, fetchVideoHistroy: true, enableTypeWritter: false });
                                   }}
                                 >
                                   <a href="/">

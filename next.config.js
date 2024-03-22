@@ -18,10 +18,35 @@ const rewrites = () => {
             source: "/getVideoDetailByVideoId/:id",
             destination: apiUrl+'/h/:id'
         },
+        {
+            source: "/processVideo",
+            destination: apiUrl+'/process'
+        },
     ];
 };
 const nextConfig = {
     rewrites,
 }
 
-module.exports = nextConfig
+module.exports = {
+    async headers() {
+      return [
+        {
+          // Apply these headers to all routes in your application.
+          source: '/(.*)',
+          headers: [
+            {
+              key: 'Cross-Origin-Embedder-Policy',
+              value: 'require-corp',
+            },
+            {
+              key: 'Cross-Origin-Opener-Policy',
+              value: 'same-origin',
+            },
+          ],
+        },
+      ]
+    },
+    // your existing config here
+    rewrites,
+  }
