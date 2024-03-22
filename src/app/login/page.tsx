@@ -200,6 +200,15 @@ const Login = () => {
                   Create an account .
                 </Link>
               </p>
+              {/*  <p className="text-white/70 text-xs text-center mt-4">
+                Forgot Password?
+                <a
+                  onClick={handleRequestDemo}
+                  className="text-blue-500 hover:underline ml-1 cursor-pointer"
+                >
+                  Recover your password here
+                </a>
+              </p> */}
             </form>
 
             <div className=" grid grid-cols-[1fr_45px_1fr] items-center px-5 pt-5">

@@ -75,16 +75,16 @@ const UserForm = () => {
       setToastObj({ type: "error", msg: "Please fill in all required fields" });
       return;
     }
+    const token = localStorage.getItem("athlabsAuthToken");
 
     var myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhdGlmQGNzc2luZGlhb25saW5lLmNvbSIsImV4cCI6MTcxNjI4OTAzN30.4ZmPZCOOX8ExBJmWNdd69Yx48WQQaQCDvtUQyWmof70"
-    );
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
     var formdata = new FormData();
     formdata.append("name", name);
-    formdata.append("gender", "Male");
+    formdata.append("gender", gender);
+    formdata.append("dob", dob);
+    formdata.append("interests[]", "Fitness");
 
     var requestOptions = {
       method: "POST",
@@ -143,6 +143,9 @@ const UserForm = () => {
 
       if (responseData.status) {
         setUserData(responseData.data.profile);
+        setName(responseData.data.profile.name);
+        setDob(responseData.data.profile.dob);
+        setGender(responseData.data.profile.gender);
       }
 
       console.log("User data:", userData);
@@ -261,9 +264,9 @@ const UserForm = () => {
                   required
                 >
                   <option value="">Select gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 

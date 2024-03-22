@@ -69,45 +69,49 @@ const Login = () => {
           body: urlencoded,
         });
 
-        const apiUrlToke = process.env.NEXT_PUBLIC_API_HOST + "/token";
-        const formData = new URLSearchParams();
-        formData.append("username", email);
-        formData.append("password", password);
-        setLoading(true);
+        if (response.status === 200) {
+          const apiUrlToke = process.env.NEXT_PUBLIC_API_HOST + "/token";
+          const formData = new URLSearchParams();
+          formData.append("username", email);
+          formData.append("password", password);
+          setLoading(true);
 
-        try {
-          const response = await fetch(apiUrlToke, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: formData,
-            redirect: "follow",
-          });
+          try {
+            const response = await fetch(apiUrlToke, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: formData,
+              redirect: "follow",
+            });
 
-          // Handling response based on status
-          if (response.status === 200) {
-            const result = await response.json();
-            localStorage.setItem("athlabsAuthToken", result.access_token);
-            setTimeout(() => {
-              router.push("/basicDetails");
-            }, 1);
-          } else {
-            let result1 = await response.text();
-            const errorMessage = JSON.parse(result1).detail;
+            // Handling response based on status
+            if (response.status === 200 && response.ok) {
+              const result = await response.json();
+              localStorage.setItem("athlabsAuthToken", result.access_token);
+              setTimeout(() => {
+                router.push("/basicDetails");
+              }, 1);
+            } else {
+              let result1 = await response.text();
+              const errorMessage = JSON.parse(result1).detail;
+              toastObj.type = "e";
+              toastObj.msg = errorMessage || "Error submitting form";
+              setToastObj(toastObj);
+            }
+          } catch (error) {
+            console.error("Error submitting form:", error);
             toastObj.type = "e";
-            toastObj.msg = errorMessage || "Error submitting form";
+            toastObj.msg = "Error submitting form";
             setToastObj(toastObj);
           }
-        } catch (error) {
-          console.error("Error submitting form:", error);
+        } else {
+          let result1 = await response.text();
+          const errorMessage = JSON.parse(result1).detail;
           toastObj.type = "e";
-          toastObj.msg = "Error submitting form";
+          toastObj.msg = errorMessage || "Error submitting form";
           setToastObj(toastObj);
-        }
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
         }
 
         // Handle successful signup
@@ -201,16 +205,6 @@ const Login = () => {
                   <LoadingComp />
                 </div>
               )}
-              <p className="text-white/70 text-xs text-center mt-4">
-                Forgot Password?
-                <a
-                  onClick={handleRequestDemo}
-                  className="text-blue-500 hover:underline ml-1 cursor-pointer"
-                >
-                  Recover your password here
-                </a>
-                .
-              </p>
             </form>
 
             <div className=" grid grid-cols-[1fr_45px_1fr] items-center px-5 pt-5">

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import { useSearchParams, ro, useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const AuthComponent = () => {
   const searchParams = useSearchParams();
