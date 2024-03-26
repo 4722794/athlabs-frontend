@@ -31,14 +31,14 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             <div className=" inline-flex  gap-x-4 md:gap-x-6 justify-center">
               <Link
                 href="/privacyPolicy"
-                className=" text-[11px] tracking-[.25em] "
+                className=" text-[11px] tracking-[.25em] hover:text-purple-400"
               >
                 PRIVACY POLICY
               </Link>
               <span className=" h-1 bg-white"></span>
               <Link
                 href="/termsAndConditions"
-                className=" text-[11px] tracking-[.25em] "
+                className=" text-[11px] tracking-[.25em] hover:text-purple-400 "
               >
                 TERMS & CONDITIONS
               </Link>

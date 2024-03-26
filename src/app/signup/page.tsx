@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { checkLogin, initiateGoogleLogin } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
 import Image from "next/image";
+import Link from "next/link";
 
 const Login = () => {
   const footerClass = "!relative";
@@ -214,10 +215,13 @@ const Login = () => {
             </div>
 
             <div className="flex items-center justify-center  mt-7">
-              <a 
-               onClick={initiateGoogleLogin}
-               target="_blank"
-              className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+              <a
+                onClick={initiateGoogleLogin}
+                target="_blank"
+                className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow 
+                
+               transition-transform hover:-translate-y-2 ease-in-out cursor-pointer focus:outline-none focus:ring-4 focus:ring-blue-300"
+              >
                 <Image
                   src={"/images/google-color.svg"}
                   width={24}
@@ -227,6 +231,18 @@ const Login = () => {
                 <span>Signup with Google</span>
               </a>
             </div>
+
+            <p className="text-white/70 text-xs text-center mt-4">
+              if have an account?
+              <Link
+                href="/login"
+                // onClick={handleRequestDemo}
+
+                className="text-blue-500 hover:underline ml-1 cursor-pointer"
+              >
+                Login
+              </Link>
+            </p>
           </div>
         </div>
       </div>
