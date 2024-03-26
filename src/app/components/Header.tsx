@@ -17,6 +17,7 @@ const Header: React.FC<HeaderProps> = ({
   requestAction,
 }) => {
   const [openmenu, setOpenMenu] = useState(false);
+  const [showMenu, setMenu] = useState(false);
   const router = useRouter();
   const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
 
@@ -50,6 +51,14 @@ const Header: React.FC<HeaderProps> = ({
       router.push("/signup");
     }
   };
+
+  const token = localStorage.getItem("athlabsAuthToken");
+
+  useEffect(() => {
+    if (token) {
+      setMenu(true);
+    }
+  }, []);
 
   return (
     <>
@@ -105,20 +114,35 @@ const Header: React.FC<HeaderProps> = ({
                   >
                     REQUEST DEMO
                   </Dropdown.Item> */}
-                  <a
-                    className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
-                    onClick={(e) => goForLogin(e)}
-                    href="/"
-                  >
-                    SIGN IN
-                  </a>
-                  <a
-                    className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
-                    onClick={(e) => goForSignUp(e)}
-                    href="/"
-                  >
-                    SIGN UP
-                  </a>
+
+                  {showMenu && (
+                    <a
+                      className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
+                      href="/home"
+                    >
+                      DASHBOARD
+                    </a>
+                  )}
+
+                  {!showMenu && (
+                    <>
+                      {" "}
+                      <a
+                        className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
+                        onClick={(e) => goForLogin(e)}
+                        href="/"
+                      >
+                        SIGN IN
+                      </a>
+                      <a
+                        className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
+                        onClick={(e) => goForSignUp(e)}
+                        href="/"
+                      >
+                        SIGN UP
+                      </a>
+                    </>
+                  )}
                 </Dropdown>
               </div>
 
@@ -157,24 +181,38 @@ const Header: React.FC<HeaderProps> = ({
                 >
                   REQUEST DEMO
                 </a> */}
+                {showMenu && (
+                  <a
+                    href="/home"
+                    className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer
+        
+        hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white
+        "
+                  >
+                    Dashboard
+                  </a>
+                )}
+                {!showMenu && (
+                  <>
+                    <a
+                      onClick={(e) => goForLogin(e)}
+                      className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
+                    >
+                      SIGN IN
+                    </a>
 
-                <a
-                  onClick={(e) => goForLogin(e)}
-                  className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
-                >
-                  SIGN IN
-                </a>
-
-                <a
-                  onClick={(e) => goForSignUp(e)}
-                  href="/"
-                  className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer
+                    <a
+                      onClick={(e) => goForSignUp(e)}
+                      href="/"
+                      className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer
               
               hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white
               "
-                >
-                  SIGN UP
-                </a>
+                    >
+                      SIGN UP
+                    </a>
+                  </>
+                )}
               </div>
             </>
           ) : (
@@ -227,27 +265,37 @@ const Header: React.FC<HeaderProps> = ({
           >
             JOIN US
           </a>
-          <a className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer">
+          {/* <a className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer">
             REQUEST DEMO
-          </a>
-          <a
-            href="/login"
-            className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer
+          </a> */}
+          {showMenu && (
+            <a
+              href="/login"
+              className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
+            >
+              DASHBOARD
+            </a>
+          )}
+          {!showMenu && (
+            <>
+              <a
+                href="/login"
+                className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
+              >
+                SIGN IN
+              </a>
+
+              <a
+                href="/signup"
+                className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer
               
               hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white
               "
-          >
-            Sign In
-          </a>
-          <a
-            href="/signup"
-            className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer
-              
-              hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white
-              "
-          >
-            Sign Up
-          </a>
+              >
+                SIGN UP
+              </a>
+            </>
+          )}
         </div>
       </div>
     </>
