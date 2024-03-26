@@ -12,17 +12,205 @@ import InputFileUpload from "../components/InputFileUpload";
 import Chat from "../components/Chat";
 import HomeLayout from "../layout/HomeLayout";
 import CustomScroll from "react-custom-scroll";
-import { callApi } from "../services/apiUtils";
+import { callApi, checkLogin } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
 import moment from "moment";
+import Typewriter from "typewriter-effect";
 import LoadingComp from "../components/LoadingComp";
-import { Spinner } from "flowbite-react";
+import { Accordion, Spinner } from "flowbite-react";
+import ProgressBar from "../components/ProgressBar";
+import AccordionMy from "../components/AccordionMy";
 interface Tab1ContentProps {
   compData: any;
+  setName: any;
 }
 
-const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => {
-  const { activeVideoDetail } = useVideoContext();
+const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
+  const { activeVideoDetail, otherData } = useVideoContext();
+  const [historyData, setHistoryData] = useState<any>(null);
+  const [score, setScore] = useState<any>(null);
+  const [feedback, setFeedback] = useState<any>(null);
+  const [highlight, setHighlight] = useState<any>(null);
+  const [items, setItems] = useState<Array<any>>([]);
+  const [isFeedbackWritten, setIsFeedbackWritten] = useState(false);
+  const [isHighlightWritten, setIsHighlightWritten] = useState(false);
+
+  const Content: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
+    <div>
+      <p>This content is {isOpen ? "open" : "closed"}.</p>
+    </div>
+  );
+
+  const resetAnalysis = () => {
+    setScore(null);
+    setFeedback('');
+    setHighlight('');
+    setIsFeedbackWritten(false);
+    setItems([]);
+  };
+
+  useEffect(() => {  
+    resetAnalysis();
+    if(activeVideoDetail?.video_id && otherData.fetchVideoHistroy) {
+      fetchHistory();
+    } else if (activeVideoDetail?.video_id) {
+      fetchFeedback();
+    }
+  }, [activeVideoDetail]);
+
+  useEffect(() => {
+    updateItems();
+  }, [highlight, feedback, isFeedbackWritten]);
+  
+  useEffect(() => {
+    updateHistoryItems();
+  }, [historyData]);
+
+  const fetchHistory = async () => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
+    const apiEndpoint = `${apiUrl}/h/${activeVideoDetail.video_id}`;
+
+    const headers = {
+      Authorization: `Bearer ${checkLogin()}`, // Replace with your actual token
+    };
+
+    const response: any = await fetch(apiEndpoint, { headers });
+    
+    const data = await response.json();
+    setHistoryData(data);
+  }
+
+  const fetchFeedback = async () => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
+    const apiEndpoint = `${apiUrl}/feedback/${activeVideoDetail.video_id}`;
+
+    const headers = {
+      Authorization: `Bearer ${checkLogin()}`, // Replace with your actual token
+    };
+
+    const response: any = await fetch(apiEndpoint, { headers });
+
+    const reader = response.body.getReader();
+
+    let receivedData = '';
+    const processStream = async () => {
+      while(true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const decodedValue = new TextDecoder().decode(value);
+        receivedData += decodedValue.replace(/data:/g, '');
+      }
+      setFeedback(receivedData);
+      fetchHighlight();
+    };
+    
+    processStream();
+  };
+
+  const fetchHighlight = async () => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
+    const apiEndpoint = `${apiUrl}/highlight/${activeVideoDetail.video_id}`;
+
+    const headers = {
+      Authorization: `Bearer ${checkLogin()}`, // Replace with your actual token
+    };
+
+    const response: any = await fetch(apiEndpoint, { headers });
+    
+    const data = await response.json();
+    setHighlight(data.highlight);
+    setScore(data.score);
+    if(data.name && !activeVideoDetail.name) {
+      setName(data.name);
+    }
+  }
+
+  const updateItems = () => {
+    const newItems = [];
+
+    // Check if feedback is not empty, then update items array
+    if (feedback) {
+      newItems.push({
+        id: 1,
+        title: "Feedback",
+        content: <Typewriter
+                  // update isFeedbackWritten state to true when feedback written
+                  onInit={(typewriter) => {
+                    typewriter
+                    .typeString(feedback)
+                    .callFunction(() => {
+                        setIsFeedbackWritten(true);
+                      })
+                      .start();
+                  }}
+                  options={{
+                    strings: feedback,
+                    autoStart: true,
+                    loop: false,
+                    delay: 10,
+                  }}
+                />,
+      });
+    }
+
+    // Check if feedback and highlight are not empty, then update items array
+    if (feedback && highlight && isFeedbackWritten) {
+      newItems.push({
+        id: 2,
+        title: "Highlight",
+        content: <Typewriter
+                  // update isHighlightWritten state to true when highlight written
+                  onInit={(typewriter) => {
+                    typewriter
+                    .typeString(highlight)
+                    .callFunction(() => {
+                        setIsHighlightWritten(true);
+                      })
+                      .start();
+                  }}
+                  options={{
+                    strings: highlight,
+                    autoStart: true,
+                    loop: false,
+                    delay: 10,
+                  }}
+                />,
+      });
+    }
+
+    setItems(newItems);
+  };
+
+  const updateHistoryItems = () => {
+    if (historyData) {
+      const { score, feedback, highlight } = historyData;
+      const newItems = [];
+      if(score) setScore(score);
+      if (feedback) {
+        if (items.findIndex((item) => item.title === "Feedback") !== -1) {
+          items[0].content = feedback;
+        } else {
+          newItems.push({
+            id: 1,
+            title: "Feedback",
+            content: feedback,
+          });
+        }
+      }
+      if (highlight) {
+        if (items.findIndex((item) => item.title === "Highlight") !== -1) {
+          items[1].content = highlight;
+        } else {
+          newItems.push({
+            id: 2,
+            title: "Highlight",
+            content: highlight,
+          });
+        }
+      }
+      setItems(newItems);
+    }
+  };
 
   return (
     <div className=" landscape:min-h-[300px]  lg:h-[calc(100vh-200px)]">
@@ -32,14 +220,30 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => {
             className="-mx-3 "
             heightRelativeToParent="calc(100% - 0px)"
           >
-            <div className=" px-3 " style={{ whiteSpace: "pre-line" }}>
+            {/* <div className=" px-3 " style={{ whiteSpace: "pre-line" }}>
               {activeVideoDetail.feedback}
-            </div>
+            </div> */}
+            <AccordionMy items={items} />
+            { ((highlight && isHighlightWritten && score) || (!highlight && score)) && (
+              <div className=" mb-4">
+                Performance Score
+                <ProgressBar
+                  progress={score}
+                  height="30px"
+                  backgroundColor="#777"
+                  progressColor="#44366a"
+                  progressTextColor="#fff"
+                  className="my-custom-class"
+                />
+              </div>
+            )}
           </CustomScroll>
         </div>
       ) : (
         ""
       )}
+
+    
     </div>
   );
 };
@@ -186,11 +390,12 @@ interface Tab {
 const AdminPage = () => {
   const [dataFromChild, setDataFromChild] = useState(null);
   const { activeVideoDetail } = useVideoContext();
+  const [name, setName] = useState("");
   const tabs: Tab[] = [
     {
       id: "tab1",
-      label: "Feedback",
-      content: <Tab1Content compData={dataFromChild} />,
+      label: "Analysis",
+      content: <Tab1Content compData={dataFromChild} setName={setName} />,
     },
   ];
 
@@ -199,6 +404,7 @@ const AdminPage = () => {
   }
 
   const handleChildData = (childData: any) => {
+    console.log("childData", childData);
     setDataFromChild(childData.feedback);
   };
 
@@ -226,7 +432,7 @@ const AdminPage = () => {
                   className=" text-lg px-5 flex items-center min-h-[66px] drop-shadow-xl  border-t border-gray-900  bg-[#26313F]  "
                   style={{ color: "#fff" }}
                 >
-                  {activeVideoDetail.name}
+                  {activeVideoDetail.name || name}
                 </div>
               </div>
             )}

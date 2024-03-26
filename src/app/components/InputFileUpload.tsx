@@ -4,12 +4,13 @@ import Dropzone, {
   IFileWithMeta,
   IUploadParams,
 } from "react-dropzone-uploader";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, memo, use, useCallback, useEffect, useRef, useState } from "react";
 import { checkLogin } from "../services/apiUtils";
 import LoadingComp from "./LoadingComp";
 import { useVideoContext } from "../services/VideoContext";
 import { Spinner } from "flowbite-react";
 import ComonToast from "./ComonToast";
+import VideoTrimmer from "./VideoTrimmer";
 
 interface InputFileUploadProps {
   //children: ReactNode;
@@ -25,6 +26,27 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   const [formErrors, setFormErrors] = useState({ name: "", file: "" });
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
   const [name, setName] = useState(""); // New state for loading indicator
+  const nameRef = useRef(''); // Assuming the initial name is an empty string
+  const [videoUrl, setVideoUrl] = useState("");
+  const [uploadedVideo, setUploadedVideo] = useState<any>(null);
+  const [trimmedVideoFile, setTrimmedVideoFile] = useState<any>(null);
+  const [videoMeta, setVideoMeta] = useState<any>(null);
+  const [rStart, setRstart] = useState(0);
+  const [rEnd, setRend] = useState(20);
+
+  const [handleTrim, setHandleTrim] = useState<(() => void) | null>(null);
+
+  const handleTrimRef = useRef<(() => void) | null>(null);
+
+  const handleTrimChange = (newTrim: any) => {
+    handleTrimRef.current = newTrim;
+  };
+
+  useEffect(() => {
+    if (handleTrimRef.current !== null) {
+      setHandleTrim(() => handleTrimRef.current);
+    }
+  }, [handleTrimRef.current]);
 
   // Reference to Dropzone instance
   const dropzoneRef = useRef<any>(null);
@@ -49,10 +71,10 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       const xhrq = file.xhr;
 
       if (actualFile instanceof Blob) {
-        formData.append("video", actualFile, actualFile.name);
-        formData.append("name", name);
+        formData.append("video", trimmedVideoFile, actualFile.name);
+        formData.append("name", nameRef.current);
         const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
-        const apiEndpoint = `${apiUrl}`;
+        const apiEndpoint = `/processVideo`;
 
         // Include authentication headers
         const headers = {
@@ -82,14 +104,16 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
 
       if (xhr && xhr.responseText) {
         const response = JSON.parse(xhr.responseText);
-        setName("");
+        nameRef.current = "";
         //setChildData(response);
         setOtherData({
           ...otherData,
-          fetchVideoHistroy: true,
+          fetchVideoHistroy: false,
           enableTypeWritter: true,
         });
         setActiveVideoData(response);
+        // const trimmedVideoUrl = URL.createObjectURL(trimmedVideoFile);
+        // setActiveVideoData({ ...response, video_url: trimmedVideoUrl });
       }
     } else if (status === "error_upload") {
       setLoading(false); // Set loading to false on error
@@ -104,25 +128,79 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       setLoading(false); // Set loading to false on error
       console.error(`${meta.name} failed to upload`);
     } else if (status === "ready") {
+      setVideoMeta(meta);
       setSelectedFile(true);
+      setUploadedVideo(file);
+      const url = URL.createObjectURL(file);
+      setVideoUrl(url);
     }
   };
-  const Preview = ({ meta }: any) => {
-    const { name, percent, status } = meta;
+  
+  const Preview = memo(({ meta, name }: any) => {
+    const { percent, status, duration } = meta;
+    const videoRef = useRef<HTMLVideoElement | null>(null);
+    const rStartRef = useRef(rStart);
+    const rEndRef = useRef(rEnd);
+  
+    useEffect(() => {
+      rStartRef.current = rStart;
+      rEndRef.current = rEnd;
+    }, [rStart, rEnd]);
+
+    const handleTimeUpdate = useCallback(() => {
+      if (videoRef.current && videoRef.current.currentTime >= rEndRef.current) {
+        videoRef.current.pause();
+      }
+    }, [videoRef.current, rEndRef.current]);
+  
+    useEffect(() => {
+      if (videoRef.current) {
+        videoRef.current.currentTime = rStartRef.current;
+        videoRef.current.addEventListener('timeupdate', handleTimeUpdate);
+      }
+    
+      return () => {
+        if (videoRef.current) {
+          videoRef.current.removeEventListener('timeupdate', handleTimeUpdate);
+        }
+      };
+    }, [handleTimeUpdate]);
+
     return (
-      <div className="flex items-center justify-center w-full min-h-[200px] h-full bg-[#1B212E] rounded-md border-dash border-2 border-[#2F3747]  flex-col lg:flex-row py-5  lg:py-7 px-4  ">
-        <div className=" relative">
+      <div className="flex justify-center w-full min-h-[650px] h-full bg-[#1B212E] rounded-md border-dash border-2 border-[#2F3747]  flex-col">
+        <div className="flex justify-center relative">
           {loading && <Spinner aria-label="Default status example" size="xl" />}
         </div>
-        <span
+        {!loading && (
+          <>
+            <video
+              ref={videoRef}
+              playsInline
+              controls
+              className=" landscape:h-[calc(100vh-45px)] landscape:w-auto landscape:lg:h-[calc(100%-66px)] lg:h-[calc(100%-66px)] my-auto mx-auto"
+            >
+              <source src={videoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>          
+            <div
+              className=" text-lg px-5 flex items-center min-h-[66px] drop-shadow-xl  border-t border-gray-900  bg-[#26313F]"
+              style={{ color: "#fff" }}
+            >
+              {name}
+            </div>
+          </>
+        )}
+        {/* <span
           className="self-center h-full flex items-center text-white text-2xl break-all"
           style={{ margin: "10px 3%", fontFamily: "Helvetica" }}
         >
           {name}
-        </span>
+        </span> */}
       </div>
     );
-  };
+  },
+    (prevProps, nextProps) => prevProps.videoUrl === nextProps.videoUrl && prevProps.loading === nextProps.loading
+  );
 
   const Layout = ({
     input,
@@ -132,8 +210,12 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
     files,
     extra: { maxFiles },
   }: any) => {
+
+    const meta = files[0]?.meta;
+
     return (
       <>
+        
         {previews}
 
         {files.length == 0 && (
@@ -169,20 +251,33 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
     setFormErrors(errors);
     return valid;
   };
-  const handleSubmit = () => {
-    // Manually trigger the upload
+
+  useEffect(() => {
+    if (trimmedVideoFile) {
+      handleSubmitFinally();
+    }
+  }, [trimmedVideoFile]);
+
+  const handleSubmit = async () => {
     if (validateForm()) {
-      setSelectedFile(false);
+      if (handleTrimRef.current !== null) {
+        const trimmedVideo = await handleTrimRef.current();
+        setTrimmedVideoFile(trimmedVideo);
+      }
+    }
+  };
+
+  const handleSubmitFinally = async () => {
+    setSelectedFile(false);
       if (dropzoneRef.current) {
         dropzoneRef.current.handleRestart(dropzoneRef.current.files[0]);
       }
-    }
   };
 
   const inputContent = (files: any, extra: any): any => {
     if (extra.reject) {
       return (
-        <div className=" gap-y-4 flex flex-col px-4">
+        <div className=" gap-y-4 flex flex-col px-4" key={Math.random()}>
           <p className=" text-xl font-semibold">
             Drag Files or Click to Browse
           </p>
@@ -198,7 +293,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       );
     } else {
       return (
-        <div className=" gap-y-4 flex flex-col px-4">
+        <div className=" gap-y-4 flex flex-col px-4" key={Math.random()}>
           <p className=" text-xl font-semibold">
             Drag Files or Click to Browse
           </p>
@@ -215,9 +310,35 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
     }
   };
 
+  const InputComponent = ({ textname, formErrors, onNameChange }: any) => {
+    const [localName, setLocalName] = useState(textname);
+  
+    const handleNameChange = (e: any) => {
+      setLocalName(e.target.value);
+      onNameChange(e.target.value);
+    };
+    return (
+      <>
+        <input
+          type="text"
+          placeholder="(optional) Enter exercise name"
+          className="h-11 text-sm md:text-md pl-4 px-2.5  md:px-5 md:pl-5 w-full bg-[#2F3747]  border border-white/40  rounded-lg      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600 "
+          value={localName}
+          maxLength={30}
+          onChange={handleNameChange}
+        />
+        {formErrors.name && (
+          <span>
+            <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
+          </span>
+        )}
+      </>
+    );
+  }
+
   return (
     <>
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex flex-col items-center justify-center w-full h-full">
         <label
           htmlFor="dropzone-file"
           className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer bg-transparent"
@@ -262,6 +383,11 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
           <input id="dropzone-file" type="file" className="hidden" />
           {/* {loading && <LoadingComp />} */}
         </label>
+        {
+          selectedFile && (
+            <VideoTrimmer setHandleTrim={handleTrimChange} rStart={rStart} rEnd={rEnd} setRstart={setRstart} setRend={setRend} inputVideoFile={uploadedVideo} videoMeta={videoMeta} />
+          )
+        }
       </div>
       {formErrors.file && (
         <span>
@@ -270,21 +396,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       )}
 
       <div className=" flex gap-x-2 lg:gap-x-5 items-end mt-2 lg:mt-5">
-        <input
-          type="text"
-          placeholder="(optional) Enter exercise name"
-          className="h-11 text-sm md:text-md pl-4 px-2.5  md:px-5 md:pl-5 w-full bg-[#2F3747]  border border-white/40  rounded-lg      ring-0 ring-inset ring-gray-300 text-white placeholder:text-gray-400 focus:ring-0 outline-none focus:ring-inset focus:ring-indigo-600 "
-          value={name}
-          maxLength={30}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
-        {formErrors.name && (
-          <span>
-            <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
-          </span>
-        )}
+        <InputComponent textname={nameRef.current} formErrors={formErrors} onNameChange={(value: any) => { nameRef.current = value}} />
         <button
           type="button"
           disabled={loading}

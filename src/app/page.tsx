@@ -224,7 +224,7 @@ const AppPage = () => {
                         data-wait="..."
                         className=" px-3 md:px-0 md:w-[200px] cursor-pointer  text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded bg-gradient-to-r from-[#101828] to-[#44366a] h-10 xl:h-12 2xl:h-[60px] absolute right-1 2xl:right-2 top-1 2xl:top-2 overflow-visible"
                       >
-                        {loading && <Spinner />} Get access
+                        {!loading && <Spinner />} Get access
                       </button>
                     </form>
                   </div>
@@ -276,7 +276,7 @@ const AppPage = () => {
                                       muted
                                       loop
                                       playsInline
-                                      className="  h-full w-full "
+                                      className="h-full w-full "
                                     >
                                       <source src={item.src} type="video/mp4" />
                                     </video>
