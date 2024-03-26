@@ -42,6 +42,15 @@ const Header: React.FC<HeaderProps> = ({
     }
   };
 
+  const goForSignUp = (e: any) => {
+    e.preventDefault();
+    if (checkLogin()) {
+      router.push("/home");
+    } else {
+      router.push("/signup");
+    }
+  };
+
   return (
     <>
       <header className="bg-[#04080f]   text-white text-left items-center flex fixed w-full top-0 z-30 h-14 md:h-16  lg:h-16 xl:h-16 2xl:h-24 border-b border-gray-800">
@@ -90,18 +99,25 @@ const Header: React.FC<HeaderProps> = ({
                   <Dropdown.Item onClick={joinUSAction} className="text-white">
                     JOIN US
                   </Dropdown.Item>
-                  <Dropdown.Item
+                  {/* <Dropdown.Item
                     onClick={handleRequestDemo}
                     className="text-white "
                   >
                     REQUEST DEMO
-                  </Dropdown.Item>
+                  </Dropdown.Item> */}
                   <a
                     className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
                     onClick={(e) => goForLogin(e)}
                     href="/"
                   >
-                    GO TO APP
+                    SIGN IN
+                  </a>
+                  <a
+                    className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
+                    onClick={(e) => goForSignUp(e)}
+                    href="/"
+                  >
+                    SIGN UP
                   </a>
                 </Dropdown>
               </div>
@@ -135,21 +151,29 @@ const Header: React.FC<HeaderProps> = ({
                 >
                   JOIN US
                 </a>
-                <a
+                {/* <a
                   onClick={handleRequestDemo}
                   className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
                 >
                   REQUEST DEMO
-                </a>
+                </a> */}
+
                 <a
                   onClick={(e) => goForLogin(e)}
+                  className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
+                >
+                  SIGN IN
+                </a>
+
+                <a
+                  onClick={(e) => goForSignUp(e)}
                   href="/"
                   className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer
               
               hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white
               "
                 >
-                  GO TO APP
+                  SIGN UP
                 </a>
               </div>
             </>
@@ -213,7 +237,16 @@ const Header: React.FC<HeaderProps> = ({
               hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white
               "
           >
-            GO TO APP
+            Sign In
+          </a>
+          <a
+            href="/signup"
+            className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer
+              
+              hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white
+              "
+          >
+            Sign Up
           </a>
         </div>
       </div>
