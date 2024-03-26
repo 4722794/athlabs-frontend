@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
         <div className="container mx-auto self-center px-6 md:px-8 flex justify-between items-center">
           <a href="/" className=" inline-flex h-8 xl:h-8 2xl:h-10 ">
             <Image
-              src={"/images/logo.svg"}
+              src={"/images/logo2.png"}
               width={230}
               height={72}
               className=" h-full w-auto"
@@ -168,7 +168,7 @@ const Header: React.FC<HeaderProps> = ({
           <div className="container mx-auto self-center px-6 md:px-8 flex justify-between items-center">
             <a className=" inline-flex h-8 xl:h-8 2xl:h-10 ">
               <Image
-                src={"/images/logo.svg"}
+                src={"/images/logo2.png"}
                 width={230}
                 height={72}
                 className=" h-full w-auto"

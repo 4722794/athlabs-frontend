@@ -16,7 +16,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
           <div className="w-6/12 flex justify-between">
             <a className=" inline-flex h-8 2xl:h-10 ">
               <Image
-                src={"/images/logo.svg"}
+                src={"/images/logo2.png"}
                 width={230}
                 height={72}
                 className=" h-full w-auto"
