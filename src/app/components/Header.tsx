@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { checkLogin } from "../services/apiUtils";
 import { Dropdown } from "flowbite-react";
 import { useVideoContext } from "../services/VideoContext";
+// import { useLocation } from "react-router-dom";
 
 interface HeaderProps {
   showButton?: boolean;
@@ -52,13 +53,15 @@ const Header: React.FC<HeaderProps> = ({
     }
   };
 
-  const token = localStorage.getItem("athlabsAuthToken");
-
   useEffect(() => {
+    const token =
+      localStorage.getItem("athlabsAuthToken") && !undefined && !null;
     if (token) {
       setMenu(true);
     }
-  }, []);
+  }, [setMenu]);
+
+  // const location = useLocation();
 
   return (
     <>
