@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ffmpeg/ffmpeg": "^0.10.0",
+    "@ffmpeg/ffmpeg": "0.10.0",
     "flowbite-react": "^0.7.2",
     "gsap": "^3.9.0",
     "lodash": "^4.17.21",
