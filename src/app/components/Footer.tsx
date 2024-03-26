@@ -1,4 +1,6 @@
+import { NavbarLink } from "flowbite-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface FooterProps {
@@ -27,16 +29,19 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
 
           <div className="w-4/12  justify-center flex self-center   ">
             <div className=" inline-flex  gap-x-4 md:gap-x-6 justify-center">
-              <a
+              <Link
                 href="/privacyPolicy"
                 className=" text-[11px] tracking-[.25em] "
               >
                 PRIVACY POLICY
-              </a>
+              </Link>
               <span className=" h-1 bg-white"></span>
-              <a className=" text-[11px] tracking-[.25em] ">
+              <Link
+                href="/termsAndConditions"
+                className=" text-[11px] tracking-[.25em] "
+              >
                 TERMS & CONDITIONS
-              </a>
+              </Link>
             </div>
           </div>
 
