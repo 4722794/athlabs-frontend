@@ -184,22 +184,19 @@ const Login = () => {
                 Login
               </button>
 
+              <Link
+                href={"/forgotpasword"}
+                className=" text-blue-500 hover:text-blue-700 font-semibold text-center  pt-5 flex justify-center text-xs"
+              >
+                Forgout Your Passowrd
+              </Link>
+
               {loading && (
                 <div className="mt-3">
                   <LoadingComp />
                 </div>
               )}
-              <p className="text-white/70 text-xs text-center mt-4">
-                Don&apos;t have an account?
-                <Link
-                  href="/signup"
-                  // onClick={handleRequestDemo}
 
-                  className="text-blue-500 hover:underline ml-1 cursor-pointer"
-                >
-                  Create an account .
-                </Link>
-              </p>
               {/*  <p className="text-white/70 text-xs text-center mt-4">
                 Forgot Password?
                 <a
@@ -221,7 +218,9 @@ const Login = () => {
               <a
                 onClick={initiateGoogleLogin}
                 target="_blank"
-                className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
+                className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow 
+                
+                transition-transform hover:-translate-y-2 ease-in-out cursor-pointer focus:outline-none focus:ring-4 focus:ring-blue-300"
               >
                 <Image
                   src={"/images/google-color.svg"}
@@ -232,6 +231,17 @@ const Login = () => {
                 <span>Login with Google</span>
               </a>
             </div>
+            <p className="text-white/70 text-xs text-center mt-4">
+              Don&apos;t have an account?
+              <Link
+                href="/signup"
+                // onClick={handleRequestDemo}
+
+                className="text-blue-500 hover:underline ml-1 cursor-pointer"
+              >
+                Create an account .
+              </Link>
+            </p>
           </div>
         </div>
       </div>
