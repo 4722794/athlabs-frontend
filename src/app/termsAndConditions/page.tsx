@@ -20,25 +20,25 @@ function PrivacyPolicy() {
                 </h2>
                 <ol className="list-decimal_ list-inside_ text-white/80 ">
                   <li className="mb-2">
-                    1.1 "Athlabs" refers to the AI-driven digital performance
+                    1.1 {"Athlabs"} refers to the AI-driven digital performance
                     coach application that provides instant, instructive
                     feedback based on exercise performance through handheld
                     videos.
                   </li>
                   <li className="mb-2">
-                    1.2 "User" or "You" means any individual who uses the
+                    1.2 {"User"} or {"You"} means any individual who uses the
                     Services provided by Athlabs.
                   </li>
                   <li className="mb-2">
-                    1.3 "Services" encompasses all software, applications,
+                    1.3 {"Services"} encompasses all software, applications,
                     content, and features provided through Athlabs.
                   </li>
                   <li className="mb-2">
-                    1.4 "Content" includes but is not limited to videos, text,
+                    1.4 {"Content"} includes but is not limited to videos, text,
                     images, user feedback, and performance data.
                   </li>
                   <li className="mb-2">
-                    1.5 "Account" means the registration and user profile
+                    1.5 {"Account"} means the registration and user profile
                     created to access the Services provided by Athlabs.
                   </li>
                 </ol>
@@ -153,7 +153,7 @@ function PrivacyPolicy() {
                 </h2>
                 <p className="text-white/80 mb-4">
                   11.1 These Terms shall be governed and construed in accordance
-                  with the laws of the jurisdiction of Athlabs' registration,
+                  with the laws of the jurisdiction of "Athlabs'" registration,
                   without regard to its conflict of law provisions.
                 </p>
 

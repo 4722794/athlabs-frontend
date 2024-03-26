@@ -15,9 +15,9 @@ function PrivacyPolicy() {
               </h1>
 
               <p className="mb-5 text-white/70">
-                This Privacy Policy ("Policy") sets forth how Athlabs, located
+                This Privacy Policy ({"Policy"}) sets forth how Athlabs, located
                 at 4132, Prestige Shantiniketan, Hoodi, Bangalore 560048, India
-                ("Company"), handles the personal data of its users in relation
+                ({"Company"}), handles the personal data of its users in relation
                 to the services provided by the Athlabs app. The app offers
                 AI-driven analysis of exercise performance through user-uploaded
                 videos.
@@ -28,7 +28,7 @@ function PrivacyPolicy() {
               </h2>
 
               <p className="mb-5 text-white/70">
-                "Personal Data" refers to any information that can directly or
+                {"Personal Data"} refers to any information that can directly or
                 indirectly identify you. However, it is essential to clarify
                 that while using Athlabs, your facial features and other
                 identifiable markers in the videos are processed in such a way
