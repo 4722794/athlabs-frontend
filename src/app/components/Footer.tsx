@@ -5,6 +5,8 @@ interface FooterProps {
   className?: string;
 }
 const Footer: React.FC<FooterProps> = ({ className }) => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer
       className={`bg-[#04080f]  text-white text-left items-center flex w-full top-auto bottom-0 z-10  border-b border-gray-800 xl:sticky ${className}`}
@@ -25,7 +27,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
 
           <div className="w-6/12  justify-end flex self-center   ">
             <div className=" font-extralight text-[11px] tracking-[.25em] ">
-              © 2023 ATHLABS
+              © {currentYear} ATHLABS
             </div>
           </div>
 
