@@ -108,7 +108,7 @@ function PrivacyPolicy() {
                 </h2>
                 <p className="text-white/80 mb-4">
                   7.1 Your use of the Services is at your sole risk. The
-                  Services are provided on an "AS IS" and "AS AVAILABLE" basis.
+                  Services are provided on an {"AS IS"} and {"AS AVAILABLE"} basis.
                 </p>
                 <p className="text-white/80 mb-4">
                   7.2 Athlabs does not warrant that a) the Services will
@@ -153,7 +153,7 @@ function PrivacyPolicy() {
                 </h2>
                 <p className="text-white/80 mb-4">
                   11.1 These Terms shall be governed and construed in accordance
-                  with the laws of the jurisdiction of "Athlabs'" registration,
+                  with the laws of the jurisdiction of {"Athlabs'"} registration,
                   without regard to its conflict of law provisions.
                 </p>
 
