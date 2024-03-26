@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import ComonToast from "../components/ComonToast";
 import LoadingComp from "../components/LoadingComp";
 import { useRouter } from "next/navigation";
-import { checkLogin } from "../services/apiUtils";
+import { checkLogin, initiateGoogleLogin } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
 import Image from "next/image";
 
@@ -214,7 +214,10 @@ const Login = () => {
             </div>
 
             <div className="flex items-center justify-center  mt-7">
-              <button className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+              <a 
+               onClick={initiateGoogleLogin}
+               target="_blank"
+              className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
                 <Image
                   src={"/images/google-color.svg"}
                   width={24}
@@ -222,7 +225,7 @@ const Login = () => {
                   alt="logo"
                 />
                 <span>Signup with Google</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>

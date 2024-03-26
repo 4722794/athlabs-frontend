@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import ComonToast from "../components/ComonToast";
 import LoadingComp from "../components/LoadingComp";
 import { useRouter } from "next/navigation";
-import { checkLogin } from "../services/apiUtils";
+import { checkLogin, initiateGoogleLogin } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
 import Image from "next/image";
 import Link from "next/link";
@@ -92,7 +92,7 @@ const Login = () => {
     }
   };
 
-  const initiateGoogleLogin = async () => {
+  const initiateGoogleLogin_old = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/login/google";
     window.location.href = apiUrl;
     /* try {
