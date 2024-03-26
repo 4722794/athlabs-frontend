@@ -86,6 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
         localStorage.setItem("athlabsLoggedInUser", responseData.data.email);
         setLoggedInUser(responseData.data.email);
       }
+      if(responseData.data.new_user) router.push("/basicDetails");
     }
   };
 

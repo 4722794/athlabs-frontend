@@ -148,7 +148,7 @@ const ResetPassword = () => {
                   placeholder="john@gmail.com"
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                {formErrors.password && (
+                {formErrors.confirmPassword && (
                   <span>
                     <p className="text-red-500 text-xs mt-1">
                       {formErrors.confirmPassword}

@@ -33,7 +33,7 @@ module.exports = {
       return [
         {
           // Apply these headers to all routes in your application.
-          source: '/(.*)',
+          source: '/home',
           headers: [
             {
               key: 'Cross-Origin-Embedder-Policy',

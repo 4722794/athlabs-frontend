@@ -11,6 +11,7 @@ import LandingLayout from "../layout/LandingLayout";
 import { FaRegUser } from "react-icons/fa";
 import { HiOutlinePlus } from "react-icons/hi";
 import InterestCheckboxes from "../components/InterestCheckboxes";
+import ComonToast from "../components/ComonToast";
 
 const UserForm = () => {
   const footerClass = "!relative";
@@ -73,7 +74,7 @@ const UserForm = () => {
 
     // Validate form data
     if (!name || !gender || !dob) {
-      setToastObj({ type: "error", msg: "Please fill in all required fields" });
+      setToastObj({ type: "e", msg: "Please fill in all required fields" });
       return;
     }
     const token = localStorage.getItem("athlabsAuthToken");
@@ -88,7 +89,6 @@ const UserForm = () => {
     if (interests.length === 0) {
       formdata.append("interests", "empty");
     } else {
-      console.log("interests", interests.join(','));
       formdata.append("interests", interests.join(','));
     }
     if (profileImage) {
@@ -105,7 +105,7 @@ const UserForm = () => {
     fetch("https://api.dev.athlabs.co/u/profile", requestOptions)
       .then((response: any) => response.text())
       .then((data:any) => {
-        setToastObj({ type: "success", msg: "Profile successfully updated" });
+        setToastObj({ type: "s", msg: "Profile successfully updated" });
         setTimeout(() => {
           router.push("/home");
         }, 2000);
@@ -161,12 +161,14 @@ const UserForm = () => {
         setDob(responseData.data.profile.dob);
         setGender(responseData.data.profile.gender);
         setPreviewImage(responseData.data.profile.picture);
+        const interestNames = responseData.data.profile.interests.map((item: any) => item.name);
+        setInterests(interestNames);
       }
 
       console.log("User data:", userData);
     } catch (error) {
       console.error("Error fetching user data:", error);
-      setToastObj({ type: "error", msg: "Error fetching user data" });
+      setToastObj({ type: "e", msg: "Error fetching user data" });
     }
   };
 
@@ -184,7 +186,7 @@ const UserForm = () => {
 
     } catch (error) {
       console.error("Error fetching interests:", error);
-      setToastObj({ type: "error", msg: "Error fetching interests" });
+      setToastObj({ type: "e", msg: "Error fetching interests" });
     }
   }
 
@@ -193,15 +195,23 @@ const UserForm = () => {
     fetchInterests();
   }, []);
 
-  const handleSkipNow = () => {
-    router.push("/home");
+  const skipBasicDetails = async () => {
+    const uriString = `/u/profile`;
+    const method = "POST";
+    const contentType = "application/json";
+    const header = { accept: "application/json" };
+    const body = { new_user: false };
+    const responseData = await callApiData(method, header, body, uriString);
+    if (responseData.status) {
+      router.push("/home");
+    } else {
+      setToastObj({ type: "e", msg: "Error skipping basic details" });
+    }
   };
 
-  // useEffect(() => {
-  //   if (checkLogin()) {
-  //     router.push("/home");
-  //   }
-  // }, [toastObj]);
+  const handleSkipNow = () => {
+    skipBasicDetails();
+  };
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
@@ -349,14 +359,8 @@ const UserForm = () => {
       </div>
 
       {/* Toast Notification */}
-      {toastObj.msg && (
-        <div
-          className={`fixed bottom-4 left-4 py-2 px-4 rounded-md text-white ${
-            toastObj.type === "success" ? "bg-green-500" : "bg-red-500"
-          }`}
-        >
-          {toastObj.msg}
-        </div>
+      {toastObj.type && (
+        <ComonToast toastObj={toastObj} setToastObj={setToastObj} />
       )}
     </LandingLayout>
   );
