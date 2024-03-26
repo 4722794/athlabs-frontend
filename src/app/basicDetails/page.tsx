@@ -21,6 +21,7 @@ const UserForm = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [interests, setInterests] = useState([]);
+  const [interestOptions, setInterestOptions] = useState([]);
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
   const router = useRouter();
   const [userData, setUserData] = useState(null);
@@ -84,7 +85,15 @@ const UserForm = () => {
     formdata.append("name", name);
     formdata.append("gender", gender);
     formdata.append("dob", dob);
-    formdata.append("interests[]", "Fitness");
+    if (interests.length === 0) {
+      formdata.append("interests", "empty");
+    } else {
+      console.log("interests", interests.join(','));
+      formdata.append("interests", interests.join(','));
+    }
+    if (profileImage) {
+      formdata.append("picture", profileImage);
+    }
 
     var requestOptions = {
       method: "POST",
@@ -94,8 +103,13 @@ const UserForm = () => {
     };
 
     fetch("https://api.dev.athlabs.co/u/profile", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((response: any) => response.text())
+      .then((data:any) => {
+        setToastObj({ type: "success", msg: "Profile successfully updated" });
+        setTimeout(() => {
+          router.push("/home");
+        }, 2000);
+      })
       .catch((error) => console.log("error", error));
 
     /* // Create form data object
@@ -146,6 +160,7 @@ const UserForm = () => {
         setName(responseData.data.profile.name);
         setDob(responseData.data.profile.dob);
         setGender(responseData.data.profile.gender);
+        setPreviewImage(responseData.data.profile.picture);
       }
 
       console.log("User data:", userData);
@@ -155,8 +170,27 @@ const UserForm = () => {
     }
   };
 
+  const fetchInterests = async () => {
+    try {
+      const uriString = `/i/list`;
+      const method = "GET";
+      const contentType = "application/json";
+      const responseData = await callApi(method, contentType, null, uriString);
+
+      if (responseData.status) {
+        const interestNames = responseData.data.map((item: any) => item.name);
+        setInterestOptions(interestNames);
+      }
+
+    } catch (error) {
+      console.error("Error fetching interests:", error);
+      setToastObj({ type: "error", msg: "Error fetching interests" });
+    }
+  }
+
   useEffect(() => {
     fetchUserData();
+    fetchInterests();
   }, []);
 
   const handleSkipNow = () => {
@@ -206,6 +240,7 @@ const UserForm = () => {
                         src={previewImage}
                         alt="Profile Preview"
                         className="  max-w-[100px] rounded-md"
+                        crossOrigin="anonymous"
                       />
                     </div>
                   )}
@@ -290,6 +325,7 @@ const UserForm = () => {
 
               <InterestCheckboxes
                 interests={interests}
+                interestOptions={interestOptions}
                 handleInterestChange={handleInterestChange}
               />
 

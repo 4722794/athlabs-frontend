@@ -15,8 +15,8 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
     >
       <div className="container mx-auto self-center px-6 md:px-8 ">
         <div className="flex flex-wrap lg:flex-nowrap justify-end pt-7 pb-7  md:pb-10 md:pt-10  xl:pb-7 2xl:pb-10 gap-y-10">
-          <div className="w-4/12 flex justify-between">
-            <a className=" inline-flex h-8 2xl:h-10 ">
+          <div className=" w-full md:w-3/12 lg:w-4/12 w- flex justify-center  md:justify-start">
+            <a className=" inline-flex h-8 2xl:h-10  ">
               <Image
                 src={"/images/logo2.png"}
                 width={230}
@@ -27,7 +27,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             </a>
           </div>
 
-          <div className="w-4/12  justify-center flex self-center   ">
+          <div className="w-full md:w-6/12 lg:w-4/12  justify-center flex self-center   ">
             <div className=" inline-flex  gap-x-4 md:gap-x-6 justify-center">
               <Link
                 href="/privacyPolicy"
@@ -45,7 +45,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             </div>
           </div>
 
-          <div className="w-4/12  justify-end flex self-center   ">
+          <div className="w-full md:w-3/12 lg:w-4/12  justify-center  md:justify-end flex self-center   ">
             <div className=" font-extralight text-[11px] tracking-[.25em] ">
               © {currentYear} ATHLABS
             </div>

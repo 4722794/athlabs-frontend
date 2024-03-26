@@ -184,28 +184,22 @@ const Login = () => {
                 Login
               </button>
 
-              <Link
-                href={"/forgotpasword"}
-                className=" text-blue-500 hover:text-blue-700 font-semibold text-center  pt-5 flex justify-center text-xs"
-              >
-                Forgout Your Passowrd
-              </Link>
-
               {loading && (
                 <div className="mt-3">
                   <LoadingComp />
                 </div>
               )}
 
-              {/*  <p className="text-white/70 text-xs text-center mt-4">
+              <p className="text-white/70 text-xs text-center mt-4">
                 Forgot Password?
-                <a
-                  onClick={handleRequestDemo}
+                <Link
+                  href="/forgot-password"
+                  // onClick={handleRequestDemo}
                   className="text-blue-500 hover:underline ml-1 cursor-pointer"
                 >
                   Recover your password here
-                </a>
-              </p> */}
+                </Link>
+              </p>
             </form>
 
             <div className=" grid grid-cols-[1fr_45px_1fr] items-center px-5 pt-5">
