@@ -10,8 +10,12 @@ const AuthComponent = () => {
     const handleAuthentication = async () => {
       try {
         // Get query parameters from the URL
-        const queryParams = searchParams.toString();
-        console.log("query", queryParams);
+        const code = searchParams.get('code');
+        if (!code) {
+          throw new Error("No code in query parameters");
+        }
+        console.log("code", code);
+        const queryParams = { code };
 
         // Construct the API URL with query parameters
         const authApiUrl = `${BASE_URL}/auth?${new URLSearchParams(
@@ -22,7 +26,7 @@ const AuthComponent = () => {
         const response = await fetch(authApiUrl, {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
           },
         });
 
@@ -31,11 +35,10 @@ const AuthComponent = () => {
         }
 
         // Get the response data (assuming it contains a token)
-        const data = await response.json();
-        const { token } = data;
+        const result = await response.json();
 
         // Store the token in localStorage
-        localStorage.setItem("token", token);
+        localStorage.setItem("athlabsAuthToken", result.access_token);
 
         // Navigate to the home page
         router.push("/home");
