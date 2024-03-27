@@ -3,7 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
-const MyGridComponent = ({ columnDefs, rowData }) => {
+const MyGridComponent = ({ columnDefs, rowData }: any) => {
   return (
     <div
       className="ag-theme-alpine myAG_table"
