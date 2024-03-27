@@ -49,23 +49,6 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     setItems([]);
   };
 
-  useEffect(() => {
-    resetAnalysis();
-    if (activeVideoDetail?.video_id && otherData.fetchVideoHistroy) {
-      fetchHistory();
-    } else if (activeVideoDetail?.video_id) {
-      fetchFeedback();
-    }
-  }, [activeVideoDetail]);
-
-  useEffect(() => {
-    updateItems();
-  }, [highlight, feedback, isFeedbackWritten]);
-
-  useEffect(() => {
-    updateHistoryItems();
-  }, [historyData]);
-
   const fetchHistory = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
     const apiEndpoint = `${apiUrl}/h/${activeVideoDetail.video_id}`;
@@ -120,6 +103,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     const data = await response.json();
     setHighlight(data.highlight);
     setScore(data.score);
+
     if (data.name && !activeVideoDetail.name) {
       setName(data.name);
     }
@@ -189,7 +173,20 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     if (historyData) {
       const { score, feedback, highlight } = historyData;
       const newItems = [];
-      if (score) setScore(score);
+
+      if (score) {
+        // setScore(score);
+        let currentScore = 0;
+        const increment = 1;
+        const interval = setInterval(() => {
+          currentScore += increment;
+          setScore(Math.min(currentScore, score));
+          if (currentScore >= score) {
+            clearInterval(interval);
+          }
+        }, 100);
+      }
+
       if (feedback) {
         if (items.findIndex((item) => item.title === "Feedback") !== -1) {
           items[0].content = feedback;
@@ -216,6 +213,23 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     }
   };
 
+  useEffect(() => {
+    resetAnalysis();
+    if (activeVideoDetail?.video_id && otherData.fetchVideoHistroy) {
+      fetchHistory();
+    } else if (activeVideoDetail?.video_id) {
+      fetchFeedback();
+    }
+  }, [activeVideoDetail]);
+
+  useEffect(() => {
+    updateItems();
+  }, [highlight, feedback, isFeedbackWritten]);
+
+  useEffect(() => {
+    updateHistoryItems();
+  }, [historyData]);
+
   return (
     <div className=" landscape:min-h-[300px]  lg:h-[calc(100vh-200px)]">
       {activeVideoDetail ? (
@@ -238,7 +252,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
                   backgroundColor="#777"
                   progressColor="#44366a"
                   progressTextColor="#fff"
-                  className="my-custom-class"
+                  className="my-custom-class "
                 />
               </div>
             )}

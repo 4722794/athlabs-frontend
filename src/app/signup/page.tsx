@@ -130,7 +130,7 @@ const Login = () => {
     if (checkLogin()) {
       router.push("/home");
     }
-  }, [toastObj]);
+  }, [router, toastObj]);
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>

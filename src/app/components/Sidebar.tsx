@@ -86,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
         localStorage.setItem("athlabsLoggedInUser", responseData.data.email);
         setLoggedInUser(responseData.data.email);
       }
-      if(responseData.data.new_user) router.push("/basicDetails");
+      if (responseData.data.new_user) router.push("/basicDetails");
     }
   };
 
@@ -375,7 +375,11 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                                   onClick={(event) => {
                                     event.preventDefault();
                                     getVideoDetail(video.video_id);
-                                    setOtherData({ ...otherData, fetchVideoHistroy: true, enableTypeWritter: false });
+                                    setOtherData({
+                                      ...otherData,
+                                      fetchVideoHistroy: true,
+                                      enableTypeWritter: false,
+                                    });
                                   }}
                                 >
                                   <a href="/">
@@ -508,9 +512,14 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
                     height={50}
                   /> */}
 
-                  <Avatar size={"sm"} rounded />
-                  <div className="truncate max-w-[175px] text-sm ">
-                    <span>{loggedInUser}</span>
+                  <div
+                    className="flex items-center gap-2"
+                    onClick={() => router.push("/basicDetails")}
+                  >
+                    <Avatar size={"sm"} rounded />
+                    <div className="truncate max-w-[175px] text-sm ">
+                      <span>{loggedInUser}</span>
+                    </div>
                   </div>
                 </span>
 
