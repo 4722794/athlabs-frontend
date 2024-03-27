@@ -120,6 +120,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     const data = await response.json();
     setHighlight(data.highlight);
     setScore(data.score);
+
     if (data.name && !activeVideoDetail.name) {
       setName(data.name);
     }
@@ -189,7 +190,21 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     if (historyData) {
       const { score, feedback, highlight } = historyData;
       const newItems = [];
-      if (score) setScore(score);
+
+      if (score) {
+        let currentScore = 0;
+        const increment = 1;
+        const interval = setInterval(() => {
+          currentScore += increment;
+
+          setScore(Math.min(currentScore, score));
+
+          if (currentScore >= score) {
+            clearInterval(interval);
+          }
+        }, 100);
+      }
+
       if (feedback) {
         if (items.findIndex((item) => item.title === "Feedback") !== -1) {
           items[0].content = feedback;
@@ -238,7 +253,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
                   backgroundColor="#777"
                   progressColor="#44366a"
                   progressTextColor="#fff"
-                  className="my-custom-class"
+                  className="my-custom-class "
                 />
               </div>
             )}

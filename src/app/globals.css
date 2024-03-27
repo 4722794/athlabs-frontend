@@ -122,3 +122,14 @@ html {
     @apply !scale-105 overflow-hidden;
   }
 }
+
+@keyframes pulse {
+  0% {
+    background-color: #44366a; /* Initial color */
+    opacity: 1;
+  }
+  50% {
+    background-color: #44366a; /* Initial color */
+    opacity: 0.5;
+  }
+}
