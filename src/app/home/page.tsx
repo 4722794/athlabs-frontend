@@ -49,23 +49,6 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     setItems([]);
   };
 
-  useEffect(() => {
-    resetAnalysis();
-    if (activeVideoDetail?.video_id && otherData.fetchVideoHistroy) {
-      fetchHistory();
-    } else if (activeVideoDetail?.video_id) {
-      fetchFeedback();
-    }
-  }, [activeVideoDetail]);
-
-  useEffect(() => {
-    updateItems();
-  }, [highlight, feedback, isFeedbackWritten]);
-
-  useEffect(() => {
-    updateHistoryItems();
-  }, [historyData]);
-
   const fetchHistory = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
     const apiEndpoint = `${apiUrl}/h/${activeVideoDetail.video_id}`;
@@ -230,6 +213,28 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
       setItems(newItems);
     }
   };
+
+  useEffect(() => {
+    resetAnalysis();
+    if (activeVideoDetail?.video_id && otherData.fetchVideoHistroy) {
+      fetchHistory();
+    } else if (activeVideoDetail?.video_id) {
+      fetchFeedback();
+    }
+  }, [
+    activeVideoDetail,
+    fetchFeedback,
+    fetchHistory,
+    otherData.fetchVideoHistroy,
+  ]);
+
+  useEffect(() => {
+    updateItems();
+  }, [highlight, feedback, isFeedbackWritten, updateItems]);
+
+  useEffect(() => {
+    updateHistoryItems();
+  }, [historyData, updateHistoryItems]);
 
   return (
     <div className=" landscape:min-h-[300px]  lg:h-[calc(100vh-200px)]">

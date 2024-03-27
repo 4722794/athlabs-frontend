@@ -113,7 +113,7 @@ const Login = () => {
     } else {
       router.push("/home");
     }
-  }, [toastObj]);
+  }, [router, toastObj]);
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>

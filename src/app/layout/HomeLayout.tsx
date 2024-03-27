@@ -33,7 +33,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [router]);
 
   return (
     <div className="relative z-0 flex h-full w-full overflow-hidden">

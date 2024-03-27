@@ -14,7 +14,10 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
-  const [formErrors, setFormErrors] = useState({ password: "", confirmPassword: "" });
+  const [formErrors, setFormErrors] = useState({
+    password: "",
+    confirmPassword: "",
+  });
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
 
   useEffect(() => {
@@ -25,7 +28,7 @@ const ResetPassword = () => {
     } else {
       router.push("/login");
     }
-  }, []);
+  }, [router]);
 
   const validateForm = () => {
     let valid = true;

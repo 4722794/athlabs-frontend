@@ -12,6 +12,7 @@ import { FaRegUser } from "react-icons/fa";
 import { HiOutlinePlus } from "react-icons/hi";
 import InterestCheckboxes from "../components/InterestCheckboxes";
 import ComonToast from "../components/ComonToast";
+import Image from "next/image";
 
 const UserForm = () => {
   const footerClass = "!relative";
@@ -89,7 +90,7 @@ const UserForm = () => {
     if (interests.length === 0) {
       formdata.append("interests", "empty");
     } else {
-      formdata.append("interests", interests.join(','));
+      formdata.append("interests", interests.join(","));
     }
     if (profileImage) {
       formdata.append("picture", profileImage);
@@ -104,7 +105,7 @@ const UserForm = () => {
 
     fetch("https://api.dev.athlabs.co/u/profile", requestOptions)
       .then((response: any) => response.text())
-      .then((data:any) => {
+      .then((data: any) => {
         setToastObj({ type: "s", msg: "Profile successfully updated" });
         setTimeout(() => {
           router.push("/home");
@@ -161,7 +162,9 @@ const UserForm = () => {
         setDob(responseData.data.profile.dob);
         setGender(responseData.data.profile.gender);
         setPreviewImage(responseData.data.profile.picture);
-        const interestNames = responseData.data.profile.interests.map((item: any) => item.name);
+        const interestNames = responseData.data.profile.interests.map(
+          (item: any) => item.name
+        );
         setInterests(interestNames);
       }
 
@@ -183,12 +186,11 @@ const UserForm = () => {
         const interestNames = responseData.data.map((item: any) => item.name);
         setInterestOptions(interestNames);
       }
-
     } catch (error) {
       console.error("Error fetching interests:", error);
       setToastObj({ type: "e", msg: "Error fetching interests" });
     }
-  }
+  };
 
   useEffect(() => {
     fetchUserData();
@@ -246,11 +248,13 @@ const UserForm = () => {
                   )}
                   {previewImage && (
                     <div className="mt-2">
-                      <img
+                      <Image
                         src={previewImage}
                         alt="Profile Preview"
                         className="  max-w-[100px] rounded-md"
                         crossOrigin="anonymous"
+                        width={100}
+                        height={100}
                       />
                     </div>
                   )}
