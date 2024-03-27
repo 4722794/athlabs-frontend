@@ -11,7 +11,7 @@ import "nouislider/distribute/nouislider.css";
 //   await FF.load();
 // })();
 
-function VideoTrimmer({ rStart, setRstart, rEnd, setRend, videoMeta }: any) {
+function VideoTrimmer({ rStart = 0, setRstart, rEnd, setRend, videoMeta }: any) {
   // const [trimIsProcessing, setTrimIsProcessing] = useState(false);
 
   // const handleTrim = useCallback(async () => {
@@ -54,11 +54,12 @@ function VideoTrimmer({ rStart, setRstart, rEnd, setRend, videoMeta }: any) {
   //   setHandleTrim(handleTrim);
   // }, [handleTrim]);
 
-  function formatTime(seconds: any) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = Math.floor(seconds % 60);
-    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
-  }
+  // update rStart and rEnd when videoMeta changes
+  useEffect(() => {
+    setRstart(0);
+    const duration = videoMeta?.duration || 2;
+    setRend(duration > 20 ? 20 : duration);
+  }, [videoMeta]);
 
   return (
     <div className="u-center flex flex-col w-full" style={{ margin: "1rem" }}>
@@ -91,6 +92,16 @@ function VideoTrimmer({ rStart, setRstart, rEnd, setRend, videoMeta }: any) {
 }
 
 export default VideoTrimmer;
+
+export function formatTime(seconds: any) {
+  const hrs = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  const secs = Math.floor(seconds % 60);
+
+  const format = (num: number) => num < 10 ? "0" + num : num;
+
+  return `${format(hrs)}:${format(mins)}:${format(secs)}`;
+}
 
 // const toTimeString = (sec: any, showMilliSeconds = true) => {
 //   sec = parseFloat(sec);

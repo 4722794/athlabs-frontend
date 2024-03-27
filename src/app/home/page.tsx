@@ -144,25 +144,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
       newItems.push({
         id: 2,
         title: "Highlight",
-        content: (
-          <Typewriter
-            // update isHighlightWritten state to true when highlight written
-            onInit={(typewriter) => {
-              typewriter
-                .typeString(highlight)
-                .callFunction(() => {
-                  setIsHighlightWritten(true);
-                })
-                .start();
-            }}
-            options={{
-              strings: highlight,
-              autoStart: true,
-              loop: false,
-              delay: 10,
-            }}
-          />
-        ),
+        content: highlight,
       });
     }
 
@@ -189,23 +171,23 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
 
       if (feedback) {
         if (items.findIndex((item) => item.title === "Feedback") !== -1) {
-          items[0].content = feedback;
+          items[0].content = processFeedback(feedback);
         } else {
           newItems.push({
             id: 1,
             title: "Feedback",
-            content: feedback,
+            content: processFeedback(feedback),
           });
         }
       }
       if (highlight) {
         if (items.findIndex((item) => item.title === "Highlight") !== -1) {
-          items[1].content = highlight;
+          items[1].content = processHighlight(highlight);
         } else {
           newItems.push({
             id: 2,
             title: "Highlight",
-            content: highlight,
+            content: processHighlight(highlight),
           });
         }
       }
@@ -213,6 +195,33 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     }
   };
 
+  // Feedback Processing
+  function processFeedback(feedback: string) {
+    // Replace excessive spaces with a single space
+    feedback = feedback.replace(/\s{2,}/g, ' ');
+    // Add bullet points for each improvement suggestion
+    feedback = feedback.replace(/Improvementsuggestions:/g, '\nImprovement Suggestions:\n');
+    feedback = feedback.replace(/(\d+\.[^\d]+)/g, '- $1\n');
+    // Add a period at the end of the sentence if it's missing
+    feedback = feedback.replace(/Overall,/g, 'Overall.');
+
+    return feedback;
+  }
+
+  // Highlight Processing
+  function processHighlight(highlight: string) {
+    // Replace excessive spaces with a single space
+    highlight = highlight.replace(/\s{2,}/g, ' ');
+    // Add proper spacing and punctuation
+    highlight = highlight.replace(/Key Points:/g, '\nKey Points:\n');
+    highlight = highlight.replace(/Improvements:/g, '\nImprovements:\n');
+    highlight = highlight.replace(/Risk of injury:/g, '\nRisk of Injury:\n');
+    highlight = highlight.replace(/Overall,/g, '\nOverall,');
+    highlight = highlight.replace(/\./g, '.\n');
+
+    return highlight;
+  }
+  
   useEffect(() => {
     resetAnalysis();
     if (activeVideoDetail?.video_id && otherData.fetchVideoHistroy) {

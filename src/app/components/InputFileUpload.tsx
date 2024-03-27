@@ -16,7 +16,7 @@ import LoadingComp from "./LoadingComp";
 import { useVideoContext } from "../services/VideoContext";
 import { Spinner } from "flowbite-react";
 import ComonToast from "./ComonToast";
-import VideoTrimmer from "./VideoTrimmer";
+import VideoTrimmer, { formatTime } from "./VideoTrimmer";
 
 interface InputFileUploadProps {
   //children: ReactNode;
@@ -38,7 +38,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   // const [trimmedVideoFile, setTrimmedVideoFile] = useState<any>(null);
   const [videoMeta, setVideoMeta] = useState<any>(null);
   const [rStart, setRstart] = useState(0);
-  const [rEnd, setRend] = useState(20);
+  const [rEnd, setRend] = useState(0);
 
   // const [handleTrim, setHandleTrim] = useState<(() => void) | null>(null);
 
@@ -75,13 +75,13 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       const formData = new FormData();
       const actualFile = file.file;
       const xhrq = file.xhr;
-      console.log("actualFile", rStart, rEnd, actualFile.name, actualFile);
+
       if (actualFile instanceof Blob) {
         formData.append("video", actualFile, actualFile.name);
         formData.append("name", nameRef.current);
         // append the start and end time to the form data
-        formData.append("startTrim", rStart.toString());
-        formData.append("endTrim", rEnd.toString());
+        formData.append("startTrim", formatTime(rStart));
+        formData.append("endTrim", formatTime(rEnd));
         const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
         const apiEndpoint = `/processVideo`;
 
@@ -176,22 +176,28 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
     }, [handleTimeUpdate]);
 
     return (
-      <div className="flex justify-center w-full lg:min-h-[650px] h-full bg-[#1B212E] rounded-md border-dash border-2 border-[#2F3747]  flex-col">
+      <div className="flex justify-center w-full min-h-[650px] h-full bg-[#1B212E] rounded-md border-dash border-2 border-[#2F3747]  flex-col">
         <div className="flex justify-center relative">
           {loading && <Spinner aria-label="Default status example" size="xl" />}
         </div>
         {!loading && (
-          <div className=" landscape:min-h-screen landscape:lg:min-h-[calc(100vh-100px)] landscape:lg:h-[calc(100vh-100px)]  min-h-[300px] lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-xl flex justify-between flex-col ">
+          <>
             <video
               ref={videoRef}
               playsInline
               controls
-              className="  landscape:h-[calc(100vh-45px)] landscape:w-auto landscape:lg:h-[calc(100%-66px)] lg:h-[calc(100%-66px)] my-auto mx-auto"
+              className=" landscape:h-[calc(100vh-45px)] landscape:w-auto landscape:lg:h-[calc(100%-66px)] lg:h-[calc(100%-66px)] my-auto mx-auto"
             >
               <source src={videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-          </div>
+            <div
+              className=" text-lg px-5 flex items-center min-h-[66px] drop-shadow-xl  border-t border-gray-900  bg-[#26313F]"
+              style={{ color: "#fff" }}
+            >
+              {name}
+            </div>
+          </>
         )}
         {/* <span
           className="self-center h-full flex items-center text-white text-2xl break-all"
@@ -392,20 +398,14 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
           <input id="dropzone-file" type="file" className="hidden" />
           {/* {loading && <LoadingComp />} */}
         </label>
-
         {selectedFile && (
-          <div
-            className=" text-lg px-5 flex items-center min-h-[66px] drop-shadow-xl  border-t border-gray-900  bg-[#26313F] w-full -mt-1 trimClass"
-            style={{ color: "#fff" }}
-          >
-            <VideoTrimmer
-              rStart={rStart}
-              rEnd={rEnd}
-              setRstart={setRstart}
-              setRend={setRend}
-              videoMeta={videoMeta}
-            />
-          </div>
+          <VideoTrimmer
+            rStart={rStart}
+            rEnd={rEnd}
+            setRstart={setRstart}
+            setRend={setRend}
+            videoMeta={videoMeta}
+          />
         )}
       </div>
       {formErrors.file && (
