@@ -133,3 +133,32 @@ html {
     opacity: 0.5;
   }
 }
+
+.myAG_table .ag-root-wrapper {
+  @apply bg-transparent border-0;
+}
+
+.myAG_table .ag-row {
+  @apply bg-gray-800 !border-gray-700;
+}
+
+.myAG_table .ag-ltr .ag-cell {
+  @apply text-white;
+}
+
+.myAG_table .ag-header-viewport {
+  @apply bg-gray-900 !border-gray-50;
+}
+
+.myAG_table .ag-header-cell-text {
+  @apply text-white;
+}
+
+.myAG_table .ag-header {
+  @apply !border-0;
+}
+
+.myAG_table .ag-icon-asc,
+.myAG_table .ag-icon-desc {
+  @apply !text-white;
+}

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "ag-grid-react": "^31.2.0",
     "flowbite-react": "^0.7.2",
     "gsap": "^3.9.0",
     "moment": "^2.29.4",
