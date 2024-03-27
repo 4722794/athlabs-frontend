@@ -4,7 +4,13 @@ import Dropzone, {
   IFileWithMeta,
   IUploadParams,
 } from "react-dropzone-uploader";
-import React, { ReactNode, memo, use, useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { checkLogin } from "../services/apiUtils";
 import LoadingComp from "./LoadingComp";
 import { useVideoContext } from "../services/VideoContext";
@@ -26,27 +32,27 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   const [formErrors, setFormErrors] = useState({ name: "", file: "" });
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
   const [name, setName] = useState(""); // New state for loading indicator
-  const nameRef = useRef(''); // Assuming the initial name is an empty string
+  const nameRef = useRef(""); // Assuming the initial name is an empty string
   const [videoUrl, setVideoUrl] = useState("");
   const [uploadedVideo, setUploadedVideo] = useState<any>(null);
-  const [trimmedVideoFile, setTrimmedVideoFile] = useState<any>(null);
+  // const [trimmedVideoFile, setTrimmedVideoFile] = useState<any>(null);
   const [videoMeta, setVideoMeta] = useState<any>(null);
   const [rStart, setRstart] = useState(0);
   const [rEnd, setRend] = useState(20);
 
-  const [handleTrim, setHandleTrim] = useState<(() => void) | null>(null);
+  // const [handleTrim, setHandleTrim] = useState<(() => void) | null>(null);
 
-  const handleTrimRef = useRef<(() => void) | null>(null);
+  // const handleTrimRef = useRef<(() => void) | null>(null);
 
-  const handleTrimChange = (newTrim: any) => {
-    handleTrimRef.current = newTrim;
-  };
+  // const handleTrimChange = (newTrim: any) => {
+  //   handleTrimRef.current = newTrim;
+  // };
 
-  useEffect(() => {
-    if (handleTrimRef.current !== null) {
-      setHandleTrim(() => handleTrimRef.current);
-    }
-  }, [handleTrimRef.current]);
+  // useEffect(() => {
+  //   if (handleTrimRef.current !== null) {
+  //     setHandleTrim(() => handleTrimRef.current);
+  //   }
+  // }, [handleTrimRef.current]);
 
   // Reference to Dropzone instance
   const dropzoneRef = useRef<any>(null);
@@ -69,10 +75,13 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       const formData = new FormData();
       const actualFile = file.file;
       const xhrq = file.xhr;
-
+      console.log("actualFile", rStart, rEnd, actualFile.name, actualFile);
       if (actualFile instanceof Blob) {
-        formData.append("video", trimmedVideoFile, actualFile.name);
+        formData.append("video", actualFile, actualFile.name);
         formData.append("name", nameRef.current);
+        // append the start and end time to the form data
+        formData.append("startTrim", rStart.toString());
+        formData.append("endTrim", rEnd.toString());
         const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
         const apiEndpoint = `/processVideo`;
 
@@ -135,13 +144,13 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       setVideoUrl(url);
     }
   };
-  
-  const Preview = memo(({ meta, name }: any) => {
+
+  const Preview = ({ meta, name }: any) => {
     const { percent, status, duration } = meta;
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const rStartRef = useRef(rStart);
     const rEndRef = useRef(rEnd);
-  
+
     useEffect(() => {
       rStartRef.current = rStart;
       rEndRef.current = rEnd;
@@ -152,16 +161,16 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         videoRef.current.pause();
       }
     }, [videoRef.current, rEndRef.current]);
-  
+
     useEffect(() => {
       if (videoRef.current) {
         videoRef.current.currentTime = rStartRef.current;
-        videoRef.current.addEventListener('timeupdate', handleTimeUpdate);
+        videoRef.current.addEventListener("timeupdate", handleTimeUpdate);
       }
-    
+
       return () => {
         if (videoRef.current) {
-          videoRef.current.removeEventListener('timeupdate', handleTimeUpdate);
+          videoRef.current.removeEventListener("timeupdate", handleTimeUpdate);
         }
       };
     }, [handleTimeUpdate]);
@@ -181,7 +190,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
             >
               <source src={videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
-            </video>          
+            </video>
             <div
               className=" text-lg px-5 flex items-center min-h-[66px] drop-shadow-xl  border-t border-gray-900  bg-[#26313F]"
               style={{ color: "#fff" }}
@@ -198,9 +207,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         </span> */}
       </div>
     );
-  },
-    (prevProps, nextProps) => prevProps.videoUrl === nextProps.videoUrl && prevProps.loading === nextProps.loading
-  );
+  };
 
   const Layout = ({
     input,
@@ -210,12 +217,10 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
     files,
     extra: { maxFiles },
   }: any) => {
-
     const meta = files[0]?.meta;
 
     return (
       <>
-        
         {previews}
 
         {files.length == 0 && (
@@ -252,27 +257,37 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
     return valid;
   };
 
-  useEffect(() => {
-    if (trimmedVideoFile) {
-      handleSubmitFinally();
-    }
-  }, [trimmedVideoFile]);
+  // useEffect(() => {
+  //   if (trimmedVideoFile) {
+  //     handleSubmitFinally();
+  //   }
+  // }, [trimmedVideoFile]);
 
-  const handleSubmit = async () => {
+  // const handleSubmit = async () => {
+  //   if (validateForm()) {
+  //     if (handleTrimRef.current !== null) {
+  //       const trimmedVideo = await handleTrimRef.current();
+  //       setTrimmedVideoFile(trimmedVideo);
+  //     }
+  //   }
+  // };
+
+  const handleSubmit = () => {
+    // Manually trigger the upload
     if (validateForm()) {
-      if (handleTrimRef.current !== null) {
-        const trimmedVideo = await handleTrimRef.current();
-        setTrimmedVideoFile(trimmedVideo);
-      }
-    }
-  };
-
-  const handleSubmitFinally = async () => {
-    setSelectedFile(false);
+      setSelectedFile(false);
       if (dropzoneRef.current) {
         dropzoneRef.current.handleRestart(dropzoneRef.current.files[0]);
       }
+    }
   };
+
+  // const handleSubmitFinally = async () => {
+  //   setSelectedFile(false);
+  //     if (dropzoneRef.current) {
+  //       dropzoneRef.current.handleRestart(dropzoneRef.current.files[0]);
+  //     }
+  // };
 
   const inputContent = (files: any, extra: any): any => {
     if (extra.reject) {
@@ -312,7 +327,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
 
   const InputComponent = ({ textname, formErrors, onNameChange }: any) => {
     const [localName, setLocalName] = useState(textname);
-  
+
     const handleNameChange = (e: any) => {
       setLocalName(e.target.value);
       onNameChange(e.target.value);
@@ -334,7 +349,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         )}
       </>
     );
-  }
+  };
 
   return (
     <>
@@ -383,11 +398,15 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
           <input id="dropzone-file" type="file" className="hidden" />
           {/* {loading && <LoadingComp />} */}
         </label>
-        {
-          selectedFile && (
-            <VideoTrimmer setHandleTrim={handleTrimChange} rStart={rStart} rEnd={rEnd} setRstart={setRstart} setRend={setRend} inputVideoFile={uploadedVideo} videoMeta={videoMeta} />
-          )
-        }
+        {selectedFile && (
+          <VideoTrimmer
+            rStart={rStart}
+            rEnd={rEnd}
+            setRstart={setRstart}
+            setRend={setRend}
+            videoMeta={videoMeta}
+          />
+        )}
       </div>
       {formErrors.file && (
         <span>
@@ -396,25 +415,31 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       )}
 
       <div className=" flex gap-x-2 lg:gap-x-5 items-end mt-2 lg:mt-5">
-        <InputComponent textname={nameRef.current} formErrors={formErrors} onNameChange={(value: any) => { nameRef.current = value}} />
+        <InputComponent
+          textname={nameRef.current}
+          formErrors={formErrors}
+          onNameChange={(value: any) => {
+            nameRef.current = value;
+          }}
+        />
         <button
           type="button"
           disabled={loading}
           className={`bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-11 2xl:h-11 min-w-[90px] md:min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40    ${
             loading
-            ? " cursor-progress "
-            : "hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white cursor-pointer"
+              ? " cursor-progress "
+              : "hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white cursor-pointer"
           }`}
           value={"Submit"}
           onClick={handleSubmit}
-          >
+        >
           Submit
         </button>
       </div>
-        <div className="flex items-center justify-center w-full h-full mt-2 lg:mt-5">
-          {toastObj.type && (
-                <ComonToast toastObj={toastObj} setToastObj={setToastObj} />
-              )}
+      <div className="flex items-center justify-center w-full h-full mt-2 lg:mt-5">
+        {toastObj.type && (
+          <ComonToast toastObj={toastObj} setToastObj={setToastObj} />
+        )}
       </div>
     </>
   );

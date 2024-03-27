@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import ComonToast from "../components/ComonToast";
 import LoadingComp from "../components/LoadingComp";
 import { useRouter } from "next/navigation";
-import { checkLogin } from "../services/apiUtils";
+import { checkLogin, initiateGoogleLogin } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
 import Image from "next/image";
 import Link from "next/link";
@@ -92,7 +92,7 @@ const Login = () => {
     }
   };
 
-  const initiateGoogleLogin = async () => {
+  const initiateGoogleLogin_old = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/login/google";
     window.location.href = apiUrl;
     /* try {
@@ -113,7 +113,7 @@ const Login = () => {
     } else {
       router.push("/home");
     }
-  }, [toastObj]);
+  }, [router, toastObj]);
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
@@ -189,15 +189,15 @@ const Login = () => {
                   <LoadingComp />
                 </div>
               )}
-              <p className="text-white/70 text-xs text-center mt-4">
-                Don&apos;t have an account?
-                <Link
-                  href="/signup"
-                  // onClick={handleRequestDemo}
 
+              <p className="text-white/70 text-xs text-center mt-4">
+                Forgot Password?
+                <Link
+                  href="/forgot-password"
+                  // onClick={handleRequestDemo}
                   className="text-blue-500 hover:underline ml-1 cursor-pointer"
                 >
-                  Create an account .
+                  Recover your password here
                 </Link>
               </p>
             </form>
@@ -212,7 +212,9 @@ const Login = () => {
               <a
                 onClick={initiateGoogleLogin}
                 target="_blank"
-                className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
+                className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow 
+                
+                transition-transform hover:-translate-y-2 ease-in-out cursor-pointer focus:outline-none focus:ring-4 focus:ring-blue-300"
               >
                 <Image
                   src={"/images/google-color.svg"}
@@ -223,6 +225,17 @@ const Login = () => {
                 <span>Login with Google</span>
               </a>
             </div>
+            <p className="text-white/70 text-xs text-center mt-4">
+              Don&apos;t have an account?
+              <Link
+                href="/signup"
+                // onClick={handleRequestDemo}
+
+                className="text-blue-500 hover:underline ml-1 cursor-pointer"
+              >
+                Create an account .
+              </Link>
+            </p>
           </div>
         </div>
       </div>

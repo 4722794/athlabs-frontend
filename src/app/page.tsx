@@ -224,7 +224,7 @@ const AppPage = () => {
                         data-wait="..."
                         className=" px-3 md:px-0 md:w-[200px] cursor-pointer  text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded bg-gradient-to-r from-[#101828] to-[#44366a] h-10 xl:h-12 2xl:h-[60px] absolute right-1 2xl:right-2 top-1 2xl:top-2 overflow-visible"
                       >
-                        {!loading && <Spinner />} Get access
+                        {loading && <Spinner />} Get access
                       </button>
                     </form>
                   </div>
@@ -334,9 +334,16 @@ const AppPage = () => {
                 Sign up now to join our exclusive beta program
               </div>
 
-              <div className="w-full lg:w-12/12 mx-auto pt-5">
+              <div className="w-full lg:w-12/12 mx-auto pt-5 text-center">
+                <a
+                  href="/signup"
+                  className="px-3 mx-auto md:px-0 md:w-[200px] justify-center items-center cursor-pointer text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded-sm bg-gradient-to-r from-[#101828] to-[#44366a]  h-10 xl:h-12 2xl:min-h-[60px]   inline-flex"
+                >
+                  Sign Up
+                </a>
+
                 <form
-                  className="flex items-center flex-1 justify-start mt-30 relative"
+                  className="flex items-center flex-1 justify-start mt-30 relative hidden"
                   onSubmit={(e) => handleSubmitBetaForm("betaProgram", e)}
                 >
                   <div className="w-full relative text-left">

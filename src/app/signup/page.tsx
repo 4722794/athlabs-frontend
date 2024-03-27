@@ -4,9 +4,10 @@ import React, { useState, useEffect } from "react";
 import ComonToast from "../components/ComonToast";
 import LoadingComp from "../components/LoadingComp";
 import { useRouter } from "next/navigation";
-import { checkLogin } from "../services/apiUtils";
+import { checkLogin, initiateGoogleLogin } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
 import Image from "next/image";
+import Link from "next/link";
 
 const Login = () => {
   const footerClass = "!relative";
@@ -69,45 +70,49 @@ const Login = () => {
           body: urlencoded,
         });
 
-        const apiUrlToke = process.env.NEXT_PUBLIC_API_HOST + "/token";
-        const formData = new URLSearchParams();
-        formData.append("username", email);
-        formData.append("password", password);
-        setLoading(true);
+        if (response.status === 200) {
+          const apiUrlToke = process.env.NEXT_PUBLIC_API_HOST + "/token";
+          const formData = new URLSearchParams();
+          formData.append("username", email);
+          formData.append("password", password);
+          setLoading(true);
 
-        try {
-          const response = await fetch(apiUrlToke, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: formData,
-            redirect: "follow",
-          });
+          try {
+            const response = await fetch(apiUrlToke, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: formData,
+              redirect: "follow",
+            });
 
-          // Handling response based on status
-          if (response.status === 200) {
-            const result = await response.json();
-            localStorage.setItem("athlabsAuthToken", result.access_token);
-            setTimeout(() => {
-              router.push("/basicDetails");
-            }, 1);
-          } else {
-            let result1 = await response.text();
-            const errorMessage = JSON.parse(result1).detail;
+            // Handling response based on status
+            if (response.status === 200 && response.ok) {
+              const result = await response.json();
+              localStorage.setItem("athlabsAuthToken", result.access_token);
+              setTimeout(() => {
+                router.push("/basicDetails");
+              }, 1);
+            } else {
+              let result1 = await response.text();
+              const errorMessage = JSON.parse(result1).detail;
+              toastObj.type = "e";
+              toastObj.msg = errorMessage || "Error submitting form";
+              setToastObj(toastObj);
+            }
+          } catch (error) {
+            console.error("Error submitting form:", error);
             toastObj.type = "e";
-            toastObj.msg = errorMessage || "Error submitting form";
+            toastObj.msg = "Error submitting form";
             setToastObj(toastObj);
           }
-        } catch (error) {
-          console.error("Error submitting form:", error);
+        } else {
+          let result1 = await response.text();
+          const errorMessage = JSON.parse(result1).detail;
           toastObj.type = "e";
-          toastObj.msg = "Error submitting form";
+          toastObj.msg = errorMessage || "Error submitting form";
           setToastObj(toastObj);
-        }
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
         }
 
         // Handle successful signup
@@ -125,7 +130,7 @@ const Login = () => {
     if (checkLogin()) {
       router.push("/home");
     }
-  }, [toastObj]);
+  }, [router, toastObj]);
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
@@ -201,16 +206,6 @@ const Login = () => {
                   <LoadingComp />
                 </div>
               )}
-              <p className="text-white/70 text-xs text-center mt-4">
-                Forgot Password?
-                <a
-                  onClick={handleRequestDemo}
-                  className="text-blue-500 hover:underline ml-1 cursor-pointer"
-                >
-                  Recover your password here
-                </a>
-                .
-              </p>
             </form>
 
             <div className=" grid grid-cols-[1fr_45px_1fr] items-center px-5 pt-5">
@@ -220,7 +215,13 @@ const Login = () => {
             </div>
 
             <div className="flex items-center justify-center  mt-7">
-              <button className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+              <a
+                onClick={initiateGoogleLogin}
+                target="_blank"
+                className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow 
+                
+               transition-transform hover:-translate-y-2 ease-in-out cursor-pointer focus:outline-none focus:ring-4 focus:ring-blue-300"
+              >
                 <Image
                   src={"/images/google-color.svg"}
                   width={24}
@@ -228,8 +229,20 @@ const Login = () => {
                   alt="logo"
                 />
                 <span>Signup with Google</span>
-              </button>
+              </a>
             </div>
+
+            <p className="text-white/70 text-xs text-center mt-4">
+              if have an account?
+              <Link
+                href="/login"
+                // onClick={handleRequestDemo}
+
+                className="text-blue-500 hover:underline ml-1 cursor-pointer"
+              >
+                Login
+              </Link>
+            </p>
           </div>
         </div>
       </div>

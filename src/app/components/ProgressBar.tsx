@@ -43,7 +43,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
   return (
     <div className={`progress-bar ${className}`} style={containerStyles}>
-      <div style={progressBarStyles}>
+      <div className="animate-pulse " style={progressBarStyles}>
         <span style={progressTextStyles}>{`${progress}%`}</span>
       </div>
     </div>

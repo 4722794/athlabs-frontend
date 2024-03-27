@@ -43,28 +43,11 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
 
   const resetAnalysis = () => {
     setScore(null);
-    setFeedback('');
-    setHighlight('');
+    setFeedback("");
+    setHighlight("");
     setIsFeedbackWritten(false);
     setItems([]);
   };
-
-  useEffect(() => {  
-    resetAnalysis();
-    if(activeVideoDetail?.video_id && otherData.fetchVideoHistroy) {
-      fetchHistory();
-    } else if (activeVideoDetail?.video_id) {
-      fetchFeedback();
-    }
-  }, [activeVideoDetail]);
-
-  useEffect(() => {
-    updateItems();
-  }, [highlight, feedback, isFeedbackWritten]);
-  
-  useEffect(() => {
-    updateHistoryItems();
-  }, [historyData]);
 
   const fetchHistory = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
@@ -75,10 +58,10 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     };
 
     const response: any = await fetch(apiEndpoint, { headers });
-    
+
     const data = await response.json();
     setHistoryData(data);
-  }
+  };
 
   const fetchFeedback = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
@@ -92,18 +75,18 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
 
     const reader = response.body.getReader();
 
-    let receivedData = '';
+    let receivedData = "";
     const processStream = async () => {
-      while(true) {
+      while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         const decodedValue = new TextDecoder().decode(value);
-        receivedData += decodedValue.replace(/data:/g, '');
+        receivedData += decodedValue.replace(/data:/g, "");
       }
       setFeedback(receivedData);
       fetchHighlight();
     };
-    
+
     processStream();
   };
 
@@ -116,14 +99,15 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     };
 
     const response: any = await fetch(apiEndpoint, { headers });
-    
+
     const data = await response.json();
     setHighlight(data.highlight);
     setScore(data.score);
-    if(data.name && !activeVideoDetail.name) {
+
+    if (data.name && !activeVideoDetail.name) {
       setName(data.name);
     }
-  }
+  };
 
   const updateItems = () => {
     const newItems = [];
@@ -133,23 +117,25 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
       newItems.push({
         id: 1,
         title: "Feedback",
-        content: <Typewriter
-                  // update isFeedbackWritten state to true when feedback written
-                  onInit={(typewriter) => {
-                    typewriter
-                    .typeString(feedback)
-                    .callFunction(() => {
-                        setIsFeedbackWritten(true);
-                      })
-                      .start();
-                  }}
-                  options={{
-                    strings: feedback,
-                    autoStart: true,
-                    loop: false,
-                    delay: 10,
-                  }}
-                />,
+        content: (
+          <Typewriter
+            // update isFeedbackWritten state to true when feedback written
+            onInit={(typewriter) => {
+              typewriter
+                .typeString(feedback)
+                .callFunction(() => {
+                  setIsFeedbackWritten(true);
+                })
+                .start();
+            }}
+            options={{
+              strings: feedback,
+              autoStart: true,
+              loop: false,
+              delay: 10,
+            }}
+          />
+        ),
       });
     }
 
@@ -158,23 +144,25 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
       newItems.push({
         id: 2,
         title: "Highlight",
-        content: <Typewriter
-                  // update isHighlightWritten state to true when highlight written
-                  onInit={(typewriter) => {
-                    typewriter
-                    .typeString(highlight)
-                    .callFunction(() => {
-                        setIsHighlightWritten(true);
-                      })
-                      .start();
-                  }}
-                  options={{
-                    strings: highlight,
-                    autoStart: true,
-                    loop: false,
-                    delay: 10,
-                  }}
-                />,
+        content: (
+          <Typewriter
+            // update isHighlightWritten state to true when highlight written
+            onInit={(typewriter) => {
+              typewriter
+                .typeString(highlight)
+                .callFunction(() => {
+                  setIsHighlightWritten(true);
+                })
+                .start();
+            }}
+            options={{
+              strings: highlight,
+              autoStart: true,
+              loop: false,
+              delay: 10,
+            }}
+          />
+        ),
       });
     }
 
@@ -185,7 +173,20 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     if (historyData) {
       const { score, feedback, highlight } = historyData;
       const newItems = [];
-      if(score) setScore(score);
+
+      if (score) {
+        // setScore(score);
+        let currentScore = 0;
+        const increment = 1;
+        const interval = setInterval(() => {
+          currentScore += increment;
+          setScore(Math.min(currentScore, score));
+          if (currentScore >= score) {
+            clearInterval(interval);
+          }
+        }, 100);
+      }
+
       if (feedback) {
         if (items.findIndex((item) => item.title === "Feedback") !== -1) {
           items[0].content = feedback;
@@ -212,6 +213,23 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     }
   };
 
+  useEffect(() => {
+    resetAnalysis();
+    if (activeVideoDetail?.video_id && otherData.fetchVideoHistroy) {
+      fetchHistory();
+    } else if (activeVideoDetail?.video_id) {
+      fetchFeedback();
+    }
+  }, [activeVideoDetail]);
+
+  useEffect(() => {
+    updateItems();
+  }, [highlight, feedback, isFeedbackWritten]);
+
+  useEffect(() => {
+    updateHistoryItems();
+  }, [historyData]);
+
   return (
     <div className=" landscape:min-h-[300px]  lg:h-[calc(100vh-200px)]">
       {activeVideoDetail ? (
@@ -223,8 +241,9 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
             {/* <div className=" px-3 " style={{ whiteSpace: "pre-line" }}>
               {activeVideoDetail.feedback}
             </div> */}
-            <AccordionMy items={items} />
-            { ((highlight && isHighlightWritten && score) || (!highlight && score)) && (
+
+            {((highlight && isHighlightWritten && score) ||
+              (!highlight && score)) && (
               <div className=" mb-4">
                 Performance Score
                 <ProgressBar
@@ -233,17 +252,16 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
                   backgroundColor="#777"
                   progressColor="#44366a"
                   progressTextColor="#fff"
-                  className="my-custom-class"
+                  className="my-custom-class "
                 />
               </div>
             )}
+            <AccordionMy items={items} />
           </CustomScroll>
         </div>
       ) : (
         ""
       )}
-
-    
     </div>
   );
 };

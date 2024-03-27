@@ -11,6 +11,8 @@ import LandingLayout from "../layout/LandingLayout";
 import { FaRegUser } from "react-icons/fa";
 import { HiOutlinePlus } from "react-icons/hi";
 import InterestCheckboxes from "../components/InterestCheckboxes";
+import ComonToast from "../components/ComonToast";
+import Image from "next/image";
 
 const UserForm = () => {
   const footerClass = "!relative";
@@ -19,35 +21,44 @@ const UserForm = () => {
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
   const [profileImage, setProfileImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
-  const [interests, setInterests] = useState([]);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [alreadySelectedInterests, setAlreadySelectedInterests] = useState<
+    string[]
+  >([]);
+  const [interests, setInterests] = useState<string[]>([]);
+
+  const [interestOptions, setInterestOptions] = useState([]);
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
   const router = useRouter();
   const [userData, setUserData] = useState(null);
 
-  const handleNameChange = (e) => {
+  const handleNameChange = (e: any) => {
     setName(e.target.value);
   };
 
-  const handlePhoneChange = (e) => {
+  const handlePhoneChange = (e: any) => {
     setPhone(e.target.value);
   };
 
-  const handleGenderChange = (e) => {
+  const handleGenderChange = (e: any) => {
     setGender(e.target.value);
   };
 
-  const handleDobChange = (e) => {
+  const handleDobChange = (e: any) => {
     setDob(e.target.value);
   };
 
-  const handleProfileImageChange = (e) => {
+  const handleProfileImageChange = (e: any) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImage(file);
-        setPreviewImage(reader.result);
+        let previewImageData: string | null = null;
+        if (typeof reader.result === "string") {
+          previewImageData = reader.result;
+        }
+        setPreviewImage(previewImageData);
       };
       reader.readAsDataURL(file);
     } else {
@@ -56,7 +67,7 @@ const UserForm = () => {
     }
   };
 
-  const handleInterestChange = (e) => {
+  const handleInterestChange = (e: any) => {
     const value = e.target.value;
     const isChecked = e.target.checked;
 
@@ -67,26 +78,35 @@ const UserForm = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     // Validate form data
     if (!name || !gender || !dob) {
-      setToastObj({ type: "error", msg: "Please fill in all required fields" });
+      setToastObj({ type: "e", msg: "Please fill in all required fields" });
       return;
     }
+    const token = localStorage.getItem("athlabsAuthToken");
 
     var myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhdGlmQGNzc2luZGlhb25saW5lLmNvbSIsImV4cCI6MTcxNjI4OTAzN30.4ZmPZCOOX8ExBJmWNdd69Yx48WQQaQCDvtUQyWmof70"
-    );
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
     var formdata = new FormData();
     formdata.append("name", name);
-    formdata.append("gender", "Male");
+    formdata.append("gender", gender);
+    formdata.append("dob", dob);
+    if (interests.length === 0) {
+      formdata.append("interests", "empty");
+    } else if (interests.join(",") !== alreadySelectedInterests.join(",")) {
+      formdata.append("interests", interests.join(","));
+    } else {
+      formdata.append("interests", "null");
+    }
+    if (profileImage) {
+      formdata.append("picture", profileImage);
+    }
 
-    var requestOptions = {
+    var requestOptions: RequestInit = {
       method: "POST",
       headers: myHeaders,
       body: formdata,
@@ -94,44 +114,15 @@ const UserForm = () => {
     };
 
     fetch("https://api.dev.athlabs.co/u/profile", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-
-    /* // Create form data object
-    let formData = new FormData();
-    formData.append("name", name);
-    // formData.append("phone", phone);
-    formData.append("gender", gender);
-    formData.append("dob", dob);
-
-    // Send form data to server (replace with your API call)
-    const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/u/profile";
-    const uriString = `/u/profile`;
-    const method = "POST";
-    const contentType = "application/json";
-    const header = { accept: "application/json" };
-    const responseData = await callApiData(method, header, formData, uriString); */
-    /* fetch(apiUrl, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Form submission successful:", data);
-        setToastObj({ type: "success", msg: "Form submitted successfully" });
-        // Reset form fields
-        // setName("");
-        // // setPhone("");
-        // setGender("");
-        // setDob("");
-        // setProfileImage(null);
-        // setInterests([]);
+      .then((response: any) => response.text())
+      .then((data: any) => {
+        setAlreadySelectedInterests(interests);
+        setToastObj({ type: "s", msg: "Profile successfully updated" });
+        setTimeout(() => {
+          router.push("/home");
+        }, 2000);
       })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-        setToastObj({ type: "error", msg: "Error submitting form" });
-      }); */
+      .catch((error) => console.log("error", error));
   };
 
   const fetchUserData = async () => {
@@ -143,28 +134,63 @@ const UserForm = () => {
 
       if (responseData.status) {
         setUserData(responseData.data.profile);
+        setName(responseData.data.profile.name);
+        setDob(responseData.data.profile.dob);
+        setGender(responseData.data.profile.gender);
+        setPreviewImage(responseData.data.profile.picture);
+        const interestNames = responseData.data.profile.interests.map(
+          (item: any) => item.name
+        );
+        setInterests(interestNames);
+        setAlreadySelectedInterests(interestNames);
       }
 
       console.log("User data:", userData);
     } catch (error) {
       console.error("Error fetching user data:", error);
-      setToastObj({ type: "error", msg: "Error fetching user data" });
+      setToastObj({ type: "e", msg: "Error fetching user data" });
+    }
+  };
+
+  const fetchInterests = async () => {
+    try {
+      const uriString = `/i/list`;
+      const method = "GET";
+      const contentType = "application/json";
+      const responseData = await callApi(method, contentType, null, uriString);
+
+      if (responseData.status) {
+        const interestNames = responseData.data.map((item: any) => item.name);
+        setInterestOptions(interestNames);
+      }
+    } catch (error) {
+      console.error("Error fetching interests:", error);
+      setToastObj({ type: "e", msg: "Error fetching interests" });
     }
   };
 
   useEffect(() => {
     fetchUserData();
+    fetchInterests();
   }, []);
 
-  const handleSkipNow = () => {
-    router.push("/home");
+  const skipBasicDetails = async () => {
+    const uriString = `/u/profile`;
+    const method = "POST";
+    const contentType = "application/json";
+    const header = { accept: "application/json" };
+    const body = { new_user: false };
+    const responseData = await callApiData(method, header, body, uriString);
+    if (responseData.status) {
+      router.push("/home");
+    } else {
+      setToastObj({ type: "e", msg: "Error skipping basic details" });
+    }
   };
 
-  // useEffect(() => {
-  //   if (checkLogin()) {
-  //     router.push("/home");
-  //   }
-  // }, [toastObj]);
+  const handleSkipNow = () => {
+    skipBasicDetails();
+  };
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
@@ -203,6 +229,9 @@ const UserForm = () => {
                         src={previewImage}
                         alt="Profile Preview"
                         className="  max-w-[100px] rounded-md"
+                        crossOrigin="anonymous"
+                        width={100}
+                        height={100}
                       />
                     </div>
                   )}
@@ -261,9 +290,9 @@ const UserForm = () => {
                   required
                 >
                   <option value="">Select gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 
@@ -287,6 +316,7 @@ const UserForm = () => {
 
               <InterestCheckboxes
                 interests={interests}
+                interestOptions={interestOptions}
                 handleInterestChange={handleInterestChange}
               />
 
@@ -310,14 +340,8 @@ const UserForm = () => {
       </div>
 
       {/* Toast Notification */}
-      {toastObj.msg && (
-        <div
-          className={`fixed bottom-4 left-4 py-2 px-4 rounded-md text-white ${
-            toastObj.type === "success" ? "bg-green-500" : "bg-red-500"
-          }`}
-        >
-          {toastObj.msg}
-        </div>
+      {toastObj.type && (
+        <ComonToast toastObj={toastObj} setToastObj={setToastObj} />
       )}
     </LandingLayout>
   );

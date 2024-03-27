@@ -97,4 +97,10 @@ const callApiData = async (method, headersD = {}, bodyData, uriString) => {
   }
 };
 
-export { callApi, checkLogin, FECallApi, callApiData };
+const initiateGoogleLogin = async () => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/login/google";
+  window.location.href = apiUrl;
+};
+
+
+export { callApi, checkLogin, FECallApi, callApiData, initiateGoogleLogin };

@@ -1,14 +1,7 @@
 import React from "react";
 
-const InterestCheckboxes = ({ interests, handleInterestChange }) => {
-  const interestOptions = [
-    "Reading",
-    "Sports",
-    "Music",
-    "Travel",
-    "Gaming",
-    "Cooking",
-  ];
+const InterestCheckboxes = ({ interests, interestOptions, handleInterestChange }) => {
+  // const interestOptions = ["Fitness", "Sports", "Yoga", "Athletics"];
 
   return (
     <div className="w-full px-3">

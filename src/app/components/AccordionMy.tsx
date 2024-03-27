@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 
 interface AccordionItem {
@@ -12,15 +12,17 @@ interface AccordionProps {
 }
 
 const AccordionMy: React.FC<AccordionProps> = ({ items }: any) => {
-  const [closeItems, setCloseItems] = useState<number[]>([]);
+  const [openItems, setOpenItems] = useState<number[]>([]);
 
   const toggleItem = (itemId: number) => {
-    if (closeItems.includes(itemId)) {
-      setCloseItems(closeItems.filter((id) => id !== itemId));
-    } else {
-      setCloseItems([...closeItems, itemId]);
-    }
+    setOpenItems([itemId]);
   };
+  
+  useEffect(() => {
+    if(items.length > 0) {
+      setOpenItems([items[0]?.id]);
+    }
+  }, [items]);
 
   return (
     <div>
@@ -28,20 +30,20 @@ const AccordionMy: React.FC<AccordionProps> = ({ items }: any) => {
         <div key={item.id} className="border border-gray-700 rounded mb-4">
           <div
             className={`flex justify-between items-center px-4 py-2 bg-gray-700 cursor-pointer ${
-              closeItems.includes(item.id) ? "rounded-b-none" : "rounded"
+              openItems.includes(item.id) ? "rounded-b-none" : "rounded"
             }`}
             onClick={() => toggleItem(item.id)}
           >
             <h3 className="text-lg font-semibold">{item.title}</h3>
-            {closeItems.includes(item.id) ? (
-              <FaChevronRight className="text-gray-100 transition-transform duration-300" />
-            ) : (
+            {openItems.includes(item.id) ? (
               <FaChevronDown className="text-gray-100 transition-transform duration-300 transform rotate-180" />
+            ) : (
+              <FaChevronRight className="text-gray-100 transition-transform duration-300" />
             )}
           </div>
           <div
             className={`px-4 py-2 ${
-              closeItems.includes(item.id) ? "hidden" : "block"
+              openItems.includes(item.id) ? "block" : "hidden"
             }`}
           >
             <p>{item.content}</p>
