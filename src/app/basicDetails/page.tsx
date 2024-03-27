@@ -21,36 +21,44 @@ const UserForm = () => {
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
   const [profileImage, setProfileImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
-  const [interests, setInterests] = useState([]);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [alreadySelectedInterests, setAlreadySelectedInterests] = useState<
+    string[]
+  >([]);
+  const [interests, setInterests] = useState<string[]>([]);
+
   const [interestOptions, setInterestOptions] = useState([]);
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
   const router = useRouter();
   const [userData, setUserData] = useState(null);
 
-  const handleNameChange = (e) => {
+  const handleNameChange = (e: any) => {
     setName(e.target.value);
   };
 
-  const handlePhoneChange = (e) => {
+  const handlePhoneChange = (e: any) => {
     setPhone(e.target.value);
   };
 
-  const handleGenderChange = (e) => {
+  const handleGenderChange = (e: any) => {
     setGender(e.target.value);
   };
 
-  const handleDobChange = (e) => {
+  const handleDobChange = (e: any) => {
     setDob(e.target.value);
   };
 
-  const handleProfileImageChange = (e) => {
+  const handleProfileImageChange = (e: any) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImage(file);
-        setPreviewImage(reader.result);
+        let previewImageData: string | null = null;
+        if (typeof reader.result === "string") {
+          previewImageData = reader.result;
+        }
+        setPreviewImage(previewImageData);
       };
       reader.readAsDataURL(file);
     } else {
@@ -59,7 +67,7 @@ const UserForm = () => {
     }
   };
 
-  const handleInterestChange = (e) => {
+  const handleInterestChange = (e: any) => {
     const value = e.target.value;
     const isChecked = e.target.checked;
 
@@ -70,7 +78,7 @@ const UserForm = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     // Validate form data
@@ -89,14 +97,16 @@ const UserForm = () => {
     formdata.append("dob", dob);
     if (interests.length === 0) {
       formdata.append("interests", "empty");
-    } else {
+    } else if (interests.join(",") !== alreadySelectedInterests.join(",")) {
       formdata.append("interests", interests.join(","));
+    } else {
+      formdata.append("interests", "null");
     }
     if (profileImage) {
       formdata.append("picture", profileImage);
     }
 
-    var requestOptions = {
+    var requestOptions: RequestInit = {
       method: "POST",
       headers: myHeaders,
       body: formdata,
@@ -106,47 +116,13 @@ const UserForm = () => {
     fetch("https://api.dev.athlabs.co/u/profile", requestOptions)
       .then((response: any) => response.text())
       .then((data: any) => {
+        setAlreadySelectedInterests(interests);
         setToastObj({ type: "s", msg: "Profile successfully updated" });
         setTimeout(() => {
           router.push("/home");
         }, 2000);
       })
       .catch((error) => console.log("error", error));
-
-    /* // Create form data object
-    let formData = new FormData();
-    formData.append("name", name);
-    // formData.append("phone", phone);
-    formData.append("gender", gender);
-    formData.append("dob", dob);
-
-    // Send form data to server (replace with your API call)
-    const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/u/profile";
-    const uriString = `/u/profile`;
-    const method = "POST";
-    const contentType = "application/json";
-    const header = { accept: "application/json" };
-    const responseData = await callApiData(method, header, formData, uriString); */
-    /* fetch(apiUrl, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Form submission successful:", data);
-        setToastObj({ type: "success", msg: "Form submitted successfully" });
-        // Reset form fields
-        // setName("");
-        // // setPhone("");
-        // setGender("");
-        // setDob("");
-        // setProfileImage(null);
-        // setInterests([]);
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-        setToastObj({ type: "error", msg: "Error submitting form" });
-      }); */
   };
 
   const fetchUserData = async () => {
@@ -166,6 +142,7 @@ const UserForm = () => {
           (item: any) => item.name
         );
         setInterests(interestNames);
+        setAlreadySelectedInterests(interestNames);
       }
 
       console.log("User data:", userData);
@@ -248,7 +225,7 @@ const UserForm = () => {
                   )}
                   {previewImage && (
                     <div className="mt-2">
-                      <Image
+                      <img
                         src={previewImage}
                         alt="Profile Preview"
                         className="  max-w-[100px] rounded-md"

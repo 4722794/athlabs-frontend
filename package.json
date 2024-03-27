@@ -9,10 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ffmpeg/ffmpeg": "0.10.0",
     "flowbite-react": "^0.7.2",
     "gsap": "^3.9.0",
-    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "next": "14.0.3",
     "nouislider-react": "^3.4.2",
@@ -30,7 +28,6 @@
   },
   "devDependencies": {
     "@types/gsap": "^3.0.0",
-    "@types/lodash": "^4.17.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-custom-scroll": "^5.0.3",

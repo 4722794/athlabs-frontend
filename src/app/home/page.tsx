@@ -175,13 +175,12 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
       const newItems = [];
 
       if (score) {
+        // setScore(score);
         let currentScore = 0;
         const increment = 1;
         const interval = setInterval(() => {
           currentScore += increment;
-
           setScore(Math.min(currentScore, score));
-
           if (currentScore >= score) {
             clearInterval(interval);
           }
@@ -221,20 +220,15 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     } else if (activeVideoDetail?.video_id) {
       fetchFeedback();
     }
-  }, [
-    activeVideoDetail,
-    fetchFeedback,
-    fetchHistory,
-    otherData.fetchVideoHistroy,
-  ]);
+  }, [activeVideoDetail]);
 
   useEffect(() => {
     updateItems();
-  }, [highlight, feedback, isFeedbackWritten, updateItems]);
+  }, [highlight, feedback, isFeedbackWritten]);
 
   useEffect(() => {
     updateHistoryItems();
-  }, [historyData, updateHistoryItems]);
+  }, [historyData]);
 
   return (
     <div className=" landscape:min-h-[300px]  lg:h-[calc(100vh-200px)]">
