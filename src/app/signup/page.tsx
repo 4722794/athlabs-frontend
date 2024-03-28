@@ -14,21 +14,22 @@ const Login = () => {
   const router = useRouter();
   const { setOtherData, otherData } = useVideoContext();
 
-  const [username, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
-  const [formErrors, setFormErrors] = useState({ username: "", password: "" });
+  const [formErrors, setFormErrors] = useState({ email: "", password: "" });
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
+
   const handleRequestDemo = () => {
     setOtherData({ ...otherData, requestDemoShow: true });
   };
   const validateForm = () => {
     let valid = true;
-    const errors = { username: "", password: "" };
+    const errors = { email: "", password: "" };
 
     // Username validation
-    if (!username) {
-      errors.username = "Username is required";
+    if (!email) {
+      errors.email = "Email is required";
       valid = false;
     }
 
@@ -50,28 +51,62 @@ const Login = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (validateForm()) {
-      const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/token";
-      const formData = new URLSearchParams();
-      formData.append("username", username);
-      formData.append("password", password);
-      setLoading(true);
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/u/create";
+    if (validateForm()) {
+      setLoading(true);
       try {
+        // Create form data object
+
+        let urlencoded = new URLSearchParams();
+        urlencoded.append("email", email);
+        urlencoded.append("password", password);
+
         const response = await fetch(apiUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-          body: formData,
-          redirect: "follow",
+          body: urlencoded,
         });
 
-        // Handling response based on status
         if (response.status === 200) {
-          const result = await response.json();
-          localStorage.setItem("athlabsAuthToken", result.access_token);
-          router.push("/home");
+          const apiUrlToke = process.env.NEXT_PUBLIC_API_HOST + "/token";
+          const formData = new URLSearchParams();
+          formData.append("username", email);
+          formData.append("password", password);
+          setLoading(true);
+
+          try {
+            const response = await fetch(apiUrlToke, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: formData,
+              redirect: "follow",
+            });
+
+            // Handling response based on status
+            if (response.status === 200 && response.ok) {
+              const result = await response.json();
+              localStorage.setItem("athlabsAuthToken", result.access_token);
+              setTimeout(() => {
+                router.push("/basicDetails");
+              }, 1);
+            } else {
+              let result1 = await response.text();
+              const errorMessage = JSON.parse(result1).detail;
+              toastObj.type = "e";
+              toastObj.msg = errorMessage || "Error submitting form";
+              setToastObj(toastObj);
+            }
+          } catch (error) {
+            console.error("Error submitting form:", error);
+            toastObj.type = "e";
+            toastObj.msg = "Error submitting form";
+            setToastObj(toastObj);
+          }
         } else {
           let result1 = await response.text();
           const errorMessage = JSON.parse(result1).detail;
@@ -79,11 +114,10 @@ const Login = () => {
           toastObj.msg = errorMessage || "Error submitting form";
           setToastObj(toastObj);
         }
+
+        // Handle successful signup
+        console.log("Signup successful");
       } catch (error) {
-        console.error("Error submitting form:", error);
-        toastObj.type = "e";
-        toastObj.msg = "Error submitting form";
-        setToastObj(toastObj);
       } finally {
         setLoading(false);
       }
@@ -92,25 +126,8 @@ const Login = () => {
     }
   };
 
-  const initiateGoogleLogin_old = async () => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_HOST + "/login/google";
-    window.location.href = apiUrl;
-    /* try {
-      const response = await fetch(apiUrl); // Make a request to your API endpoint for Google OAuth
-      const { authorizationUrl } = await response.json();
-      window.location.href = authorizationUrl; // Redirect to Google's authentication page
-    } catch (error) {
-      console.error("Error initiating Google login:", error);
-      toastObj.type = "e";
-      toastObj.msg = "Error initiating Google login";
-      setToastObj(toastObj);
-    } */
-  };
-
   useEffect(() => {
-    if (!checkLogin()) {
-      router.push("/login");
-    } else {
+    if (checkLogin()) {
       router.push("/home");
     }
   }, [router, toastObj]);
@@ -121,10 +138,10 @@ const Login = () => {
         <div className="container mx-auto self-center px-6 md:px-8 flex justify-center items-center">
           <div className="bg-black p-8 rounded-lg shadow-lg max-w-sm w-full border-[3px]  border-gray-400">
             <h2 className="text-2xl font-semibold text-center mb-4 text-white">
-              Login
+              Sign Up
             </h2>
             <p className="text-white/90 text-center mb-10">
-              Login to use Athlabs
+              Sign Up to use Athlabs
             </p>
 
             {toastObj.type && (
@@ -136,20 +153,20 @@ const Login = () => {
                   htmlFor="email"
                   className="block text-white/70  text-sm font-semibold mb-2"
                 >
-                  Username *
+                  Email Address *
                 </label>
                 <input
                   type="text"
                   id="username"
-                  value={username}
+                  value={email}
                   className="form-input w-full px-4 py-2 border rounded-lg  border-gray-400 text-white/90  bg-transparent"
                   placeholder="john@gmail.com"
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {formErrors.username && (
+                {formErrors.email && (
                   <span>
                     <p className="text-red-500 text-xs mt-1">
-                      {formErrors.username}
+                      {formErrors.email}
                     </p>
                   </span>
                 )}
@@ -181,7 +198,7 @@ const Login = () => {
                 type="submit"
                 className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               >
-                Login
+                Sign Up
               </button>
 
               {loading && (
@@ -189,17 +206,6 @@ const Login = () => {
                   <LoadingComp />
                 </div>
               )}
-
-              <p className="text-white/70 text-xs text-center mt-4">
-                Forgot Password?
-                <Link
-                  href="/forgot-password"
-                  // onClick={handleRequestDemo}
-                  className="text-blue-500 hover:underline ml-1 cursor-pointer"
-                >
-                  Recover your password here
-                </Link>
-              </p>
             </form>
 
             <div className=" grid grid-cols-[1fr_45px_1fr] items-center px-5 pt-5">
@@ -214,7 +220,7 @@ const Login = () => {
                 target="_blank"
                 className="px-4 py-1.5 border flex gap-2  bg-white border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow 
                 
-                transition-transform hover:-translate-y-2 ease-in-out cursor-pointer focus:outline-none focus:ring-4 focus:ring-blue-300"
+               transition-transform hover:-translate-y-2 ease-in-out cursor-pointer focus:outline-none focus:ring-4 focus:ring-blue-300"
               >
                 <Image
                   src={"/images/google-color.svg"}
@@ -222,18 +228,19 @@ const Login = () => {
                   height={24}
                   alt="logo"
                 />
-                <span>Login with Google</span>
+                <span>Signup with Google</span>
               </a>
             </div>
+
             <p className="text-white/70 text-xs text-center mt-4">
-              Don&apos;t have an account?
+              if have an account?
               <Link
-                href="/signup"
+                href="/login"
                 // onClick={handleRequestDemo}
 
                 className="text-blue-500 hover:underline ml-1 cursor-pointer"
               >
-                Create an account .
+                Login
               </Link>
             </p>
           </div>

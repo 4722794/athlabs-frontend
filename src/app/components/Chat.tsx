@@ -30,9 +30,9 @@ const Chat: React.FC = () => {
           {/* Check if activeVideoDetail and chat exist */}
           {activeVideoDetail &&
             activeVideoDetail.messages &&
-            activeVideoDetail.messages.map((message: Message) => (
+            activeVideoDetail.messages.map((message: Message, index: any) => (
               <div
-                key={message.id}
+                key={index}
                 className={`flex items-center ${
                   message.sender === "user" ? " justify-end" : ""
                 }`}

@@ -12,17 +12,250 @@ import InputFileUpload from "../components/InputFileUpload";
 import Chat from "../components/Chat";
 import HomeLayout from "../layout/HomeLayout";
 import CustomScroll from "react-custom-scroll";
-import { callApi } from "../services/apiUtils";
+import { callApi, checkLogin } from "../services/apiUtils";
 import { useVideoContext } from "../services/VideoContext";
 import moment from "moment";
+import Typewriter from "typewriter-effect";
 import LoadingComp from "../components/LoadingComp";
-import { Spinner } from "flowbite-react";
+import { Accordion, Spinner } from "flowbite-react";
+import ProgressBar from "../components/ProgressBar";
+import AccordionMy from "../components/AccordionMy";
 interface Tab1ContentProps {
   compData: any;
+  setName: any;
 }
 
-const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => {
-  const { activeVideoDetail } = useVideoContext();
+const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
+  const { activeVideoDetail, otherData } = useVideoContext();
+  const [historyData, setHistoryData] = useState<any>(null);
+  const [score, setScore] = useState<any>(null);
+  const [scoreValue, setScoreValue] = useState<any>(null);
+  const [feedback, setFeedback] = useState<any>(null);
+  const [highlight, setHighlight] = useState<any>(null);
+  const [items, setItems] = useState<Array<any>>([]);
+  const [isFeedbackWritten, setIsFeedbackWritten] = useState(false);
+  const [isHighlightWritten, setIsHighlightWritten] = useState(false);
+
+  const Content: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
+    <div>
+      <p>This content is {isOpen ? "open" : "closed"}.</p>
+    </div>
+  );
+
+  const resetAnalysis = () => {
+    setScore(null);
+    setFeedback("");
+    setHighlight("");
+    setIsFeedbackWritten(false);
+    setItems([]);
+  };
+
+  const fetchHistory = async () => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
+    const apiEndpoint = `${apiUrl}/h/${activeVideoDetail.video_id}`;
+
+    const headers = {
+      Authorization: `Bearer ${checkLogin()}`, // Replace with your actual token
+    };
+
+    const response: any = await fetch(apiEndpoint, { headers });
+
+    const data = await response.json();
+    setHistoryData(data);
+  };
+
+  const fetchFeedback = async () => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
+    const apiEndpoint = `${apiUrl}/feedback/${activeVideoDetail.video_id}`;
+
+    const headers = {
+      Authorization: `Bearer ${checkLogin()}`, // Replace with your actual token
+    };
+
+    const response: any = await fetch(apiEndpoint, { headers });
+
+    const reader = response.body.getReader();
+
+    let receivedData = "";
+    const processStream = async () => {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const decodedValue = new TextDecoder().decode(value);
+        receivedData += decodedValue.replace(/data:/g, "");
+      }
+      setFeedback(receivedData);
+      fetchHighlight();
+    };
+
+    processStream();
+  };
+
+  const fetchHighlight = async () => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
+    const apiEndpoint = `${apiUrl}/highlight/${activeVideoDetail.video_id}`;
+
+    const headers = {
+      Authorization: `Bearer ${checkLogin()}`, // Replace with your actual token
+    };
+
+    const response: any = await fetch(apiEndpoint, { headers });
+
+    const data = await response.json();
+    setHighlight(data.highlight);
+    setScore(data.score);
+
+    if (data.score) {
+      setScoreValue(data.score);
+      let currentScore = 0;
+      const increment = 1;
+      const interval = setInterval(() => {
+        currentScore += increment;
+        setScore(Math.min(currentScore, data.score));
+        if (currentScore >= data.score) {
+          clearInterval(interval);
+        }
+      }, 100);
+    }
+
+    if (data.name && !activeVideoDetail.name) {
+      setName(data.name);
+    }
+  };
+
+  const updateItems = () => {
+    const newItems = [];
+
+    // Check if feedback is not empty, then update items array
+    if (feedback) {
+      newItems.push({
+        id: 1,
+        title: "Feedback",
+        content: (
+          <Typewriter
+            // update isFeedbackWritten state to true when feedback written
+            onInit={(typewriter) => {
+              typewriter
+                .typeString(feedback)
+                .callFunction(() => {
+                  setIsFeedbackWritten(true);
+                })
+                .start();
+            }}
+            options={{
+              strings: feedback,
+              autoStart: true,
+              loop: false,
+              delay: 10,
+            }}
+          />
+        ),
+      });
+    }
+
+    // Check if feedback and highlight are not empty, then update items array
+    if (feedback && highlight && isFeedbackWritten) {
+      newItems.push({
+        id: 2,
+        title: "Highlight",
+        content: highlight,
+      });
+    }
+
+    setItems(newItems);
+  };
+
+  const updateHistoryItems = () => {
+    if (historyData) {
+      const { score, feedback, highlight } = historyData;
+      const newItems = [];
+      // setScore(score);
+
+      if (score) {
+        setScoreValue(score);
+        let currentScore = 0;
+        const increment = 1;
+        const interval = setInterval(() => {
+          currentScore += increment;
+          setScore(Math.min(currentScore, score));
+          if (currentScore >= score) {
+            clearInterval(interval);
+          }
+        }, 100);
+      }
+
+      if (feedback) {
+        if (items.findIndex((item) => item.title === "Feedback") !== -1) {
+          items[0].content = processFeedback(feedback);
+        } else {
+          newItems.push({
+            id: 1,
+            title: "Feedback",
+            content: processFeedback(feedback),
+          });
+        }
+      }
+      if (highlight) {
+        if (items.findIndex((item) => item.title === "Highlight") !== -1) {
+          items[1].content = processHighlight(highlight);
+        } else {
+          newItems.push({
+            id: 2,
+            title: "Highlight",
+            content: processHighlight(highlight),
+          });
+        }
+      }
+      setItems(newItems);
+    }
+  };
+
+  // Feedback Processing
+  function processFeedback(feedback: string) {
+    // Replace excessive spaces with a single space
+    feedback = feedback.replace(/\s{2,}/g, " ");
+    // Add bullet points for each improvement suggestion
+    feedback = feedback.replace(
+      /Improvementsuggestions:/g,
+      "\nImprovement Suggestions:\n"
+    );
+    feedback = feedback.replace(/(\d+\.[^\d]+)/g, "- $1\n");
+    // Add a period at the end of the sentence if it's missing
+    feedback = feedback.replace(/Overall,/g, "Overall.");
+
+    return feedback;
+  }
+
+  // Highlight Processing
+  function processHighlight(highlight: string) {
+    // Replace excessive spaces with a single space
+    highlight = highlight.replace(/\s{2,}/g, " ");
+    // Add proper spacing and punctuation
+    highlight = highlight.replace(/Key Points:/g, "\nKey Points:\n");
+    highlight = highlight.replace(/Improvements:/g, "\nImprovements:\n");
+    highlight = highlight.replace(/Risk of injury:/g, "\nRisk of Injury:\n");
+    highlight = highlight.replace(/Overall,/g, "\nOverall,");
+    highlight = highlight.replace(/\./g, ".\n");
+
+    return highlight;
+  }
+
+  useEffect(() => {
+    resetAnalysis();
+    if (activeVideoDetail?.video_id && otherData.fetchVideoHistroy) {
+      fetchHistory();
+    } else if (activeVideoDetail?.video_id) {
+      fetchFeedback();
+    }
+  }, [activeVideoDetail]);
+
+  useEffect(() => {
+    updateItems();
+  }, [highlight, feedback, isFeedbackWritten]);
+
+  useEffect(() => {
+    updateHistoryItems();
+  }, [historyData]);
 
   return (
     <div className=" landscape:min-h-[300px]  lg:h-[calc(100vh-200px)]">
@@ -32,9 +265,26 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData }) => {
             className="-mx-3 "
             heightRelativeToParent="calc(100% - 0px)"
           >
-            <div className=" px-3 " style={{ whiteSpace: "pre-line" }}>
+            {/* <div className=" px-3 " style={{ whiteSpace: "pre-line" }}>
               {activeVideoDetail.feedback}
-            </div>
+            </div> */}
+
+            {((highlight && isHighlightWritten && score) ||
+              (!highlight && score)) && (
+              <div className=" mb-4">
+                Performance Score
+                <ProgressBar
+                  progress={score}
+                  progressValue={scoreValue}
+                  height="30px"
+                  backgroundColor="#777"
+                  progressColor="#44366a"
+                  progressTextColor="#fff"
+                  className="my-custom-class "
+                />
+              </div>
+            )}
+            <AccordionMy items={items} />
           </CustomScroll>
         </div>
       ) : (
@@ -186,11 +436,12 @@ interface Tab {
 const AdminPage = () => {
   const [dataFromChild, setDataFromChild] = useState(null);
   const { activeVideoDetail } = useVideoContext();
+  const [name, setName] = useState("");
   const tabs: Tab[] = [
     {
       id: "tab1",
-      label: "Feedback",
-      content: <Tab1Content compData={dataFromChild} />,
+      label: "Analysis",
+      content: <Tab1Content compData={dataFromChild} setName={setName} />,
     },
   ];
 
@@ -199,6 +450,7 @@ const AdminPage = () => {
   }
 
   const handleChildData = (childData: any) => {
+    console.log("childData", childData);
     setDataFromChild(childData.feedback);
   };
 
@@ -226,7 +478,7 @@ const AdminPage = () => {
                   className=" text-lg px-5 flex items-center min-h-[66px] drop-shadow-xl  border-t border-gray-900  bg-[#26313F]  "
                   style={{ color: "#fff" }}
                 >
-                  {activeVideoDetail.name}
+                  {activeVideoDetail.name || name}
                 </div>
               </div>
             )}
