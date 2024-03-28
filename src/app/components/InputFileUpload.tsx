@@ -181,7 +181,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
           {loading && <Spinner aria-label="Default status example" size="xl" />}
         </div>
         {!loading && (
-          <>
+          <div className=" landscape:min-h-screen landscape:lg:min-h-[calc(100vh-100px)] landscape:lg:h-[calc(100vh-100px)]  min-h-[300px] lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-xl flex justify-between flex-col ">
             <video
               ref={videoRef}
               playsInline
@@ -191,13 +191,13 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
               <source src={videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-            <div
+            {/* <div
               className=" text-lg px-5 flex items-center min-h-[66px] drop-shadow-xl  border-t border-gray-900  bg-[#26313F]"
               style={{ color: "#fff" }}
             >
               {name}
-            </div>
-          </>
+            </div> */}
+          </div>
         )}
         {/* <span
           className="self-center h-full flex items-center text-white text-2xl break-all"
@@ -399,13 +399,18 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
           {/* {loading && <LoadingComp />} */}
         </label>
         {selectedFile && (
-          <VideoTrimmer
-            rStart={rStart}
-            rEnd={rEnd}
-            setRstart={setRstart}
-            setRend={setRend}
-            videoMeta={videoMeta}
-          />
+          <div
+            className=" text-lg px-5 flex items-center min-h-[66px] drop-shadow-xl  border-t border-gray-900  bg-[#26313F] w-full -mt-1 trimClass"
+            style={{ color: "#fff" }}
+          >
+            <VideoTrimmer
+              rStart={rStart}
+              rEnd={rEnd}
+              setRstart={setRstart}
+              setRend={setRend}
+              videoMeta={videoMeta}
+            />
+          </div>
         )}
       </div>
       {formErrors.file && (

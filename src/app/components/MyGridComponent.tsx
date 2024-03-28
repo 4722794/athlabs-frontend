@@ -7,7 +7,7 @@ const MyGridComponent = ({ columnDefs, rowData }: any) => {
   return (
     <div
       className="ag-theme-alpine myAG_table"
-      style={{ height: "300px", width: "100%" }}
+      style={{ height: "470px", width: "100%" }}
     >
       <AgGridReact columnDefs={columnDefs} rowData={rowData} />
     </div>
