@@ -7,6 +7,7 @@ interface ProgressBarProps {
   progressColor?: string;
   progressTextColor?: string;
   className?: string;
+  progressValue: number;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
@@ -16,6 +17,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   progressColor = "#4CAF50",
   progressTextColor = "#ffffff",
   className = "",
+  progressValue,
 }) => {
   const containerStyles: React.CSSProperties = {
     height,
@@ -44,7 +46,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   return (
     <div className={`progress-bar ${className}`} style={containerStyles}>
       <div className="animate-pulse " style={progressBarStyles}>
-        <span style={progressTextStyles}>{`${progress}%`}</span>
+        <span style={progressTextStyles}>{`${progressValue}%`}</span>
       </div>
     </div>
   );

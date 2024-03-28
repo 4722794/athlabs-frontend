@@ -29,6 +29,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
   const { activeVideoDetail, otherData } = useVideoContext();
   const [historyData, setHistoryData] = useState<any>(null);
   const [score, setScore] = useState<any>(null);
+  const [scoreValue, setScoreValue] = useState<any>(null);
   const [feedback, setFeedback] = useState<any>(null);
   const [highlight, setHighlight] = useState<any>(null);
   const [items, setItems] = useState<Array<any>>([]);
@@ -104,6 +105,19 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     setHighlight(data.highlight);
     setScore(data.score);
 
+    if (data.score) {
+      setScoreValue(data.score);
+      let currentScore = 0;
+      const increment = 1;
+      const interval = setInterval(() => {
+        currentScore += increment;
+        setScore(Math.min(currentScore, data.score));
+        if (currentScore >= data.score) {
+          clearInterval(interval);
+        }
+      }, 100);
+    }
+
     if (data.name && !activeVideoDetail.name) {
       setName(data.name);
     }
@@ -155,9 +169,10 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     if (historyData) {
       const { score, feedback, highlight } = historyData;
       const newItems = [];
+      // setScore(score);
 
       if (score) {
-        // setScore(score);
+        setScoreValue(score);
         let currentScore = 0;
         const increment = 1;
         const interval = setInterval(() => {
@@ -198,12 +213,15 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
   // Feedback Processing
   function processFeedback(feedback: string) {
     // Replace excessive spaces with a single space
-    feedback = feedback.replace(/\s{2,}/g, ' ');
+    feedback = feedback.replace(/\s{2,}/g, " ");
     // Add bullet points for each improvement suggestion
-    feedback = feedback.replace(/Improvementsuggestions:/g, '\nImprovement Suggestions:\n');
-    feedback = feedback.replace(/(\d+\.[^\d]+)/g, '- $1\n');
+    feedback = feedback.replace(
+      /Improvementsuggestions:/g,
+      "\nImprovement Suggestions:\n"
+    );
+    feedback = feedback.replace(/(\d+\.[^\d]+)/g, "- $1\n");
     // Add a period at the end of the sentence if it's missing
-    feedback = feedback.replace(/Overall,/g, 'Overall.');
+    feedback = feedback.replace(/Overall,/g, "Overall.");
 
     return feedback;
   }
@@ -211,17 +229,17 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
   // Highlight Processing
   function processHighlight(highlight: string) {
     // Replace excessive spaces with a single space
-    highlight = highlight.replace(/\s{2,}/g, ' ');
+    highlight = highlight.replace(/\s{2,}/g, " ");
     // Add proper spacing and punctuation
-    highlight = highlight.replace(/Key Points:/g, '\nKey Points:\n');
-    highlight = highlight.replace(/Improvements:/g, '\nImprovements:\n');
-    highlight = highlight.replace(/Risk of injury:/g, '\nRisk of Injury:\n');
-    highlight = highlight.replace(/Overall,/g, '\nOverall,');
-    highlight = highlight.replace(/\./g, '.\n');
+    highlight = highlight.replace(/Key Points:/g, "\nKey Points:\n");
+    highlight = highlight.replace(/Improvements:/g, "\nImprovements:\n");
+    highlight = highlight.replace(/Risk of injury:/g, "\nRisk of Injury:\n");
+    highlight = highlight.replace(/Overall,/g, "\nOverall,");
+    highlight = highlight.replace(/\./g, ".\n");
 
     return highlight;
   }
-  
+
   useEffect(() => {
     resetAnalysis();
     if (activeVideoDetail?.video_id && otherData.fetchVideoHistroy) {
@@ -257,6 +275,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
                 Performance Score
                 <ProgressBar
                   progress={score}
+                  progressValue={scoreValue}
                   height="30px"
                   backgroundColor="#777"
                   progressColor="#44366a"
