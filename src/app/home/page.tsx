@@ -76,7 +76,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     setHistoryData(data);
   };
 
-  const fetchFeedback = async () => {
+  const fetchFeedbackOld = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
     const apiEndpoint = `${apiUrl}/feedback/${activeVideoDetail.video_id}`;
 
@@ -103,6 +103,36 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     processStream();
   };
 
+  const fetchFeedback = async () => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
+    const apiEndpoint = `${apiUrl}/feedback/${activeVideoDetail.video_id}`;
+
+    const headers = {
+      Authorization: `Bearer ${checkLogin()}`, // Replace with your actual token
+    };
+  
+    try {
+      const response = await fetch(apiEndpoint, { headers });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const responseData = await response.json();
+      const formattedText = responseData.feedback
+      setFeedback(formattedText);
+
+      setScore(responseData.score);
+
+    if (responseData.name && !activeVideoDetail.name) {
+      setName(responseData.name);
+    }
+      fetchHighlight(); // Assuming fetchHighlight is defined elsewhere
+    } catch (error) {
+      console.error('Error fetching feedback:', error);
+      // Handle error as needed
+    }
+  };
+  
+
   const fetchHighlight = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
     const apiEndpoint = `${apiUrl}/highlight/${activeVideoDetail.video_id}`;
@@ -115,11 +145,11 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
 
     const data = await response.json();
     setHighlight(data.highlight);
-    setScore(data.score);
+    /* setScore(data.score);
 
     if (data.name && !activeVideoDetail.name) {
       setName(data.name);
-    }
+    } */
   };
 
   const updateItems = () => {
@@ -137,7 +167,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
       id: 2,
       title: "Highlight",
       content:
-        feedback && highlight && isFeedbackWritten ? (
+        feedback && highlight ? (
           highlight
         ) : (
           <FeedBackLodding />
@@ -247,14 +277,14 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
             {/* {((highlight && isHighlightWritten && score) ||
               (!highlight && score)) && ( */}
             <div className=" mb-4">
-              Performance Score
+              Performance Score {score?': '+score+'%':''}
               <ProgressBar
-                progress={score}
+                progress={score?score:100}
                 height="30px"
                 backgroundColor="#777"
                 progressColor="#44366a"
                 progressTextColor="#fff"
-                className="my-custom-class "
+                className="my-custom-class"
               />
             </div>
             {/* )} */}

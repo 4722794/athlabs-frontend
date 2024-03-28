@@ -3,7 +3,7 @@ function FeedBackLodding() {
     <div className=" py-7">
       <div className=" text-white text-center text-xl mb-2">
         {" "}
-        Exersise analysis in progress
+        Exercise analysis in progress
       </div>
       <div className=" flex justify-center py-3">
         <div role="status">

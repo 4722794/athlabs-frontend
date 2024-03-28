@@ -80,9 +80,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         style={progressBarStyles}
         className={isAnimating ? "animate-pulse" : ""}
       >
-        <span style={progressTextStyles}>{`${
+       {/*  <span style={progressTextStyles}>{`${
           progress > 100 ? 100 : progress
-        }%`}</span>
+        }%`}</span> */}
       </div>
     </div>
   );
