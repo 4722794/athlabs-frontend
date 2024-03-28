@@ -20,6 +20,7 @@ import LoadingComp from "../components/LoadingComp";
 import { Accordion, Spinner } from "flowbite-react";
 import ProgressBar from "../components/ProgressBar";
 import AccordionMy from "../components/AccordionMy";
+import FeedBackLodding from "../components/FeedBackLodding";
 interface Tab1ContentProps {
   compData: any;
   setName: any;
@@ -47,7 +48,18 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     setFeedback("");
     setHighlight("");
     setIsFeedbackWritten(false);
-    setItems([]);
+    setItems([
+      {
+        id: 1,
+        title: "Feedback",
+        content: <FeedBackLodding />,
+      },
+      {
+        id: 2,
+        title: "Highlight",
+        content: <FeedBackLodding />,
+      },
+    ]);
   };
 
   const fetchHistory = async () => {
@@ -83,8 +95,8 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
         if (done) break;
         const decodedValue = new TextDecoder().decode(value);
         receivedData += decodedValue.replace(/data:/g, "");
+        setFeedback(receivedData);
       }
-      setFeedback(receivedData);
       fetchHighlight();
     };
 
@@ -117,27 +129,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     newItems.push({
       id: 1,
       title: "Feedback",
-      content: feedback ? (
-        <Typewriter
-          // update isFeedbackWritten state to true when feedback written
-          onInit={(typewriter) => {
-            typewriter
-              .typeString(feedback)
-              .callFunction(() => {
-                setIsFeedbackWritten(true);
-              })
-              .start();
-          }}
-          options={{
-            strings: feedback,
-            autoStart: true,
-            loop: false,
-            delay: 10,
-          }}
-        />
-      ) : (
-        "Loading"
-      ),
+      content: feedback ? feedback : <FeedBackLodding />,
     });
 
     // Check if feedback and highlight are not empty, then update items array
@@ -145,9 +137,11 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
       id: 2,
       title: "Highlight",
       content:
-        feedback && highlight && isFeedbackWritten
-          ? highlight
-          : "No Highlight available",
+        feedback && highlight && isFeedbackWritten ? (
+          highlight
+        ) : (
+          <FeedBackLodding />
+        ),
     });
 
     // Update the items state with the newItems array
@@ -163,34 +157,34 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
         setScore(score);
       }, 500);
 
-      if (feedback) {
-        if (items.findIndex((item) => item.title === "Feedback") !== -1) {
-          items[0].content = processFeedback(feedback);
-        } else {
-          newItems.push({
-            id: 1,
-            title: "Feedback",
-            content: processFeedback(feedback),
-          });
-        }
-      }
-      if (highlight) {
-        if (items.findIndex((item) => item.title === "Highlight") !== -1) {
-          items[1].content = processHighlight(highlight);
-        } else {
-          newItems.push({
-            id: 2,
-            title: "Highlight",
-            content: processHighlight(highlight),
-          });
-        }
-      }
+      newItems.push({
+        id: 1,
+        title: "Feedback",
+        content:
+          feedback &&
+          items.findIndex((item) => item.title === "Feedback") !== -1
+            ? (items[0].content = processFeedback(feedback))
+            : processFeedback(feedback),
+      });
+
+      newItems.push({
+        id: 2,
+        title: "Highlight",
+        content:
+          highlight &&
+          items.findIndex((item) => item.title === "Highlight") !== -1
+            ? (items[1].content = processHighlight(highlight))
+            : processHighlight(highlight),
+      });
+
       setItems(newItems);
     }
   };
 
   // Feedback Processing
   function processFeedback(feedback: string) {
+    if (!feedback) return ""; // Check if feedback is defined
+
     // Replace excessive spaces with a single space
     feedback = feedback.replace(/\s{2,}/g, " ");
     // Add bullet points for each improvement suggestion
@@ -207,6 +201,8 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
 
   // Highlight Processing
   function processHighlight(highlight: string) {
+    if (!highlight) return ""; // Check if highlight is defined
+
     // Replace excessive spaces with a single space
     highlight = highlight.replace(/\s{2,}/g, " ");
     // Add proper spacing and punctuation
