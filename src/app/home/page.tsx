@@ -83,8 +83,8 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
         if (done) break;
         const decodedValue = new TextDecoder().decode(value);
         receivedData += decodedValue.replace(/data:/g, "");
+        setFeedback(receivedData);
       }
-      setFeedback(receivedData);
       fetchHighlight();
     };
 
@@ -131,25 +131,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
       newItems.push({
         id: 1,
         title: "Feedback",
-        content: (
-          <Typewriter
-            // update isFeedbackWritten state to true when feedback written
-            onInit={(typewriter) => {
-              typewriter
-                .typeString(feedback)
-                .callFunction(() => {
-                  setIsFeedbackWritten(true);
-                })
-                .start();
-            }}
-            options={{
-              strings: feedback,
-              autoStart: true,
-              loop: false,
-              delay: 10,
-            }}
-          />
-        ),
+        content: feedback
       });
     }
 
