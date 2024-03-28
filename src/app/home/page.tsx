@@ -20,6 +20,7 @@ import LoadingComp from "../components/LoadingComp";
 import { Accordion, Spinner } from "flowbite-react";
 import ProgressBar from "../components/ProgressBar";
 import AccordionMy from "../components/AccordionMy";
+import FeedBackLodding from "../components/FeedBackLodding";
 interface Tab1ContentProps {
   compData: any;
   setName: any;
@@ -28,7 +29,8 @@ interface Tab1ContentProps {
 const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
   const { activeVideoDetail, otherData } = useVideoContext();
   const [historyData, setHistoryData] = useState<any>(null);
-  const [score, setScore] = useState<any>(null);
+  const [score, setScore] = useState<any>(0);
+  const [scoreValue, setScoreValue] = useState<any>(null);
   const [feedback, setFeedback] = useState<any>(null);
   const [highlight, setHighlight] = useState<any>(null);
   const [items, setItems] = useState<Array<any>>([]);
@@ -42,11 +44,22 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
   );
 
   const resetAnalysis = () => {
-    setScore(null);
+    setScore(0);
     setFeedback("");
     setHighlight("");
     setIsFeedbackWritten(false);
-    setItems([]);
+    setItems([
+      {
+        id: 1,
+        title: "Feedback",
+        content: <FeedBackLodding />,
+      },
+      {
+        id: 2,
+        title: "Highlight",
+        content: <FeedBackLodding />,
+      },
+    ]);
   };
 
   const fetchHistory = async () => {
@@ -63,7 +76,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     setHistoryData(data);
   };
 
-  const fetchFeedback = async () => {
+  const fetchFeedbackOld = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
     const apiEndpoint = `${apiUrl}/feedback/${activeVideoDetail.video_id}`;
 
@@ -82,13 +95,43 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
         if (done) break;
         const decodedValue = new TextDecoder().decode(value);
         receivedData += decodedValue.replace(/data:/g, "");
+        setFeedback(receivedData);
       }
-      setFeedback(receivedData);
       fetchHighlight();
     };
 
     processStream();
   };
+
+  const fetchFeedback = async () => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
+    const apiEndpoint = `${apiUrl}/feedback/${activeVideoDetail.video_id}`;
+
+    const headers = {
+      Authorization: `Bearer ${checkLogin()}`, // Replace with your actual token
+    };
+  
+    try {
+      const response = await fetch(apiEndpoint, { headers });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const responseData = await response.json();
+      const formattedText = responseData.feedback
+      setFeedback(formattedText);
+
+      setScore(responseData.score);
+
+    if (responseData.name && !activeVideoDetail.name) {
+      setName(responseData.name);
+    }
+      fetchHighlight(); // Assuming fetchHighlight is defined elsewhere
+    } catch (error) {
+      console.error('Error fetching feedback:', error);
+      // Handle error as needed
+    }
+  };
+  
 
   const fetchHighlight = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
@@ -102,70 +145,36 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
 
     const data = await response.json();
     setHighlight(data.highlight);
-    setScore(data.score);
+    /* setScore(data.score);
 
     if (data.name && !activeVideoDetail.name) {
       setName(data.name);
-    }
+    } */
   };
 
   const updateItems = () => {
     const newItems = [];
 
     // Check if feedback is not empty, then update items array
-    if (feedback) {
-      newItems.push({
-        id: 1,
-        title: "Feedback",
-        content: (
-          <Typewriter
-            // update isFeedbackWritten state to true when feedback written
-            onInit={(typewriter) => {
-              typewriter
-                .typeString(feedback)
-                .callFunction(() => {
-                  setIsFeedbackWritten(true);
-                })
-                .start();
-            }}
-            options={{
-              strings: feedback,
-              autoStart: true,
-              loop: false,
-              delay: 10,
-            }}
-          />
-        ),
-      });
-    }
+    newItems.push({
+      id: 1,
+      title: "Feedback",
+      content: feedback ? feedback : <FeedBackLodding />,
+    });
 
     // Check if feedback and highlight are not empty, then update items array
-    if (feedback && highlight && isFeedbackWritten) {
-      newItems.push({
-        id: 2,
-        title: "Highlight",
-        content: (
-          <Typewriter
-            // update isHighlightWritten state to true when highlight written
-            onInit={(typewriter) => {
-              typewriter
-                .typeString(highlight)
-                .callFunction(() => {
-                  setIsHighlightWritten(true);
-                })
-                .start();
-            }}
-            options={{
-              strings: highlight,
-              autoStart: true,
-              loop: false,
-              delay: 10,
-            }}
-          />
+    newItems.push({
+      id: 2,
+      title: "Highlight",
+      content:
+        feedback && highlight ? (
+          highlight
+        ) : (
+          <FeedBackLodding />
         ),
-      });
-    }
+    });
 
+    // Update the items state with the newItems array
     setItems(newItems);
   };
 
@@ -174,44 +183,67 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
       const { score, feedback, highlight } = historyData;
       const newItems = [];
 
-      if (score) {
-        // setScore(score);
-        let currentScore = 0;
-        const increment = 1;
-        const interval = setInterval(() => {
-          currentScore += increment;
-          setScore(Math.min(currentScore, score));
-          if (currentScore >= score) {
-            clearInterval(interval);
-          }
-        }, 100);
-      }
+      setTimeout(() => {
+        setScore(score);
+      }, 500);
 
-      if (feedback) {
-        if (items.findIndex((item) => item.title === "Feedback") !== -1) {
-          items[0].content = feedback;
-        } else {
-          newItems.push({
-            id: 1,
-            title: "Feedback",
-            content: feedback,
-          });
-        }
-      }
-      if (highlight) {
-        if (items.findIndex((item) => item.title === "Highlight") !== -1) {
-          items[1].content = highlight;
-        } else {
-          newItems.push({
-            id: 2,
-            title: "Highlight",
-            content: highlight,
-          });
-        }
-      }
+      newItems.push({
+        id: 1,
+        title: "Feedback",
+        content:
+          feedback &&
+          items.findIndex((item) => item.title === "Feedback") !== -1
+            ? (items[0].content = processFeedback(feedback))
+            : processFeedback(feedback),
+      });
+
+      newItems.push({
+        id: 2,
+        title: "Highlight",
+        content:
+          highlight &&
+          items.findIndex((item) => item.title === "Highlight") !== -1
+            ? (items[1].content = processHighlight(highlight))
+            : processHighlight(highlight),
+      });
+
       setItems(newItems);
     }
   };
+
+  // Feedback Processing
+  function processFeedback(feedback: string) {
+    if (!feedback) return ""; // Check if feedback is defined
+
+    // Replace excessive spaces with a single space
+    feedback = feedback.replace(/\s{2,}/g, " ");
+    // Add bullet points for each improvement suggestion
+    feedback = feedback.replace(
+      /Improvementsuggestions:/g,
+      "\nImprovement Suggestions:\n"
+    );
+    feedback = feedback.replace(/(\d+\.[^\d]+)/g, "- $1\n");
+    // Add a period at the end of the sentence if it's missing
+    feedback = feedback.replace(/Overall,/g, "Overall.");
+
+    return feedback;
+  }
+
+  // Highlight Processing
+  function processHighlight(highlight: string) {
+    if (!highlight) return ""; // Check if highlight is defined
+
+    // Replace excessive spaces with a single space
+    highlight = highlight.replace(/\s{2,}/g, " ");
+    // Add proper spacing and punctuation
+    highlight = highlight.replace(/Key Points:/g, "\nKey Points:\n");
+    highlight = highlight.replace(/Improvements:/g, "\nImprovements:\n");
+    highlight = highlight.replace(/Risk of injury:/g, "\nRisk of Injury:\n");
+    highlight = highlight.replace(/Overall,/g, "\nOverall,");
+    highlight = highlight.replace(/\./g, ".\n");
+
+    return highlight;
+  }
 
   useEffect(() => {
     resetAnalysis();
@@ -242,20 +274,20 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
               {activeVideoDetail.feedback}
             </div> */}
 
-            {((highlight && isHighlightWritten && score) ||
-              (!highlight && score)) && (
-              <div className=" mb-4">
-                Performance Score
-                <ProgressBar
-                  progress={score}
-                  height="30px"
-                  backgroundColor="#777"
-                  progressColor="#44366a"
-                  progressTextColor="#fff"
-                  className="my-custom-class "
-                />
-              </div>
-            )}
+            {/* {((highlight && isHighlightWritten && score) ||
+              (!highlight && score)) && ( */}
+            <div className=" mb-4">
+              Performance Score {score?': '+score+'%':''}
+              <ProgressBar
+                progress={score?score:100}
+                height="30px"
+                backgroundColor="#777"
+                progressColor="#44366a"
+                progressTextColor="#fff"
+                className="my-custom-class"
+              />
+            </div>
+            {/* )} */}
             <AccordionMy items={items} />
           </CustomScroll>
         </div>

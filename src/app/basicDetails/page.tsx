@@ -99,8 +99,6 @@ const UserForm = () => {
       formdata.append("interests", "empty");
     } else if (interests.join(",") !== alreadySelectedInterests.join(",")) {
       formdata.append("interests", interests.join(","));
-    } else {
-      formdata.append("interests", "null");
     }
     if (profileImage) {
       formdata.append("picture", profileImage);
@@ -188,7 +186,8 @@ const UserForm = () => {
     }
   };
 
-  const handleSkipNow = () => {
+  const handleSkipNow = (event:any) => {
+    event.preventDefault();
     skipBasicDetails();
   };
 
