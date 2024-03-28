@@ -2,7 +2,7 @@
 import React, { useState, ReactNode, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/AdminHeader";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { checkLogin } from "../services/apiUtils";
 
 interface HomeLayoutProps {
@@ -11,22 +11,21 @@ interface HomeLayoutProps {
 
 const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   const [open, setSidebarOpen] = useState(true);
-  const router = useRouter()
+  const router = useRouter();
   const toggleSidebar = () => {
     setSidebarOpen(!open);
+    // alert("side bar");
   };
 
   useEffect(() => {
-    console.log('sdsdss',checkLogin())
-    if(!checkLogin()){ 
-      router.push('/login')
-    }else{ 
-      router.push('/home')
+    if (!checkLogin()) {
+      router.push("/login");
+    } else {
+      router.push("/home");
     }
 
     const handleResize = () => {
       const isSmallScreen = window.innerWidth <= 1024;
-
       setSidebarOpen(!isSmallScreen);
     };
     handleResize();
@@ -34,14 +33,14 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [router]);
 
   return (
     <div className="relative z-0 flex h-full w-full overflow-hidden">
       <Sidebar modalOpen={open} toggleSidebar={toggleSidebar} />
       <div
         onClick={toggleSidebar}
-        className={` lg:hidden bg-black/50 absolute w-full h-full top-0 left-0 z-40 ${
+        className={` lg:hidden bg-black/50 absolute w-full h-full top-0 left-0 z-10 ${
           open ? " translate-x-[260px] " : "translate-x-[0px] hidden "
         }transform  -translate-y-2/2 rotate-0 translate-z-0`}
       >
@@ -73,11 +72,11 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
       <div className="relative flex h-full max-w-full flex-1 flex-col overflow-hidden bg-[#171717]">
         <main className="relative h-full w-full flex-1 overflow-auto transition-width">
           <div
-            className={`fixed left-0 top-0 z-40 hover:bg-[#262626] cursor-pointer text-white  ${
+            className={`fixed left-0 top-0 z-40 hover:bg-[#373D51] cursor-pointer text-white  ${
               open
                 ? " translate-x-[260px] hidden "
                 : "translate-x-[0px]  inline-flex  "
-            }transform    rotate-180 translate-z-0 h-16 w-6  justify-center items-center `}
+            }transform    rotate-180 translate-z-0 h-16 w-6  justify-center items-center  `}
             onClick={toggleSidebar}
           >
             <svg

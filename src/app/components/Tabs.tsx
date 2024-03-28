@@ -25,7 +25,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
           <button
             key={tab.id}
             onClick={() => handleTabClick(tab.id)}
-            className={`grow py-2 px-4 text-white rounded-xl text-sm ${
+            className={`grow py-2 px-4 text-white rounded-xl text-sm font-semibold ${
               activeTab === tab.id ? "bg-[#2F3747]" : " bg-transparent "
             }`}
           >
@@ -33,7 +33,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
           </button>
         ))}
       </div>
-      <div className="flex h-full w-full flex-col py-4">
+      <div className="flex h-[calc(100%-50px)] w-full flex-col pt-4">
         {tabs.map((tab) => (
           <div
             key={tab.id}
@@ -41,7 +41,9 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
               activeTab === tab.id ? "block" : "hidden"
             }`}
           >
-            <div className="flex h-full w-full flex-col">{tab.content}</div>
+            <div className="flex h-full w-full flex-col justify-between">
+              {tab.content}
+            </div>
           </div>
         ))}
       </div>

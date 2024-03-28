@@ -1,14 +1,18 @@
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useVideoContext } from "../services/VideoContext";
 
 const Header = () => {
   const router = useRouter();
+  const { setDefaultData } = useVideoContext();
 
   const logOut = () => {
     localStorage.removeItem("athlabsAuthToken");
+    localStorage.removeItem("athlabsLoggedInUser");
     const tokenAfterRemoval = localStorage.getItem("athlabsAuthToken");
     if (tokenAfterRemoval === null) {
+      setDefaultData();
       router.push("/login");
     }
   };
@@ -16,9 +20,9 @@ const Header = () => {
     <header className="bg-[#171717]  text-white text-left sticky top-0 flex items-center  w-full z-30 py-3  ">
       <div className="flex justify-between items-center w-full px-6">
         <div className=" inline-flex justify-between">
-          <a className=" inline-flex h-8 xl:h-8 2xl:h-10  items-start">
+          <a href="/" className=" inline-flex h-8 xl:h-8 2xl:h-8  items-start">
             <Image
-              src={"/images/logo.svg"}
+              src={"/images/logo2.png"}
               width={230}
               height={72}
               className=" h-full w-auto"
@@ -36,7 +40,7 @@ const Header = () => {
             <svg
               stroke="currentColor"
               fill="currentColor"
-              stroke-width="0"
+              strokeWidth="0"
               viewBox="0 0 1024 1024"
               height="1em"
               width="1em"
