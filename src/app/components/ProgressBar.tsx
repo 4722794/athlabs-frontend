@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 interface ProgressBarProps {
   progress: number;
@@ -7,7 +7,7 @@ interface ProgressBarProps {
   progressColor?: string;
   progressTextColor?: string;
   className?: string;
-  progressValue: number;
+  duration?: number; // Duration of the animation in milliseconds
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
@@ -17,8 +17,39 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   progressColor = "#4CAF50",
   progressTextColor = "#ffffff",
   className = "",
-  progressValue,
+  duration = 500, // Default duration is 500ms
 }) => {
+  const [width, setWidth] = useState(0);
+  const [animationProgress, setAnimationProgress] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    setWidth(0); // Reset the width to 0 before starting the animation
+    setAnimationProgress(0); // Reset the animationProgress to 0
+    setIsAnimating(true); // Set isAnimating to true
+
+    const incrementAnimation = setInterval(() => {
+      setAnimationProgress((prevProgress) => {
+        const newProgress = prevProgress + 1;
+        if (newProgress >= progress) {
+          clearInterval(incrementAnimation);
+          setIsAnimating(false); // Set isAnimating to false when animation is complete
+          return progress;
+        }
+        return newProgress;
+      });
+    }, duration / progress); // Adjust the interval based on the progress value
+
+    return () => {
+      clearInterval(incrementAnimation);
+      setIsAnimating(false); // Set isAnimating to false when component unmounts
+    };
+  }, [progress, duration]);
+
+  useEffect(() => {
+    setWidth(animationProgress);
+  }, [animationProgress]);
+
   const containerStyles: React.CSSProperties = {
     height,
     backgroundColor,
@@ -27,11 +58,11 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   };
 
   const progressBarStyles: React.CSSProperties = {
-    width: `${progress}%`,
+    width: `${width}%`,
     backgroundColor: progressColor,
     height: "100%",
     borderRadius: "inherit",
-    transition: "width 0.5s ease",
+    transition: `width ${duration}ms ease`,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -45,8 +76,13 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
   return (
     <div className={`progress-bar ${className}`} style={containerStyles}>
-      <div className="animate-pulse " style={progressBarStyles}>
-        <span style={progressTextStyles}>{`${progressValue}%`}</span>
+      <div
+        style={progressBarStyles}
+        className={isAnimating ? "animate-pulse" : ""}
+      >
+       {/*  <span style={progressTextStyles}>{`${
+          progress > 100 ? 100 : progress
+        }%`}</span> */}
       </div>
     </div>
   );

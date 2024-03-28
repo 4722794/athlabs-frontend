@@ -17,6 +17,10 @@ const AccordionMy: React.FC<AccordionProps> = ({ items }: any) => {
   const toggleItem = (itemId: number) => {
     setOpenItems([itemId]);
   };
+
+  const style = {
+    whiteSpace: 'pre-line',
+  };
   
   useEffect(() => {
     if(items.length > 0) {
@@ -46,7 +50,7 @@ const AccordionMy: React.FC<AccordionProps> = ({ items }: any) => {
               openItems.includes(item.id) ? "block" : "hidden"
             }`}
           >
-            <p>{item.content}</p>
+            <p style={style}>{item.content}</p>
           </div>
         </div>
       ))}
