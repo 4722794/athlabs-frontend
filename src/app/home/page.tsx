@@ -28,7 +28,7 @@ interface Tab1ContentProps {
 const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
   const { activeVideoDetail, otherData } = useVideoContext();
   const [historyData, setHistoryData] = useState<any>(null);
-  const [score, setScore] = useState<any>(null);
+  const [score, setScore] = useState<any>(0);
   const [scoreValue, setScoreValue] = useState<any>(null);
   const [feedback, setFeedback] = useState<any>(null);
   const [highlight, setHighlight] = useState<any>(null);
@@ -43,7 +43,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
   );
 
   const resetAnalysis = () => {
-    setScore(null);
+    setScore(0);
     setFeedback("");
     setHighlight("");
     setIsFeedbackWritten(false);
@@ -105,19 +105,6 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     setHighlight(data.highlight);
     setScore(data.score);
 
-    if (data.score) {
-      setScoreValue(data.score);
-      let currentScore = 0;
-      const increment = 1;
-      const interval = setInterval(() => {
-        currentScore += increment;
-        setScore(Math.min(currentScore, data.score));
-        if (currentScore >= data.score) {
-          clearInterval(interval);
-        }
-      }, 100);
-    }
-
     if (data.name && !activeVideoDetail.name) {
       setName(data.name);
     }
@@ -127,41 +114,43 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     const newItems = [];
 
     // Check if feedback is not empty, then update items array
-    if (feedback) {
-      newItems.push({
-        id: 1,
-        title: "Feedback",
-        content: (
-          <Typewriter
-            // update isFeedbackWritten state to true when feedback written
-            onInit={(typewriter) => {
-              typewriter
-                .typeString(feedback)
-                .callFunction(() => {
-                  setIsFeedbackWritten(true);
-                })
-                .start();
-            }}
-            options={{
-              strings: feedback,
-              autoStart: true,
-              loop: false,
-              delay: 10,
-            }}
-          />
-        ),
-      });
-    }
+    newItems.push({
+      id: 1,
+      title: "Feedback",
+      content: feedback ? (
+        <Typewriter
+          // update isFeedbackWritten state to true when feedback written
+          onInit={(typewriter) => {
+            typewriter
+              .typeString(feedback)
+              .callFunction(() => {
+                setIsFeedbackWritten(true);
+              })
+              .start();
+          }}
+          options={{
+            strings: feedback,
+            autoStart: true,
+            loop: false,
+            delay: 10,
+          }}
+        />
+      ) : (
+        "Loading"
+      ),
+    });
 
     // Check if feedback and highlight are not empty, then update items array
-    if (feedback && highlight && isFeedbackWritten) {
-      newItems.push({
-        id: 2,
-        title: "Highlight",
-        content: highlight,
-      });
-    }
+    newItems.push({
+      id: 2,
+      title: "Highlight",
+      content:
+        feedback && highlight && isFeedbackWritten
+          ? highlight
+          : "No Highlight available",
+    });
 
+    // Update the items state with the newItems array
     setItems(newItems);
   };
 
@@ -169,20 +158,10 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     if (historyData) {
       const { score, feedback, highlight } = historyData;
       const newItems = [];
-      // setScore(score);
 
-      if (score) {
-        setScoreValue(score);
-        let currentScore = 0;
-        const increment = 1;
-        const interval = setInterval(() => {
-          currentScore += increment;
-          setScore(Math.min(currentScore, score));
-          if (currentScore >= score) {
-            clearInterval(interval);
-          }
-        }, 100);
-      }
+      setTimeout(() => {
+        setScore(score);
+      }, 500);
 
       if (feedback) {
         if (items.findIndex((item) => item.title === "Feedback") !== -1) {
@@ -269,21 +248,20 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
               {activeVideoDetail.feedback}
             </div> */}
 
-            {((highlight && isHighlightWritten && score) ||
-              (!highlight && score)) && (
-              <div className=" mb-4">
-                Performance Score
-                <ProgressBar
-                  progress={score}
-                  progressValue={scoreValue}
-                  height="30px"
-                  backgroundColor="#777"
-                  progressColor="#44366a"
-                  progressTextColor="#fff"
-                  className="my-custom-class "
-                />
-              </div>
-            )}
+            {/* {((highlight && isHighlightWritten && score) ||
+              (!highlight && score)) && ( */}
+            <div className=" mb-4">
+              Performance Score
+              <ProgressBar
+                progress={score}
+                height="30px"
+                backgroundColor="#777"
+                progressColor="#44366a"
+                progressTextColor="#fff"
+                className="my-custom-class "
+              />
+            </div>
+            {/* )} */}
             <AccordionMy items={items} />
           </CustomScroll>
         </div>
