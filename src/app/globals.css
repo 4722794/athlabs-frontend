@@ -177,3 +177,7 @@ html {
 .myAG_table .ag-wrapper {
   @apply !bg-transparent;
 }
+
+/* .myAG_table .ag-paging-page-size {
+  display: none;
+} */

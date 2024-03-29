@@ -15,6 +15,7 @@ const MyGridComponent = ({ columnDefs, rowData }: any) => {
 
   function onGridReady(params: any) {
     gridApiRef.current = params.api;
+    params.api.paginationSetPageSize(defaultPageSize); // Set the initial page size
   }
 
   return (
@@ -27,6 +28,8 @@ const MyGridComponent = ({ columnDefs, rowData }: any) => {
         rowData={rowData}
         gridOptions={gridOptions}
         onGridReady={onGridReady}
+        paginationPageSize={defaultPageSize} // Set the initial page size
+        paginationPageSizeSelector={[10, 20, 50, 100]} // Specify available page sizes
       />
     </div>
   );
