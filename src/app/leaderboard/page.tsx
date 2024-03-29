@@ -68,7 +68,7 @@ function Leaderboard() {
         }
 
         const data = await response.json();
-        const sortedData = data.sort((a, b) => b.score - a.score);
+        const sortedData = data.sort((a: any, b: any) => b.score - a.score);
         // setLeaderboardData(sortedData.slice(0, 20)); // Only keep the top 20 entries
         setLeaderboardData(sortedData);
         setLoading(false);
@@ -99,7 +99,7 @@ function Leaderboard() {
       }
 
       const data = await response.json();
-      const sortedData = data.sort((a, b) => b.score - a.score);
+      const sortedData = data.sort((a: any, b: any) => b.score - a.score);
       setLeaderboardData(sortedData); // Set all the leaderboard data
       setLoading(false);
     } catch (error) {
