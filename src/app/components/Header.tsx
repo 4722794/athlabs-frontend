@@ -121,6 +121,15 @@ const Header: React.FC<HeaderProps> = ({
                   {showMenu && (
                     <a
                       className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
+                      href="/leaderboard"
+                    >
+                      Leaderboard
+                    </a>
+                  )}
+
+                  {showMenu && (
+                    <a
+                      className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
                       href="/home"
                     >
                       DASHBOARD
@@ -186,6 +195,14 @@ const Header: React.FC<HeaderProps> = ({
                 </a> */}
                 {showMenu && (
                   <a
+                    href="/leaderboard"
+                    className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
+                  >
+                    Leaderboard
+                  </a>
+                )}
+                {showMenu && (
+                  <a
                     href="/home"
                     className=" ml-2 bg-white py-2 px-3  text-sm  font-semibold text-black inline-flex h-9 2xl:h-12 min-w-[110px] 2xl:min-w-[130px] justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer
         
@@ -195,6 +212,7 @@ const Header: React.FC<HeaderProps> = ({
                     Dashboard
                   </a>
                 )}
+
                 {!showMenu && (
                   <>
                     <a
@@ -273,12 +291,21 @@ const Header: React.FC<HeaderProps> = ({
           </a> */}
           {showMenu && (
             <a
+              href="/leaderboard"
+              className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
+            >
+              Leaderboard
+            </a>
+          )}
+          {showMenu && (
+            <a
               href="/login"
               className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
             >
               DASHBOARD
             </a>
           )}
+
           {!showMenu && (
             <>
               <a
