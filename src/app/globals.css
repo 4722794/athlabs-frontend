@@ -162,3 +162,18 @@ html {
 .myAG_table .ag-icon-desc {
   @apply !text-white;
 }
+
+.myAG_table .ag-paging-panel {
+  @apply !text-white;
+}
+
+.myAG_table .ag-paging-button {
+  @apply !text-white;
+}
+.myAG_table .ag-icon {
+  @apply !text-white;
+}
+
+.myAG_table .ag-wrapper {
+  @apply !bg-transparent;
+}
