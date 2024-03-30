@@ -110,28 +110,27 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     const headers = {
       Authorization: `Bearer ${checkLogin()}`, // Replace with your actual token
     };
-  
+
     try {
       const response = await fetch(apiEndpoint, { headers });
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const responseData = await response.json();
-      const formattedText = responseData.feedback
+      const formattedText = responseData.feedback;
       setFeedback(formattedText);
 
       setScore(responseData.score);
 
-    if (responseData.name && !activeVideoDetail.name) {
-      setName(responseData.name);
-    }
+      if (responseData.name && !activeVideoDetail.name) {
+        setName(responseData.name);
+      }
       fetchHighlight(); // Assuming fetchHighlight is defined elsewhere
     } catch (error) {
-      console.error('Error fetching feedback:', error);
+      console.error("Error fetching feedback:", error);
       // Handle error as needed
     }
   };
-  
 
   const fetchHighlight = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
@@ -166,12 +165,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     newItems.push({
       id: 2,
       title: "Highlight",
-      content:
-        feedback && highlight ? (
-          highlight
-        ) : (
-          <FeedBackLodding />
-        ),
+      content: feedback && highlight ? highlight : <FeedBackLodding />,
     });
 
     // Update the items state with the newItems array
@@ -277,9 +271,9 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
             {/* {((highlight && isHighlightWritten && score) ||
               (!highlight && score)) && ( */}
             <div className=" mb-4">
-              Performance Score {score?': '+score+'%':''}
+              Performance Score {score ? ": " + score + "%" : ""}
               <ProgressBar
-                progress={score?score:100}
+                progress={score ? score : 100}
                 height="30px"
                 backgroundColor="#777"
                 progressColor="#44366a"
@@ -326,6 +320,10 @@ const Tab2Content = () => {
         timestamp: moment().format("MMMM Do YYYY, h:mm:ss a"),
       };
       const updatedData = { ...activeVideoDetail };
+      updatedData.messages = updatedData.messages || [];
+
+      console.log(userMsg, "userMsg");
+
       updatedData.messages.push(userMsg);
       setActiveVideoData(updatedData);
       setText("");
@@ -343,6 +341,7 @@ const Tab2Content = () => {
       );
       if (responseData.status) {
         const updatedData1 = { ...activeVideoDetail };
+        updatedData1.messages = updatedData1.messages || [];
         updatedData1.messages.push(responseData.data);
         setActiveVideoData(updatedData1);
         setLoading(false);

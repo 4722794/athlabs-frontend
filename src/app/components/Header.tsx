@@ -184,6 +184,7 @@ const Header: React.FC<HeaderProps> = ({
                 >
                   REQUEST DEMO
                 </a> */}
+                
                 {showMenu && (
                   <a
                     href="/home"
@@ -195,6 +196,7 @@ const Header: React.FC<HeaderProps> = ({
                     Dashboard
                   </a>
                 )}
+
                 {!showMenu && (
                   <>
                     <a
@@ -271,6 +273,7 @@ const Header: React.FC<HeaderProps> = ({
           {/* <a className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer">
             REQUEST DEMO
           </a> */}
+          
           {showMenu && (
             <a
               href="/login"
@@ -279,6 +282,7 @@ const Header: React.FC<HeaderProps> = ({
               DASHBOARD
             </a>
           )}
+
           {!showMenu && (
             <>
               <a
