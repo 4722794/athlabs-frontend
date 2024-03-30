@@ -1,13 +1,25 @@
+import React, { useState, useEffect } from 'react';
+
 function FeedBackLodding() {
+  const [message, setMessage] = useState('Uploading video');
+
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setMessage('Processing video'), 5000),
+      setTimeout(() => setMessage('Generating feedback'), 15000),
+    ];
+
+    return () => timers.forEach((timer) => clearTimeout(timer));
+  }, []);
+
   return (
     <div className=" py-7">
       <div className=" text-white text-center text-xl mb-2">
-        {" "}
-        Exercise analysis in progress
+        {message}
       </div>
       <div className=" flex justify-center py-3">
         <div role="status">
-          <svg
+        <svg
             aria-hidden="true"
             className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
             viewBox="0 0 100 101"
