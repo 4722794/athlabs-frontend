@@ -121,15 +121,6 @@ const Header: React.FC<HeaderProps> = ({
                   {showMenu && (
                     <a
                       className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
-                      href="/leaderboard"
-                    >
-                      Leaderboard
-                    </a>
-                  )}
-
-                  {showMenu && (
-                    <a
-                      className="flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-ful hover:bg-gray-600 focus:outline-none hover:text-white focus:bg-gray-600 focus:text-white text-white"
                       href="/home"
                     >
                       DASHBOARD
@@ -193,14 +184,7 @@ const Header: React.FC<HeaderProps> = ({
                 >
                   REQUEST DEMO
                 </a> */}
-                {showMenu && (
-                  <a
-                    href="/leaderboard"
-                    className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
-                  >
-                    Leaderboard
-                  </a>
-                )}
+                
                 {showMenu && (
                   <a
                     href="/home"
@@ -289,14 +273,7 @@ const Header: React.FC<HeaderProps> = ({
           {/* <a className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer">
             REQUEST DEMO
           </a> */}
-          {showMenu && (
-            <a
-              href="/leaderboard"
-              className="ml-2 bg-transparent  py-2 px-3  text-sm  font-semibold hover:text-purple-400  text-white inline-flex h-9 2xl:h-12  justify-center items-center rounded-lg drop-shadow-md  shadow-white/40 cursor-pointer"
-            >
-              Leaderboard
-            </a>
-          )}
+          
           {showMenu && (
             <a
               href="/login"
