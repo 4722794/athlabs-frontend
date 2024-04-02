@@ -272,6 +272,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
               (!highlight && score)) && ( */}
             <div className=" mb-4">
               Performance Score {score ? ": " + score : ""}
+
               <ProgressBar
                 progress={score ? score : 100}
                 height="30px"
