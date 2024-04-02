@@ -80,8 +80,8 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         formData.append("video", actualFile, actualFile.name);
         formData.append("name", nameRef.current);
         // append the start and end time to the form data
-        formData.append("startTrim", formatTime(rStart));
-        formData.append("endTrim", formatTime(rEnd));
+        formData.append("start_time", formatTime(rStart));
+        formData.append("end_time", formatTime(rEnd));
         const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
         const apiEndpoint = `/processVideo`;
 
