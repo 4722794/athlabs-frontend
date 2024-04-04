@@ -39,7 +39,6 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   const [videoMeta, setVideoMeta] = useState<any>(null);
   const [rStart, setRstart] = useState(0);
   const [rEnd, setRend] = useState(0);
-
   // const [handleTrim, setHandleTrim] = useState<(() => void) | null>(null);
 
   // const handleTrimRef = useRef<(() => void) | null>(null);
@@ -56,7 +55,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
 
   // Reference to Dropzone instance
   const dropzoneRef = useRef<any>(null);
-  const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
+  const { setActiveVideoData, setOtherData, otherData, setClearVideo  } = useVideoContext();
   const sendDataToParent = () => {
     // Call the callback function in the parent with the data
     onDataFromChild(childData);
@@ -155,6 +154,25 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       rStartRef.current = rStart;
       rEndRef.current = rEnd;
     }, [rStart, rEnd]);
+
+
+    useEffect(() => {    
+      console.log("Clearing video");
+      setClearVideo(() => {
+      console.log("Resetting states");
+      // Clear the uploaded video file
+      //setUploadedVideo(null);
+      // Reset other relevant states
+      //setSelectedFile(false); // Reset selected file state
+      //setName(""); // Reset name state
+      //setVideoMeta(null); // Reset video metadata state
+      //setRstart(0); // Reset start time for video trimming
+      //setRend(0); // Reset end time for video trimming
+      // Reset other relevant states here
+      });
+
+    }, []);
+    
 
     const handleTimeUpdate = useCallback(() => {
       if (videoRef.current && videoRef.current.currentTime >= rEndRef.current) {
@@ -279,6 +297,10 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       if (dropzoneRef.current) {
         dropzoneRef.current.handleRestart(dropzoneRef.current.files[0]);
       }
+       setOtherData((prevData: any) => ({
+        ...prevData,
+        justUploadVideo: true
+      }));
     }
   };
 

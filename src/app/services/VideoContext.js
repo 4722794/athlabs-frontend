@@ -6,10 +6,14 @@ const VideoContext = createContext();
 
 export const VideoProvider = ({ children }) => {
   const [activeVideoDetail, setVideoDetail] = useState(null);
+  const [clearVideo, setClearVideo] = useState(() => {});
   const defaultValue = {
     fetchVideoHistroy: true,
     enableTypeWritter: false,
     requestDemoShow: false,
+    justUploadVideo:false,
+    textAfterUploadVideo:false, 
+    feedBackRespond:null,
   };
   const [otherData, setOtherData] = useState(defaultValue);
   const setActiveVideoData = (data) => {
@@ -29,6 +33,8 @@ export const VideoProvider = ({ children }) => {
         setOtherData,
         otherData,
         setDefaultData,
+        clearVideo,
+        setClearVideo
       }}
     >
       {children}
