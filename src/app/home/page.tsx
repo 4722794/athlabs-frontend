@@ -399,7 +399,24 @@ const Tab2Content = () => {
         console.log('responseData',responseData)
         const updatedData1 = { ...activeVideoDetail };
         updatedData1.messages = updatedData1.messages || [];
-        updatedData1.messages.push(responseData.data);
+
+        /**When first time video upload and start text message at that first time I append user msg with text message come from AI
+         * After that not so for that purpose I used appendTextzMsg and after first I set to false.
+         */
+        if(otherData.justUploadVideo && otherData.appendTextzMsg){
+          updatedData1.messages.push(userMsg);
+          setOtherData((prevData: any) => ({
+            ...prevData,
+            appendTextzMsg: false
+          }));
+        }
+        const aiResponse = {
+          text: responseData.data.text,
+          sender: responseData.data.sender,
+          timestamp: responseData.data.timestamp
+        };
+
+        updatedData1.messages.push(aiResponse);
         //if(!otherData.justUploadVideo){
           setActiveVideoData(updatedData1);
         //}

@@ -14,6 +14,7 @@ export const VideoProvider = ({ children }) => {
     justUploadVideo:false,
     textAfterUploadVideo:false, 
     feedBackRespond:null,
+    appendTextzMsg:true, 
   };
   const [otherData, setOtherData] = useState(defaultValue);
   const setActiveVideoData = (data) => {
