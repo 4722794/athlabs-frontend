@@ -37,7 +37,7 @@ interface Video {
 const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const [videoData, setVideoData] = useState([]);
   const [activeVideo, setactiveVideo] = useState(false);
-  const { setActiveVideoData, setOtherData, otherData,clearVideo,setClearVideo } = useVideoContext();
+  const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
   const [loggedInUser, setLoggedInUser] = useState("");
   const [videoLoading, setVideoLoading] = useState<VideoLoading>({});
   const [videoEdit, setVideoEdit] = useState<VideoEdit>({});
@@ -179,11 +179,9 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   };
 
   const clearPage = () => {
-    /* setactiveVideo(false);
+    setactiveVideo(false);
     setActiveVideoData(null);
-    clearEditScreen();
-    setClearVideo(); */
-    window.location.reload();
+    setOtherData({ ...otherData, callClearVideo: true });
   };
 
   const removeVideoHistory = async (videoId: any) => {
