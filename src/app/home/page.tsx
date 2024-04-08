@@ -174,14 +174,14 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     newItems.push({
       id: 1,
       title: "Feedback",
-      content: feedback ? feedback : <FeedBackLodding />,
+      content: <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
     });
 
     // Check if feedback and highlight are not empty, then update items array
     newItems.push({
       id: 2,
       title: "Highlight",
-      content: feedback && highlight ? highlight : <FeedBackLodding />,
+      content: <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
     });
 
     // Update the items state with the newItems array
