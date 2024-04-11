@@ -20,6 +20,7 @@ const UserForm = () => {
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
+  const [newUser, setNewUser] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [alreadySelectedInterests, setAlreadySelectedInterests] = useState<
@@ -111,7 +112,7 @@ const UserForm = () => {
       redirect: "follow",
     };
 
-    fetch("https://api.dev.athlabs.co/u/profile", requestOptions)
+    fetch(process.env.NEXT_PUBLIC_API_HOST + "/u/profile", requestOptions)
       .then((response: any) => response.text())
       .then((data: any) => {
         setAlreadySelectedInterests(interests);
@@ -135,6 +136,7 @@ const UserForm = () => {
         setName(responseData.data.profile.name);
         setDob(responseData.data.profile.dob);
         setGender(responseData.data.profile.gender);
+        setNewUser(responseData.data.new_user);
         setPreviewImage(responseData.data.profile.picture);
         const interestNames = responseData.data.profile.interests.map(
           (item: any) => item.name
@@ -143,7 +145,8 @@ const UserForm = () => {
         setAlreadySelectedInterests(interestNames);
       }
 
-      console.log("User data:", userData);
+      console.log("User data:", responseData);
+      console.log("New User", newUser);
     } catch (error) {
       console.error("Error fetching user data:", error);
       setToastObj({ type: "e", msg: "Error fetching user data" });
@@ -170,11 +173,12 @@ const UserForm = () => {
   useEffect(() => {
     fetchUserData();
     fetchInterests();
-  }, []);
+  }, [newUser]);
 
   const skipBasicDetails = async () => {
-    const uriString = `/u/profile`;
-    const method = "POST";
+    if (newUser) {
+    const uriString = `/u/update`;
+    const method = "PATCH";
     const contentType = "application/json";
     const header = { accept: "application/json" };
     const body = { new_user: false };
@@ -184,6 +188,9 @@ const UserForm = () => {
     } else {
       setToastObj({ type: "e", msg: "Error skipping basic details" });
     }
+  } else {
+    router.push("/home");
+  }
   };
 
   const handleSkipNow = (event:any) => {
@@ -227,8 +234,7 @@ const UserForm = () => {
                       <img
                         src={previewImage}
                         alt="Profile Preview"
-                        className="  max-w-[100px] rounded-md"
-                        crossOrigin="anonymous"
+                        className="rounded-full max-w-[100px]"
                         width={100}
                         height={100}
                       />
@@ -291,7 +297,6 @@ const UserForm = () => {
                   <option value="">Select gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
-                  <option value="Other">Other</option>
                 </select>
               </div>
 
@@ -322,15 +327,15 @@ const UserForm = () => {
               <div className="w-full px-3 my-5 grid gap-x-4 grid-cols-[_1fr_145px] ">
                 <button
                   type="submit"
-                  className="hover:shadow-form  w-full rounded-md bg-blue-600 hover:bg-blue-700  py-2 px-8 text-center text-base font-semibold text-white outline-none"
+                  className="hover:shadow-form  w-full rounded-md bg-[#44366a] hover:bg-gradient-to-b from-[#101828] to-[#44366a] hover:text-white  py-2 px-8 text-center text-base font-semibold text-white outline-none"
                 >
                   Submit Now
                 </button>
                 <button
-                  className="hover:shadow-form text-center   w-full rounded-md bg-white hover:text-white hover:bg-blue-700  py-2 px-8 text-center text-base font-semibold text-gray-700 outline-none "
+                  className="hover:shadow-form text-center   w-full rounded-md bg-white hover:text-white hover:bg-gradient-to-b from-[#101828] to-[#44366a] py-2 px-8 text-center text-base font-semibold text-gray-700 outline-none "
                   onClick={handleSkipNow}
                 >
-                  Skip now
+                  Close
                 </button>
               </div>
             </div>

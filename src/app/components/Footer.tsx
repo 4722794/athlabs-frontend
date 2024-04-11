@@ -16,9 +16,9 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
       <div className="container mx-auto self-center px-6 md:px-8 ">
         <div className="flex flex-wrap lg:flex-nowrap justify-end pt-7 pb-7  md:pb-10 md:pt-10  xl:pb-7 2xl:pb-10 gap-y-10">
           <div className=" w-full md:w-3/12 lg:w-4/12 w- flex justify-center  md:justify-start">
-            <a className=" inline-flex h-8 2xl:h-10  ">
+            <a className=" inline-flex h-6 2xl:h-8  ">
               <Image
-                src={"/images/logo2.png"}
+                src={"/images/newlogo_v4.png"}
                 width={230}
                 height={72}
                 className=" h-full w-auto"
