@@ -43,7 +43,11 @@ function FeedBackLodding({
   return (
     <div>
       {otherData.feedBackRespond ? (
-        <div className=" flex justify-center">
+        <div>
+        <div className="text-white text-center text-sm mb-4 mt-4">
+          There was an error generating feedback
+        </div>
+        <div className=" flex justify-center mb-4">
           <button
             onClick={callBackWhenFail}
             className={`bg-[#44366a] py-2 px-3 text-sm font-semibold text-white inline-flex h-11 2xl:h-11 min-w-[90px] md:min-w-[110px] 2xl:min-w-[130px] justify-center mx-auto items-center rounded-lg drop-shadow-md shadow-white/40 hover:bg-gradient-to-r from-[#101828] to-[#44366a] hover:text-white cursor-pointer`}
@@ -51,6 +55,7 @@ function FeedBackLodding({
             <FiRefreshCcw className="mr-3" />
             Regenerate
           </button>
+        </div>
         </div>
       ) : (
         <div className="py-7">

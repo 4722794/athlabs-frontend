@@ -47,17 +47,18 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     setScore(0);
     setFeedback("");
     setHighlight("");
+    setName("");
     setIsFeedbackWritten(false);
     setItems([
       {
         id: 1,
         title: "Feedback",
-        content: <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
+        content: feedback ? feedback : <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
       },
       {
         id: 2,
         title: "Highlight",
-        content: <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
+        content: feedback && highlight ? highlight : <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
       },
     ]);
   };
@@ -73,7 +74,13 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     const response: any = await fetch(apiEndpoint, { headers });
 
     const data = await response.json();
-    setHistoryData(data);
+    console.log(data, "data");
+    if (data.feedback === null) {
+      feedBackNotFetch();
+    }
+    else if (data.feedback && data.highlight) {
+      setHistoryData(data);
+    }
   };
 
   const fetchFeedbackOld = async () => {
@@ -107,9 +114,9 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
      /*this condition is for if video is just uplaoded and chat start 
       *at that time feedback is not required to fetch again
      */
-     if(otherData.justUploadVideo && otherData.textAfterUploadVideo){
-      return
-     }
+    //  if(otherData.justUploadVideo && otherData.textAfterUploadVideo){
+    //   return
+    //  }
      /*End of condition*/
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
     const apiEndpoint = `${apiUrl}/feedback/${activeVideoDetail.video_id}`;
@@ -125,7 +132,10 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const responseData = await response.json();
-      const formattedText = responseData.feedback;
+      if (responseData.feedback === null || responseData.feedback === "") {
+      feedBackNotFetch();  // Call to show regenerate button
+    }
+      const formattedText = processFeedback(responseData.feedback);
       setFeedback(formattedText);
 
       setScore(responseData.score);
@@ -174,14 +184,14 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     newItems.push({
       id: 1,
       title: "Feedback",
-      content: <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
+      content: feedback ? feedback : <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
     });
 
     // Check if feedback and highlight are not empty, then update items array
     newItems.push({
       id: 2,
       title: "Highlight",
-      content: <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
+      content: feedback && highlight ? highlight : <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
     });
 
     // Update the items state with the newItems array
@@ -223,6 +233,8 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
 
   // Feedback Processing
   function processFeedback(feedback: string) {
+    // Make anything in **bold** actually bold
+     feedback = feedback.replace(/\*\*(.*?)\*\*/g, "$1");
     /* if (!feedback) return ""; // Check if feedback is defined
 
     // Replace excessive spaces with a single space
@@ -357,12 +369,12 @@ const Tab2Content = () => {
   };
 
   const handleSubmit = async (e: any) => {
-    if(otherData.justUploadVideo){
-      setOtherData((prevData: any) => ({
-        ...prevData,
-        textAfterUploadVideo: true
-      }));
-    }
+    // if(otherData.justUploadVideo){
+    //   setOtherData((prevData: any) => ({
+    //     ...prevData,
+    //     textAfterUploadVideo: true
+    //   }));
+    // }
 
 
     e.preventDefault();

@@ -140,6 +140,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
           ...otherData,
           fetchVideoHistroy: false,
           enableTypeWritter: true,
+          feedBackRespond:null,
         });
         setActiveVideoData(response);
         // const trimmedVideoUrl = URL.createObjectURL(trimmedVideoFile);
