@@ -78,6 +78,10 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     if (data.feedback === null) {
       feedBackNotFetch();
     }
+    else if (data.feedback && data.highlight === null) {
+      setFeedback(data.feedback);
+      fetchHighlight();
+    }
     else if (data.feedback && data.highlight) {
       setHistoryData(data);
     }
@@ -581,7 +585,7 @@ const AdminPage = () => {
           </div>
         </div>
       </div>
-      <div className="flex w-full flex-col lg:flex-row lg:pt-1">
+      <div className="flex w-full flex-col lg:flex-row lg:pt-2">
         <div className="flex flex-col relative w-full lg:w-8/12 text-center text-xs " style={{color: "#676767"}}>
               Athlabs can make mistakes. Always consult an expert for your fitness needs.
         </div>

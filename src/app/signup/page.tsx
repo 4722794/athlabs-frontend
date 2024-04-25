@@ -134,7 +134,7 @@ const Login = () => {
 
   return (
     <LandingLayout showButton={false} footerClass={footerClass}>
-      <div className="bg-[#04080f] flex items-center justify-center pt-40 pb-20 min-h-[550px] h-[calc(100%-100px)]  2xl:h-[calc(100%-121px)] ">
+      <div className="bg-[#04080f] flex items-center justify-center pt-40 pb-20 min-h-[700px] h-[calc(100%-100px)]  2xl:h-[calc(100%-121px)] ">
         <div className="container mx-auto self-center px-6 md:px-8 flex justify-center items-center">
           <div className="bg-black p-8 rounded-lg shadow-lg max-w-sm w-full border-[3px]  border-gray-400">
             <h2 className="text-2xl font-semibold text-center mb-4 text-white">
@@ -233,7 +233,7 @@ const Login = () => {
             </div>
 
             <p className="text-white/70 text-xs text-center mt-4">
-              if have an account?
+              Already have an account?
               <Link
                 href="/login"
                 // onClick={handleRequestDemo}

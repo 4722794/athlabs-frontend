@@ -12,7 +12,7 @@ function FeedBackLodding({
   fetchHighlight,
 }: FeedBackLoddingProps) {
   const [message, setMessage] = useState("Uploading video");
-  const { otherData, setOtherData } = useVideoContext();
+  const { activeVideoDetail, otherData, setOtherData } = useVideoContext();
   useEffect(() => {
     const timers = [
       setTimeout(() => setMessage("Processing video"), 5000),
@@ -20,7 +20,7 @@ function FeedBackLodding({
     ];
 
     return () => timers.forEach((timer) => clearTimeout(timer));
-  }, []);
+  }, [activeVideoDetail]);
 
   const callBackWhenFail = () => {
     if (otherData.feedBackRespond && otherData.feedBackRespond === "feedback") {

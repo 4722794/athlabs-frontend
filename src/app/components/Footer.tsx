@@ -31,14 +31,14 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             <div className=" inline-flex  gap-x-4 md:gap-x-6 justify-center">
               <Link
                 href="/privacyPolicy"
-                className=" text-[11px] tracking-[.25em] hover:text-purple-400"
+                className=" text-[11px] tracking-[.25em] hover:text-purple-400 text-center"
               >
                 PRIVACY POLICY
               </Link>
               <span className=" h-1 bg-white"></span>
               <Link
                 href="/termsAndConditions"
-                className=" text-[11px] tracking-[.25em] hover:text-purple-400 "
+                className=" text-[11px] tracking-[.25em] hover:text-purple-400 text-center"
               >
                 TERMS & CONDITIONS
               </Link>
@@ -78,8 +78,8 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             © {currentYear} ATHLABS
           </div>
           <div className=" inline-flex  gap-x-4 md:gap-x-6 md:w-6/12 justify-end">
-            <a className=" text-[11px] tracking-[.25em] ">PRIVACY POLICY</a>
-            <a className=" text-[11px] tracking-[.25em] ">TERMS & CONDITIONS</a>
+            <a className=" text-[11px] tracking-[.25em] text-center">PRIVACY POLICY</a>
+            <a className=" text-[11px] tracking-[.25em] text-center">TERMS & CONDITIONS</a>
           </div>
         </div>
       </div>
