@@ -18,7 +18,7 @@ jobs:
 
       - name: Add Github Actions IP to Azure Network Security Group
         run: |
-          az network nsg rule create --resource-group Athlabs --name AllowSSHFromGitHub --nsg-name ${{ secrets.AZURE_NSG_NAME }} --priority 100 --access Allow --direction Inbound --protocol Tcp --source-address-prefixes ${{ steps.ip.outputs.ipv4 }}/24 --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges 22
+          az network nsg rule create --resource-group Athlabs --name AllowSSHFromGitHub --nsg-name ${{ secrets.AZURE_NSG_NAME }} --priority 100 --access Allow --direction Inbound --protocol Tcp --source-address-prefixes ${{ steps.ip.outputs.ipv4 }} --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges 22
           sleep 10
       - name: Deploy on Azure VM
         env:
