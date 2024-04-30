@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({
               src={"/images/newlogo_v4.png"}
               width={230}
               height={72}
-              className=" h-full w-auto"
+              className=" h-full w-full"
               alt="logo"
             />
           </a>
@@ -238,7 +238,7 @@ const Header: React.FC<HeaderProps> = ({
                 src={"/images/newlogo_v4.png"}
                 width={230}
                 height={72}
-                className=" h-full w-auto"
+                className=" h-full w-full"
                 alt="logo"
               />
             </a>
