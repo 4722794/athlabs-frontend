@@ -67,9 +67,9 @@ const Header: React.FC<HeaderProps> = ({
     <>
       <header className="bg-[#04080f]   text-white text-left items-center flex fixed w-full top-0 z-30 h-14 md:h-16  lg:h-16 xl:h-16 2xl:h-24 border-b border-gray-800">
         <div className="container mx-auto self-center px-6 md:px-8 flex justify-between items-center">
-          <a href="/" className=" inline-flex h-8 xl:h-8 2xl:h-10 ">
+          <a href="/" className=" inline-flex h-6 xl:h-6 2xl:h-8 ">
             <Image
-              src={"/images/logo2.png"}
+              src={"/images/newlogo_v4.png"}
               width={230}
               height={72}
               className=" h-full w-auto"
@@ -233,9 +233,9 @@ const Header: React.FC<HeaderProps> = ({
       >
         <div className="bg-[#04080f]  text-white text-left items-center flex w-full top-0 z-30 h-14 md:h-16  lg:h-16 xl:h-16 2xl:h-24 border-b border-gray-800">
           <div className="container mx-auto self-center px-6 md:px-8 flex justify-between items-center">
-            <a className=" inline-flex h-8 xl:h-8 2xl:h-10 ">
+            <a className=" inline-flex h-6 xl:h-6 2xl:h-8 ">
               <Image
-                src={"/images/logo2.png"}
+                src={"/images/newlogo_v4.png"}
                 width={230}
                 height={72}
                 className=" h-full w-auto"

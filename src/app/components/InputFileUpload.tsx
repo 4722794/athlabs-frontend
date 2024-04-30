@@ -26,6 +26,7 @@ interface InputFileUploadProps {
 const InputFileUpload: React.FC<InputFileUploadProps> = ({
   onDataFromChild,
 }) => {
+  const { activeVideoDetail, setActiveVideoData, setOtherData, otherData  } = useVideoContext();
   const [childData, setChildData] = useState(null);
   const [loading, setLoading] = useState(false); // New state for loading indicator
   const [selectedFile, setSelectedFile] = useState(false); // New state for loading indicator
@@ -39,7 +40,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   const [videoMeta, setVideoMeta] = useState<any>(null);
   const [rStart, setRstart] = useState(0);
   const [rEnd, setRend] = useState(0);
-
+  const dropzoneRef = useRef<any>(null);
   // const [handleTrim, setHandleTrim] = useState<(() => void) | null>(null);
 
   // const handleTrimRef = useRef<(() => void) | null>(null);
@@ -55,8 +56,6 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
   // }, [handleTrimRef.current]);
 
   // Reference to Dropzone instance
-  const dropzoneRef = useRef<any>(null);
-  const { setActiveVideoData, setOtherData, otherData } = useVideoContext();
   const sendDataToParent = () => {
     // Call the callback function in the parent with the data
     onDataFromChild(childData);
@@ -67,6 +66,28 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       sendDataToParent();
     }
   }, [childData]);
+
+  useEffect(()=> {
+    if(activeVideoDetail?.video_url) setVideoUrl(activeVideoDetail.video_url);
+  }, [activeVideoDetail?.video_url])
+
+  const [key, setKey] = useState(0);
+
+  function myClearVideo() { 
+    if (dropzoneRef.current) {
+      setKey(key + 1);
+      setName(""); 
+      nameRef.current = '';
+      setUploadedVideo(null);
+      setSelectedFile(false);
+      setOtherData({ ...otherData, callClearVideo: false });
+    }
+  }
+
+  useEffect(() => {
+    if(otherData.callClearVideo) myClearVideo();
+  }, [otherData]);
+  
 
   const getUploadParams = (
     file: IFileWithMeta
@@ -80,8 +101,8 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         formData.append("video", actualFile, actualFile.name);
         formData.append("name", nameRef.current);
         // append the start and end time to the form data
-        formData.append("startTrim", formatTime(rStart));
-        formData.append("endTrim", formatTime(rEnd));
+        formData.append("start_time", formatTime(rStart));
+        formData.append("end_time", formatTime(rEnd));
         const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
         const apiEndpoint = `/processVideo`;
 
@@ -119,6 +140,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
           ...otherData,
           fetchVideoHistroy: false,
           enableTypeWritter: true,
+          feedBackRespond:null,
         });
         setActiveVideoData(response);
         // const trimmedVideoUrl = URL.createObjectURL(trimmedVideoFile);
@@ -155,6 +177,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       rStartRef.current = rStart;
       rEndRef.current = rEnd;
     }, [rStart, rEnd]);
+   
 
     const handleTimeUpdate = useCallback(() => {
       if (videoRef.current && videoRef.current.currentTime >= rEndRef.current) {
@@ -279,6 +302,10 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
       if (dropzoneRef.current) {
         dropzoneRef.current.handleRestart(dropzoneRef.current.files[0]);
       }
+       setOtherData((prevData: any) => ({
+        ...prevData,
+        justUploadVideo: true
+      }));
     }
   };
 
@@ -360,6 +387,7 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
         >
           <div className="flex items-center justify-center w-full h-full">
             <Dropzone
+              key={key}
               getUploadParams={getUploadParams}
               onChangeStatus={handleChangeStatus}
               accept="video/*"

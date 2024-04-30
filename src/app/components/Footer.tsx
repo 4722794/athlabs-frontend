@@ -16,9 +16,9 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
       <div className="container mx-auto self-center px-6 md:px-8 ">
         <div className="flex flex-wrap lg:flex-nowrap justify-end pt-7 pb-7  md:pb-10 md:pt-10  xl:pb-7 2xl:pb-10 gap-y-10">
           <div className=" w-full md:w-3/12 lg:w-4/12 w- flex justify-center  md:justify-start">
-            <a className=" inline-flex h-8 2xl:h-10  ">
+            <a className=" inline-flex h-6 2xl:h-8  ">
               <Image
-                src={"/images/logo2.png"}
+                src={"/images/newlogo_v4.png"}
                 width={230}
                 height={72}
                 className=" h-full w-auto"
@@ -31,14 +31,14 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             <div className=" inline-flex  gap-x-4 md:gap-x-6 justify-center">
               <Link
                 href="/privacyPolicy"
-                className=" text-[11px] tracking-[.25em] hover:text-purple-400"
+                className=" text-[11px] tracking-[.25em] hover:text-purple-400 text-center"
               >
                 PRIVACY POLICY
               </Link>
               <span className=" h-1 bg-white"></span>
               <Link
                 href="/termsAndConditions"
-                className=" text-[11px] tracking-[.25em] hover:text-purple-400 "
+                className=" text-[11px] tracking-[.25em] hover:text-purple-400 text-center"
               >
                 TERMS & CONDITIONS
               </Link>
@@ -78,8 +78,8 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             © {currentYear} ATHLABS
           </div>
           <div className=" inline-flex  gap-x-4 md:gap-x-6 md:w-6/12 justify-end">
-            <a className=" text-[11px] tracking-[.25em] ">PRIVACY POLICY</a>
-            <a className=" text-[11px] tracking-[.25em] ">TERMS & CONDITIONS</a>
+            <a className=" text-[11px] tracking-[.25em] text-center">PRIVACY POLICY</a>
+            <a className=" text-[11px] tracking-[.25em] text-center">TERMS & CONDITIONS</a>
           </div>
         </div>
       </div>

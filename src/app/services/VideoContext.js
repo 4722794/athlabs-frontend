@@ -10,6 +10,11 @@ export const VideoProvider = ({ children }) => {
     fetchVideoHistroy: true,
     enableTypeWritter: false,
     requestDemoShow: false,
+    justUploadVideo:false,
+    textAfterUploadVideo:false, 
+    feedBackRespond:null,
+    appendTextzMsg:true, 
+    callClearVideo:false, 
   };
   const [otherData, setOtherData] = useState(defaultValue);
   const setActiveVideoData = (data) => {
@@ -28,7 +33,7 @@ export const VideoProvider = ({ children }) => {
         setActiveVideoData,
         setOtherData,
         otherData,
-        setDefaultData,
+        setDefaultData        
       }}
     >
       {children}

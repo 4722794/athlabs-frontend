@@ -37,7 +37,7 @@ const Chat: React.FC = () => {
                   message.sender === "user" ? " justify-end" : ""
                 }`}
               >
-                <div
+                <div style={{whiteSpace: 'pre-line'}}
                   className={`max-w-[90%] ${
                     message.sender === "user"
                       ? "bg-[#171717] text-white rounded-br-none"

@@ -51,7 +51,14 @@ const AuthComponent = () => {
     handleAuthentication();
   }, []);
 
-  return <div>Authenticating...</div>;
+  return (
+    <div className="flex items-center justify-center h-screen bg-#171717">
+      <div className="flex items-center justify-center bg-gray-500 rounded-lg p-4">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
+        <p className="text-white ml-2">Authenticating...</p>
+      </div>
+    </div>
+  );
 };
 
 export default AuthComponent;

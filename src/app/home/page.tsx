@@ -27,7 +27,7 @@ interface Tab1ContentProps {
 }
 
 const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
-  const { activeVideoDetail, otherData } = useVideoContext();
+  const { activeVideoDetail, otherData,setOtherData } = useVideoContext();
   const [historyData, setHistoryData] = useState<any>(null);
   const [score, setScore] = useState<any>(0);
   const [scoreValue, setScoreValue] = useState<any>(null);
@@ -47,17 +47,18 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     setScore(0);
     setFeedback("");
     setHighlight("");
+    setName("");
     setIsFeedbackWritten(false);
     setItems([
       {
         id: 1,
         title: "Feedback",
-        content: <FeedBackLodding />,
+        content: feedback ? feedback : <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
       },
       {
         id: 2,
         title: "Highlight",
-        content: <FeedBackLodding />,
+        content: feedback && highlight ? highlight : <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
       },
     ]);
   };
@@ -73,7 +74,17 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     const response: any = await fetch(apiEndpoint, { headers });
 
     const data = await response.json();
-    setHistoryData(data);
+    console.log(data, "data");
+    if (data.feedback === null) {
+      feedBackNotFetch();
+    }
+    else if (data.feedback && data.highlight === null) {
+      setFeedback(data.feedback);
+      fetchHighlight();
+    }
+    else if (data.feedback && data.highlight) {
+      setHistoryData(data);
+    }
   };
 
   const fetchFeedbackOld = async () => {
@@ -104,6 +115,13 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
   };
 
   const fetchFeedback = async () => {
+     /*this condition is for if video is just uplaoded and chat start 
+      *at that time feedback is not required to fetch again
+     */
+    //  if(otherData.justUploadVideo && otherData.textAfterUploadVideo){
+    //   return
+    //  }
+     /*End of condition*/
     const apiUrl = process.env.NEXT_PUBLIC_API_HOST;
     const apiEndpoint = `${apiUrl}/feedback/${activeVideoDetail.video_id}`;
 
@@ -114,10 +132,14 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     try {
       const response = await fetch(apiEndpoint, { headers });
       if (!response.ok) {
+        feedBackNotFetch();
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const responseData = await response.json();
-      const formattedText = responseData.feedback;
+      if (responseData.feedback === null || responseData.feedback === "") {
+      feedBackNotFetch();  // Call to show regenerate button
+    }
+      const formattedText = processFeedback(responseData.feedback);
       setFeedback(formattedText);
 
       setScore(responseData.score);
@@ -126,9 +148,11 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
         setName(responseData.name);
       }
       fetchHighlight(); // Assuming fetchHighlight is defined elsewhere
+      feedBackFetched(); //hide regnerate response button if enable
     } catch (error) {
       console.error("Error fetching feedback:", error);
       // Handle error as needed
+      feedBackNotFetch();
     }
   };
 
@@ -141,9 +165,15 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     };
 
     const response: any = await fetch(apiEndpoint, { headers });
-
-    const data = await response.json();
-    setHighlight(data.highlight);
+    if (response.ok) {
+      const data = await response.json();
+      setHighlight(data.highlight);
+      highLightFetched();
+    }else {
+      highLightNotFetch()
+      console.error('Failed to fetch:', response.statusText);
+      throw new Error('Failed to fetch data');
+    }
     /* setScore(data.score);
 
     if (data.name && !activeVideoDetail.name) {
@@ -158,14 +188,14 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     newItems.push({
       id: 1,
       title: "Feedback",
-      content: feedback ? feedback : <FeedBackLodding />,
+      content: feedback ? feedback : <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
     });
 
     // Check if feedback and highlight are not empty, then update items array
     newItems.push({
       id: 2,
       title: "Highlight",
-      content: feedback && highlight ? highlight : <FeedBackLodding />,
+      content: feedback && highlight ? highlight : <FeedBackLodding fetchFeedback={fetchFeedback} fetchHighlight={fetchHighlight}/>,
     });
 
     // Update the items state with the newItems array
@@ -207,7 +237,9 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
 
   // Feedback Processing
   function processFeedback(feedback: string) {
-    if (!feedback) return ""; // Check if feedback is defined
+    // Make anything in **bold** actually bold
+     feedback = feedback.replace(/\*\*(.*?)\*\*/g, "$1");
+    /* if (!feedback) return ""; // Check if feedback is defined
 
     // Replace excessive spaces with a single space
     feedback = feedback.replace(/\s{2,}/g, " ");
@@ -218,14 +250,14 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     );
     feedback = feedback.replace(/(\d+\.[^\d]+)/g, "- $1\n");
     // Add a period at the end of the sentence if it's missing
-    feedback = feedback.replace(/Overall,/g, "Overall.");
+    feedback = feedback.replace(/Overall,/g, "Overall."); */
 
     return feedback;
   }
 
   // Highlight Processing
   function processHighlight(highlight: string) {
-    if (!highlight) return ""; // Check if highlight is defined
+   /*  if (!highlight) return ""; // Check if highlight is defined
 
     // Replace excessive spaces with a single space
     highlight = highlight.replace(/\s{2,}/g, " ");
@@ -234,12 +266,13 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     highlight = highlight.replace(/Improvements:/g, "\nImprovements:\n");
     highlight = highlight.replace(/Risk of injury:/g, "\nRisk of Injury:\n");
     highlight = highlight.replace(/Overall,/g, "\nOverall,");
-    highlight = highlight.replace(/\./g, ".\n");
+    highlight = highlight.replace(/\./g, ".\n"); */
 
     return highlight;
   }
 
   useEffect(() => {
+    console.log('useEffect',otherData)
     resetAnalysis();
     if (activeVideoDetail?.video_id && otherData.fetchVideoHistroy) {
       fetchHistory();
@@ -256,6 +289,34 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     updateHistoryItems();
   }, [historyData]);
 
+  const feedBackNotFetch  = ()=>{
+    setOtherData((prevData: any) => ({
+      ...prevData,
+      feedBackRespond: 'feedback'
+    }));
+  }
+
+  const feedBackFetched  = ()=>{
+    setOtherData((prevData: any) => ({
+      ...prevData,
+      feedBackRespond: null
+    }));
+  }
+
+  const highLightNotFetch  = ()=>{
+    setOtherData((prevData: any) => ({
+      ...prevData,
+      highLightRespond: 'highlight'
+    }));
+  }
+
+  const highLightFetched  = ()=>{
+    setOtherData((prevData: any) => ({
+      ...prevData,
+      highLightRespond: null
+    }));
+  }
+
   return (
     <div className=" landscape:min-h-[300px]  lg:h-[calc(100vh-200px)]">
       {activeVideoDetail ? (
@@ -271,9 +332,10 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
             {/* {((highlight && isHighlightWritten && score) ||
               (!highlight && score)) && ( */}
             <div className=" mb-4">
-              Performance Score {score ? ": " + score : ""}
+            Performance Score: {score !== null ? score : ""}
+
               <ProgressBar
-                progress={score ? score : 100}
+                progress={score !== null ? score : 100}
                 height="30px"
                 backgroundColor="#777"
                 progressColor="#44366a"
@@ -294,7 +356,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
 const Tab2Content = () => {
   const [formErrors, setFormErrors] = useState({ textMsg: "" });
   const [textMsg, setText] = useState("");
-  const { activeVideoDetail } = useVideoContext();
+  const { activeVideoDetail, otherData,setOtherData } = useVideoContext();
   const { setActiveVideoData } = useVideoContext();
   const [loading, setLoading] = useState(false);
   const formRef = useRef<any>(null);
@@ -311,6 +373,14 @@ const Tab2Content = () => {
   };
 
   const handleSubmit = async (e: any) => {
+    // if(otherData.justUploadVideo){
+    //   setOtherData((prevData: any) => ({
+    //     ...prevData,
+    //     textAfterUploadVideo: true
+    //   }));
+    // }
+
+
     e.preventDefault();
     let videoId = activeVideoDetail.video_id;
     if (validateForm() && videoId) {
@@ -325,7 +395,9 @@ const Tab2Content = () => {
       console.log(userMsg, "userMsg");
 
       updatedData.messages.push(userMsg);
-      setActiveVideoData(updatedData);
+      //if(!otherData.justUploadVideo){
+        setActiveVideoData(updatedData);
+      //}
       setText("");
       setLoading(true);
       const uriString = `/c/${videoId}`;
@@ -340,10 +412,30 @@ const Tab2Content = () => {
         uriString
       );
       if (responseData.status) {
+        console.log('responseData',responseData)
         const updatedData1 = { ...activeVideoDetail };
         updatedData1.messages = updatedData1.messages || [];
-        updatedData1.messages.push(responseData.data);
-        setActiveVideoData(updatedData1);
+
+        /**When first time video upload and start text message at that first time I append user msg with text message come from AI
+         * After that not so for that purpose I used appendTextzMsg and after first I set to false.
+         */
+        if(otherData.justUploadVideo && otherData.appendTextzMsg){
+          updatedData1.messages.push(userMsg);
+          setOtherData((prevData: any) => ({
+            ...prevData,
+            appendTextzMsg: false
+          }));
+        }
+        const aiResponse = {
+          text: responseData.data.text,
+          sender: responseData.data.sender,
+          timestamp: responseData.data.timestamp
+        };
+
+        updatedData1.messages.push(aiResponse);
+        //if(!otherData.justUploadVideo){
+          setActiveVideoData(updatedData1);
+        //}
         setLoading(false);
         if (formRef.current) {
           formRef.current.scrollIntoView({ behavior: "smooth" });
@@ -491,6 +583,11 @@ const AdminPage = () => {
               <Tabs tabs={tabs} />
             </div>
           </div>
+        </div>
+      </div>
+      <div className="flex w-full flex-col lg:flex-row lg:pt-2">
+        <div className="flex flex-col relative w-full lg:w-8/12 text-center text-xs " style={{color: "#676767"}}>
+              Athlabs can make mistakes. Always consult an expert for your fitness needs.
         </div>
       </div>
     </HomeLayout>
