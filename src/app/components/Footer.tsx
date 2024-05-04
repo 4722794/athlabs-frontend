@@ -19,8 +19,8 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             <a className=" inline-flex h-6 2xl:h-8  ">
               <Image
                 src={"/images/newlogo_v4.png"}
-                width={230}
-                height={72}
+                width={160}
+                height={25}
                 className=" h-full w-auto"
                 alt="logo"
               />
