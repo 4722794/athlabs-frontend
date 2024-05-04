@@ -70,9 +70,9 @@ const Header: React.FC<HeaderProps> = ({
           <a href="/" className=" inline-flex h-6 xl:h-6 2xl:h-8 ">
             <Image
               src={"/images/newlogo_v4.png"}
-              width={150}
+              width={160}
               height={25}
-              className=" h-full"
+              className=" h-full w-auto"
               alt="logo"
             />
           </a>
@@ -236,9 +236,9 @@ const Header: React.FC<HeaderProps> = ({
             <a className=" inline-flex h-6 xl:h-6 2xl:h-8 ">
               <Image
                 src={"/images/newlogo_v4.png"}
-                width={150}
+                width={160}
                 height={25}
-                className=" h-full"
+                className=" h-full w-auto"
                 alt="logo"
               />
             </a>
