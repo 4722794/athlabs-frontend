@@ -186,48 +186,19 @@ const AppPage = () => {
                 </div>
 
                 <div>
-                  <div className="w-full lg:w-10/12 pt-5">
-                    <form
-                      className="flex items-center flex-1 justify-start mt-30 relative"
-                      onSubmit={(e) => handleSubmit("injuryFreeTraining", e)}
-                    >
-                      <div className="w-full relative text-left">
-                        <input
-                          type="text"
-                          placeholder=" > enter your email"
-                          value={mail}
-                          onChange={(e) => setMail(e.target.value)}
-                          className="box-border placeholder:text-white/50 text-white bg-[#1a212f] border-1 border-[#344054] pl-5 md:p-2 md:pl-5 h-12 xl:h-14 2xl:h-[75px]  w-full  outline-2 outline-gray-800 rounded
-                          
-                          pr-[130px] lg:pr-[230px]"
-                        />
-                        {formErrors.mail && (
-                          <span>
-                            <p className="text-red-500 text-xs mt-1">
-                              {formErrors.mail}
-                            </p>
-                          </span>
-                        )}
-
-                        {toastTObj.type && (
-                          <div className=" absolute mt-0 top-0 z-20">
-                            <ComonToast
-                              toastObj={toastTObj}
-                              setToastObj={setToastTObj}
-                            />
+                <div className="w-full lg:w-10/12 pt-2">
+                  {/* <div className="border border-[#98a2b3] rounded"> */}
+                      <div className="flex items-center flex-1 justify-start mt-2 relative">
+                        <div className="flex flex-col lg:flex-row w-full relative items-center justify-center lg:justify-start">
+                          <div className="flex text-2xl font-bold text-white/80 ml-0 mr-4 my-4">Now on Product Hunt!</div>
+                          <a href="https://www.producthunt.com" target="_blank" rel="noopener noreferrer" className="flex justify-center lg:justify-start">
+                            <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=12345&theme=dark" alt="Featured on Product Hunt" className="w-auto mx-4 my-2"/>
+                          </a>
                           </div>
-                        )}
+                        {/* <p className="text-white mt-4">Check out our new app and give us an upvote if you like it.</p> */}
+                        </div>
                       </div>
-
-                      <button
-                        type="submit"
-                        data-wait="..."
-                        className=" px-3 md:px-0 md:w-[200px] cursor-pointer  text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded bg-gradient-to-r from-[#101828] to-[#44366a] h-10 xl:h-12 2xl:h-[60px] absolute right-1 2xl:right-2 top-1 2xl:top-2 overflow-visible"
-                      >
-                        {loading && <Spinner />} Get access
-                      </button>
-                    </form>
-                  </div>
+                {/* </div> */}
                 </div>
               </div>
               <div className="   w-[266px] sm:w-[356px] md:w-[326px] lg:w-4/12 2xl:w-4/12  flex justify-center lg:justify-center mx-auto lg:mr-0">
