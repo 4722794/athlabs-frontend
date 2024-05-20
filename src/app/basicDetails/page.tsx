@@ -119,7 +119,7 @@ const UserForm = () => {
         setToastObj({ type: "s", msg: "Profile successfully updated" });
         setTimeout(() => {
           router.push("/home");
-        }, 2000);
+        }, 1500);
       })
       .catch((error) => console.log("error", error));
   };
