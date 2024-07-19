@@ -11,12 +11,11 @@ function FeedBackLodding({
   fetchFeedback,
   fetchHighlight,
 }: FeedBackLoddingProps) {
-  const [message, setMessage] = useState("Uploading video");
+  const [message, setMessage] = useState("Processing video");
   const { activeVideoDetail, otherData, setOtherData } = useVideoContext();
   useEffect(() => {
     const timers = [
-      setTimeout(() => setMessage("Processing video"), 5000),
-      setTimeout(() => setMessage("Generating feedback"), 15000),
+      setTimeout(() => setMessage("Generating feedback"), 10000),
     ];
 
     return () => timers.forEach((timer) => clearTimeout(timer));
