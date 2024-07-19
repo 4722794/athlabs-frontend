@@ -23,10 +23,8 @@ const UserForm = () => {
   const [newUser, setNewUser] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [alreadySelectedInterests, setAlreadySelectedInterests] = useState<
-    string[]
-  >([]);
-  const [interests, setInterests] = useState<string[]>([]);
+  const [alreadySelectedInterests, setAlreadySelectedInterests] = useState<string | null>(null);
+  const [interests, setInterests] = useState<string | null>(null);
 
   const [interestOptions, setInterestOptions] = useState([]);
   const [toastObj, setToastObj] = useState({ type: "", msg: "" });
@@ -70,13 +68,7 @@ const UserForm = () => {
 
   const handleInterestChange = (e: any) => {
     const value = e.target.value;
-    const isChecked = e.target.checked;
-
-    if (isChecked) {
-      setInterests([...interests, value]);
-    } else {
-      setInterests(interests.filter((interest) => interest !== value));
-    }
+    setInterests(value); // Set the selected interest
   };
 
   const handleSubmit = async (e: any) => {
@@ -96,10 +88,10 @@ const UserForm = () => {
     formdata.append("name", name);
     formdata.append("gender", gender);
     formdata.append("dob", dob);
-    if (interests.length === 0) {
+    if (interests === "" || null) {
       formdata.append("interests", "empty");
-    } else if (interests.join(",") !== alreadySelectedInterests.join(",")) {
-      formdata.append("interests", interests.join(","));
+    } else if (interests !== alreadySelectedInterests) {
+      formdata.append("interests", interests || "");
     }
     if (profileImage) {
       formdata.append("picture", profileImage);
@@ -119,7 +111,7 @@ const UserForm = () => {
         setToastObj({ type: "s", msg: "Profile successfully updated" });
         setTimeout(() => {
           router.push("/home");
-        }, 1500);
+        }, 2000);
       })
       .catch((error) => console.log("error", error));
   };
@@ -138,9 +130,7 @@ const UserForm = () => {
         setGender(responseData.data.profile.gender);
         setNewUser(responseData.data.new_user);
         setPreviewImage(responseData.data.profile.picture);
-        const interestNames = responseData.data.profile.interests.map(
-          (item: any) => item.name
-        );
+        const interestNames = responseData.data.profile.interests[0]? responseData.data.profile.interests[0].name :null;
         setInterests(interestNames);
         setAlreadySelectedInterests(interestNames);
       }

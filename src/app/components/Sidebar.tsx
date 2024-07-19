@@ -181,7 +181,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modalOpen, toggleSidebar }) => {
   const clearPage = () => {
     setactiveVideo(false);
     setActiveVideoData(null);
-    setOtherData({ ...otherData, callClearVideo: true });
+    setOtherData({ ...otherData, callClearVideo: true, feedBackRespond: null, highLightRespond: null });
   };
 
   const removeVideoHistory = async (videoId: any) => {
