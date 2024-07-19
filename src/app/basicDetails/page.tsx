@@ -314,7 +314,7 @@ const UserForm = () => {
                 handleInterestChange={handleInterestChange}
               />
 
-              <div className="w-full px-3 my-5 grid gap-x-4 grid-cols-[_1fr_130px] ">
+              <div className="w-full px-3 mb-5 mt-2 grid gap-x-4 grid-cols-[_1fr_130px] ">
                 <button
                   type="submit"
                   className="hover:shadow-form  w-full rounded-md bg-[#44366a] hover:bg-gradient-to-b from-[#101828] to-[#44366a] hover:text-white  py-2 px-8 text-center text-base font-semibold text-white outline-none"

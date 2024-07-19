@@ -6,7 +6,7 @@ const InterestCheckboxes = ({ interests, interestOptions, handleInterestChange }
   return (
     <div className="w-full px-3">
       <label className="mb-3 block text-base font-medium text-white/80">
-        Interests
+        Interest
       </label>
       <div className="flex flex-wrap gap-x-3 gap-y-3">
         {interestOptions.map((option) => (
@@ -27,6 +27,9 @@ const InterestCheckboxes = ({ interests, interestOptions, handleInterestChange }
             {option}
           </label>
         ))}
+      </div>
+      <div className="flex flex-col mt-4 mb-0 pb-0 relative w-full text-xs " style={{color: "#676767"}}>
+      Choose your Interest. Feedback will be based on this selection
       </div>
     </div>
   );
