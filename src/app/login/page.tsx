@@ -233,7 +233,7 @@ const Login = () => {
 
                 className="text-blue-500 hover:underline ml-1 cursor-pointer"
               >
-                Create an account .
+                Create an account
               </Link>
             </p>
           </div>
