@@ -27,7 +27,7 @@ function FeedBackLodding({
       //If feedback fail then feedback and highlight both will fetch again
       setInitialStage();
       fetchFeedback();
-    } else {
+    } else if (otherData.highLightRespond && otherData.highLightRespond === "highlight") {
       setInitialStage();
       fetchHighlight();
     }
@@ -37,15 +37,16 @@ function FeedBackLodding({
     setOtherData((prevData: any) => ({
       ...prevData,
       feedBackRespond: null,
+      highLightRespond: null,
     }));
   };
 
   return (
     <div>
-      {otherData.feedBackRespond ? (
+      {otherData.feedBackRespond || otherData.highLightRespond ? (
         <div>
         <div className="text-white text-center text-sm mb-4 mt-4">
-          There was an error generating feedback
+          There was an error generating the response
         </div>
         <div className=" flex justify-center mb-4">
           <button

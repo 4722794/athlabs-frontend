@@ -79,7 +79,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
       feedBackNotFetch();
     }
     else if (data.feedback && data.highlight === null) {
-      setFeedback(data.feedback);
+      setFeedback(processFeedback(data.feedback));
       fetchHighlight();
     }
     else if (data.feedback && data.highlight) {
@@ -133,7 +133,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
       const response = await fetch(apiEndpoint, { headers });
       if (!response.ok) {
         feedBackNotFetch();
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        // throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const responseData = await response.json();
       if (responseData.feedback === null || responseData.feedback === "") {
@@ -172,7 +172,7 @@ const Tab1Content: React.FC<Tab1ContentProps> = ({ compData, setName }) => {
     }else {
       highLightNotFetch()
       console.error('Failed to fetch:', response.statusText);
-      throw new Error('Failed to fetch data');
+      // throw new Error('Failed to fetch data');
     }
     /* setScore(data.score);
 
