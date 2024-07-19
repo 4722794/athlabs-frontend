@@ -200,9 +200,17 @@ const InputFileUpload: React.FC<InputFileUploadProps> = ({
 
     return (
       <div className="flex justify-center w-full min-h-[650px] h-full bg-[#1B212E] rounded-md border-dash border-2 border-[#2F3747]  flex-col">
-        <div className="flex justify-center relative">
-          {loading && <Spinner aria-label="Default status example" size="xl" />}
-        </div>
+        {loading && (
+          <div className="flex flex-col items-center justify-center relative">
+            <div className="mb-4 items-center justify-center font-bold text-md text-white/80">
+              Uploading video
+            </div>
+            {loading && <Spinner aria-label="Default status example" size="xl" />}
+            <div className="mt-4 items-center justify-center font-bold text-md text-white/80">
+              Please Wait
+            </div>
+          </div>
+        )}
         {!loading && (
           <div className=" landscape:min-h-screen landscape:lg:min-h-[calc(100vh-100px)] landscape:lg:h-[calc(100vh-100px)]  min-h-[300px] lg:min-h-[462px]  lg:h-[calc(100vh-100px)] bg-[#1B212E]  rounded-xl flex justify-between flex-col ">
             <video
