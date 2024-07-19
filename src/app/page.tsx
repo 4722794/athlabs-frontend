@@ -189,8 +189,14 @@ const AppPage = () => {
                 <div className="w-full lg:w-10/12 pt-2">
                   {/* <div className="border border-[#98a2b3] rounded"> */}
                       <div className="flex items-center flex-1 justify-start mt-2 relative">
-                        <div className="flex flex-col lg:flex-row w-full relative items-center justify-center lg:justify-start">
-                          <div className="flex text-2xl font-bold text-white/80 ml-0 mr-4 my-4">Now on Product Hunt!</div>
+                        <div className="flex flex-col md:flex-row w-full relative items-center justify-center lg:justify-start">
+                          <div className="flex font-bold text-lg text-white/80 ml-4 md:ml-0 mr-4 my-4">
+                          <a href="/signup"
+                            className="px-3 mx-auto my-2 w-[250px] py-6 justify-center items-center cursor-pointer text-white text-center tracking-wider capitalize whitespace-normal object-fill rounded-lg bg-gradient-to-r from-[#101828] to-[#44366a]  h-10 xl:h-12 2xl:min-h-[60px] inline-flex"
+                          >
+                            Get Started 
+                          </a>
+                          </div>
                           <a href="https://www.producthunt.com" target="_blank" rel="noopener noreferrer" className="flex justify-center lg:justify-start">
                             <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=12345&theme=dark" alt="Featured on Product Hunt" className="w-auto mx-4 my-2"/>
                           </a>
