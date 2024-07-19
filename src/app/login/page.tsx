@@ -191,13 +191,13 @@ const Login = () => {
               )}
 
               <p className="text-white/70 text-xs text-center mt-4">
-                Forgot Password?
+                
                 <Link
                   href="/forgot-password"
                   // onClick={handleRequestDemo}
                   className="text-blue-500 hover:underline ml-1 cursor-pointer"
                 >
-                  Recover your password here
+                  Forgot Password?
                 </Link>
               </p>
             </form>
