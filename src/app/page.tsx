@@ -197,8 +197,8 @@ const AppPage = () => {
                             Get Started 
                           </a>
                           </div>
-                          <a href="https://www.producthunt.com" target="_blank" rel="noopener noreferrer" className="flex justify-center lg:justify-start">
-                            <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=12345&theme=dark" alt="Featured on Product Hunt" className="w-auto mx-4 my-2"/>
+                          <a href="https://www.producthunt.com/posts/athlabs?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-athlabs" target="_blank" rel="noopener noreferrer" className="flex justify-center lg:justify-start">
+                            <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=472441&theme=dark" alt="Featured on Product Hunt" className="w-auto mx-4 my-2"/>
                           </a>
                           </div>
                         {/* <p className="text-white mt-4">Check out our new app and give us an upvote if you like it.</p> */}
