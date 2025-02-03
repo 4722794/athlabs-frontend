@@ -25,9 +25,13 @@
 //     },
 //   ];
 // };
+const isGitHubPages = process.env.NEXT_PUBLIC_DEPLOYMENT === 'github-pages';
+
 const nextConfig = {
-  // rewrites,
   output: "export",
+  basePath: isGitHubPages ? "/YourRepoName" : "",
+  assetPrefix: isGitHubPages ? "/YourRepoName/" : "",
+  images: { unoptimized: true },
 };
 
 module.exports = nextConfig;
