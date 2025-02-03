@@ -77,6 +77,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
+      - name: Add CNAME
+        run: echo "athlabs.online" > ./out/CNAME
 
   # Deployment job
   deploy:
