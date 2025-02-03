@@ -73,12 +73,12 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Create .nojekyll file
         run: touch ./out/.nojekyll
+      - name: Add CNAME
+        run: echo "www.athlabs.online" > ./out/CNAME      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
-      - name: Add CNAME
-        run: echo "athlabs.online" > ./out/CNAME
 
   # Deployment job
   deploy:
