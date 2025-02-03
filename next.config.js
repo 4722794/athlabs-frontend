@@ -29,8 +29,8 @@ const isGitHubPages = process.env.NEXT_PUBLIC_DEPLOYMENT === 'github-pages';
 
 const nextConfig = {
   output: "export",
-  basePath: isGitHubPages ? "/YourRepoName" : "",
-  assetPrefix: isGitHubPages ? "/YourRepoName/" : "",
+  basePath: isGitHubPages ? "/athlabs-frontend" : "",
+  assetPrefix: isGitHubPages ? "/athlabs-frontend/" : "",
   images: { unoptimized: true },
 };
 
